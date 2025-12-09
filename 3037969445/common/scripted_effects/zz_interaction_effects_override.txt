@@ -1,0 +1,176 @@
+﻿
+#####################################################################
+# EFFECT LIST
+#####################################################################
+# !!! Remember to add all new effects with a short description here !!!
+
+#####################################################################
+# EFFECTS
+#####################################################################
+
+disinherit_effect = {
+	save_scope_as = disinherited_character
+	if = {
+		limit = {
+			is_heir_of = $DISINHERITOR$
+			NOT = {
+				has_trait = disputed_heritage
+			}
+			$DISINHERITOR$ = {
+				any_vassal = {
+					vassal_stance = courtly
+				}
+			}
+		}
+		$DISINHERITOR$ = {
+			custom_tooltip = courtly_vassal_disapproves_disinheriting
+			hidden_effect = {
+				every_vassal = {
+					vassal_stance = courtly
+					add_opinion = {
+						target = $DISINHERITOR$
+						modifier = courtly_disinherit_opinion
+					}
+				}
+			}
+		}
+	}
+	# the disinherited now gets an immediate pressed claim to any non-elective titles they are about to no longer inherit
+	if = {
+		limit = { has_game_rule = lmf_yes_disinheritance_change }
+		every_heir_title = {
+			limit = {
+				exists = holder
+				NOT = { has_title_law_flag = elective_succession_law }
+				tier > tier_barony
+			}
+			scope:disinherited_character = {
+				add_pressed_claim = prev
+			}
+		}
+		# in the instance where the disinherited dynasty member isn't heir to anything, they'll claim any titles
+		# that their parents are currently heir to - just in case someone is disinheriting grand-children
+		if = {
+			limit = {
+				NOT = {
+					any_heir_title = {
+						exists = holder
+						NOT = { has_title_law_flag = elective_succession_law }
+						tier > tier_barony
+					}
+				}
+			}
+			every_parent = {
+				every_heir_title = {
+					limit = {
+						exists = holder
+						NOT = { has_title_law_flag = elective_succession_law }
+						tier > tier_barony
+					}
+					scope:disinherited_character = {
+						add_pressed_claim = prev
+					}
+				}
+			}
+		}
+	}
+	add_trait = disinherited
+	add_opinion = {
+		modifier = disinherited_opinion
+		target = $DISINHERITOR$
+	}
+	house = {
+		every_house_member = {
+			limit = {
+				NOT = { house = $DISINHERITOR$.house }
+			}
+			custom = all_house_members
+			add_opinion = {
+				modifier = disinherited_house_member_opinion
+				target = $DISINHERITOR$
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = dynasty
+			NOT = { $DISINHERITOR$ = dynasty.dynast }
+		}
+		$DISINHERITOR$.dynasty.dynast = {
+			add_opinion = {
+				target = $DISINHERITOR$
+				modifier = fp1_usurped_my_authority_opinion
+				years = 20
+			}
+		}
+	}
+	hidden_effect = { #Nudge towards rivalry
+		if = {
+			limit = {
+				NOR = {
+					has_relation_rival = $DISINHERITOR$
+					has_relation_potential_rival = $DISINHERITOR$
+				}
+			}
+			set_relation_potential_rival = $DISINHERITOR$
+		}
+	}
+
+	# is the disinherited character betrothed?
+	if = {
+		limit = {
+			is_betrothed = yes
+			exists = scope:disinherited_character.betrothed.liege
+			scope:disinherited_character.betrothed.liege = { is_close_or_extended_family_of = scope:disinherited_character.betrothed }
+		}
+		custom_tooltip = disinherited_betrothal_upset_tt
+		scope:disinherited_character.betrothed = { save_scope_as = disinherited_betrothed }
+		$DISINHERITOR$ = { save_scope_as = disinheritor }
+		scope:disinherited_character.betrothed.liege = { trigger_event = lmf_interaction.0004 }
+	}
+	
+	# is the disinherited character married?
+	if = {
+		limit = { is_married = yes }
+		primary_spouse = {
+			if = {
+				limit = {
+					NOR = {
+						house = $DISINHERITOR$.house
+						this ?= $DISINHERITOR$.dynasty.dynast
+					}
+				}
+				add_opinion = {
+					target = $DISINHERITOR$
+					modifier = disinherited_spouse_opinion
+				}
+			}
+			hidden_effect = { #Nudge towards rivalry
+				if = {
+					limit = {
+						scope:disinherited_character = { is_playable_character = no }
+						NOR = {
+							has_relation_rival = $DISINHERITOR$
+							has_relation_potential_rival = $DISINHERITOR$
+						}
+					}
+					set_relation_potential_rival = $DISINHERITOR$
+				}
+			}
+			every_close_family_member = {
+				limit = {
+					NOR = {
+						house = $DISINHERITOR$.house
+						this = scope:disinherited_character
+						this ?= $DISINHERITOR$.dynasty.dynast
+					}
+				}
+				add_opinion = {
+					target = $DISINHERITOR$
+					modifier = disinherited_family_spouse_opinion
+				}
+			}
+		}
+	}
+}
+

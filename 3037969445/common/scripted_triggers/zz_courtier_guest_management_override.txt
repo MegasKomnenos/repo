@@ -1,0 +1,52 @@
+﻿# overriding the pruneable trigger so maidens attached to pool characters don't mean they never get pruned
+# and so that the bar for pruning is a bit lower than previous - we WANT characters to get pruned
+pool_character_is_pruneable_trigger = {
+	save_temporary_scope_as = pool_prune_check
+	is_adult = yes
+	NOR = {
+		has_trait = heresiarch
+		has_trait = populist_leader
+		has_trait = adventurer_follower
+		has_trait = adventurer
+		has_trait = historical_character
+		has_character_flag = easteregg
+		trigger_if = {
+			limit = { exists = dynasty }
+			dynasty = { dynasty_prestige_level > medium_dynasty_prestige_level }
+		}
+		trigger_if = {
+			limit = { exists = dynasty }
+			any_player = { dynasty = scope:pool_prune_check.dynasty }
+		}
+		is_claimant = yes
+		any_owned_story = {}
+		any_relation = { type = rival is_ai = no }
+		any_relation = { type = lover is_playable_character = yes }
+		any_relation = { type = friend is_playable_character = yes }
+		any_close_or_extended_family_member = { is_playable_character = yes }
+		is_pregnant = yes
+		any_child = {
+			is_adult = no
+			NOT = { has_character_flag = is_created_maiden }
+		}
+		real_father ?= {
+			OR = {
+				is_playable_character = yes
+				any_close_or_extended_family_member = { is_playable_character = yes }
+			}
+		}
+	}
+	trigger_if = {
+		limit = { is_lowborn = no }
+		has_any_high_skill_rating = no
+	}
+	trigger_if = {
+		limit = { years_from_game_start < 100 }
+		NOR = {
+			has_character_flag = ai_will_not_convert
+			is_married = yes
+			culture = { has_cultural_tradition = tradition_diasporic }
+		}
+	}
+}
+

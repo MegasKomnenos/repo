@@ -1,0 +1,8 @@
+﻿# this is added for ANSF3 compatibility with AGOT
+
+agot_is_wildling_culture = { always = yes }
+is_human = { always = yes }
+agot_has_traits_preventing_knighthood_trigger = { always = yes }
+agot_has_clergy_trait = { always = no }
+is_current_dragonrider_warfare = { always = no }
+

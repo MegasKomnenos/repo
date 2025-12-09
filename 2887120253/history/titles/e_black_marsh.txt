@@ -1,0 +1,1479 @@
+# Black Marsh
+e_black_marsh = {
+	300.1.1 = { change_development_level = 2 }
+}
+
+#k_gideon
+k_gideon = {
+	200.1.1 = { holder = myfrandi_002 } #Ayleids migrate after Narfinsel Schism
+	300.1.1 = { change_development_level = 3 }
+	310.1.1 = { holder = 0 }	
+}
+d_gideon = {
+	200.1.1 = { holder = myfrandi_002 }
+	300.1.1 = { change_development_level = 4 }
+	310.1.1 = { holder = 0 }
+	3241.5.3 = { holder = gnithringi_96 }
+	3277.12.23 = { holder = gnithringi_97 }
+	3292.10.21 = { holder = gnithringi_98 }
+	3329.6.17 = { holder = gnithringi_99 }
+	3356.1.11 = { holder = gnithringi_100 }
+	3387.4.12 = { holder = gnithringi_101 }
+}
+c_gideon = {
+	200.1.1 = { holder = myfrandi_002 }
+	300.1.1 = { change_development_level = 10 }
+	3241.5.3 = { holder = gnithringi_96 }
+	3257.1.1 = { holder = gnithringi_97 }
+	3292.10.21 = { holder = gnithringi_98 }
+	3329.6.17 = { holder = gnithringi_99 }
+	3356.1.11 = { holder = gnithringi_100 }
+	3387.4.12 = { holder = gnithringi_101 }
+}
+b_governor_keep = {
+	3369.1.1 = { holder = martius_100 }
+}
+c_giovesse = {
+	300.1.1 = { change_development_level = 6 }
+	3241.5.3 = { holder = gnithringi_96 }
+	3257.1.1 = { holder = gnithringi_97 }
+	3292.10.21 = { holder = gnithringi_98 }
+	3329.6.17 = { holder = gnithringi_99 }
+	3356.1.11 = { holder = gnithringi_100 }
+	3387.4.12 = { holder = gnithringi_101 }
+}
+c_thtacreexuxalt = {
+	300.1.1 = { change_development_level = 3 }
+	3313.1.1 = {
+		liege = d_gideon
+		holder = reddream_100
+	}
+	3379.9.15 = { holder = reddream_101 }
+}
+c_rockguard = {
+	3291.7.14 = { 
+		holder = rehk_98
+		liege = d_gideon 
+	}
+	3317.11.27 = { holder = rehk_99 }
+	3347.3.22 = { holder = rehk_100 }
+	3379.2.15 = { holder = rehk_101 }
+}
+c_sariellen_sword = {
+	3311.8.5 = { 
+		holder = toringi_98
+		liege = d_gideon
+	}
+	3339.1.1 = { holder = toringi_99 }
+	3352.1.1 = { holder = toringi_100 }
+	3366.11.25 = { holder = tuulingi_100 }
+}
+c_deathwart_pond = {
+	3305.4.14 = { 
+		holder = tuulingi_98
+		liege = d_gideon
+	}
+	3332.1.1 = { holder = tuulingi_99 }
+	3358.1.1 = { holder = tuulingi_100 }
+}
+c_silent_halls = {
+	200.1.1 = { holder = myfrandi_002 }
+	300.1.1 = { change_development_level = 4 }
+	3104.1.1 = { holder = myfrandi_98 }
+	3199.1.6 = { holder = myfrandi_99 }
+	3314.4.2 = { holder = myfrandi_100 }
+	3369.5.7 = { holder = myfrandi_100b }
+	3412.9.5 = { holder = myfrandi_101 }
+}
+
+#d_ge_vas_rexu
+c_ge_vas_rexu  = {
+	3280.1.1 = { holder = neius_98 }
+	3315.1.1 = { holder = neius_99 }
+	3360.1.1 = { holder = neius_102 }
+}
+c_al_nashukiul_el = {
+	3300.1.1 = { 
+		holder = carandol_100 
+	}
+}
+c_hajhuthilweel = {
+	3350.1.1 = { holder = kunark_100 }
+}
+c_uxisteilul = {
+	3350.1.1 = { holder = vlarzyn_100 }
+}
+
+d_coldmoor = {
+	3280.1.1 = { holder = neius_98 }
+	3315.1.1 = { holder = neius_99 }
+	3360.1.1 = { holder = neius_100 }
+}
+c_coldmoor = {
+	3280.1.1 = { holder = neius_98 }
+	3315.1.1 = { holder = neius_99 }
+	3360.1.1 = { holder = neius_100 }
+}
+c_porcixid = {
+	3280.1.1 = { holder = neius_98 }
+	3315.1.1 = { holder = neius_99 }
+	3360.1.1 = { holder = neius_101 }
+}
+c_xilul = {
+	3280.1.1 = { holder = neius_98 }
+	3315.1.1 = { holder = neius_99 }
+	3360.1.1 = { holder = neius_102 }
+}
+#d_gloomire
+c_glenbridge = {
+	300.1.1 = { change_development_level = 4 }
+	3130.1.1 = { 
+		holder = chiluk_1 
+	}
+	3369.1.1 = { holder = chiluk_100 } #Chiluk loses everything except shajuhe
+}
+c_shajuhe = {
+	300.1.1 = { change_development_level = 3 }
+	3130.1.1 = { 
+		holder = chiluk_1 
+	}
+	3369.1.1 = { holder = chiluk_100 }
+}
+c_plateau_of_the_traveler = {
+	300.1.1 = {
+		change_development_level = 4
+	}
+	3311.1.1 = { holder = cazahleel_99 }
+	3342.1.1 = { holder = cazahleel_100 }
+}
+#d_stonewaste_coast
+c_stonewaste = {
+	3292.1.1 = { holder = tulakul_98 }
+	3321.1.1 = { holder = tulakul_99 }
+	3348.1.1 = { holder = tulakul_100 }
+	3378.1.1 = { holder = tulakul_101 }
+}
+c_elossi = {
+	3310.1.1 = { holder = inssringi_98 }
+	3347.1.1 = { holder = inssringi_99 }
+	3368.1.1 = { holder = inssringi_100 }
+}
+c_xi_tsei = {
+	3310.1.1 = { holder = inssringi_98 }
+	3347.1.1 = { holder = inssringi_99 }
+	3368.1.1 = { holder = inssringi_100 }
+}
+
+#k_soulrest
+k_soulrest = {
+	3346.1.1 = { holder = atla_99 }
+	3355.1.1 = { holder = atla_100 }
+	3378.1.1 = { holder = atla_100b }
+	3397.1.1 = { holder = atla_101 }
+	3426.1.1 = { holder = atla_102 }
+	3451.1.1 = { holder = atla_103 }
+	3490.1.1 = { holder = 0 } #Knahaten Flu?
+}
+d_soulrest = {
+	300.1.1 = { change_development_level = 4 }
+	233.1.1 = { holder = mirdan_99 } #Ayleids
+	487.1.1 = { holder = mirdan_100 }
+	592.1.1 = { holder = arialia_100 } #First yespest ruler
+	3182.1.1 = { holder = atla_1 } #First Atla king
+	3228.1.1 = { holder = atla_2 }
+	3259.1.1 = { holder = atla1_3 }
+	3293.1.1 = { holder = atla1_4 }
+	3305.1.1 = { holder = atla_5 }
+	3311.1.1 = { holder = atla_98 }
+	3333.1.1 = { holder = atla_99 }
+	3355.1.1 = { holder = atla_100 }
+	3378.1.1 = { holder = atla_100b }
+	3397.1.1 = { holder = atla_101 }
+	3426.1.1 = { holder = atla_102 }
+	3451.1.1 = { holder = atla_103 }
+}
+c_soulrest = {
+	300.1.1 = { change_development_level = 10 }
+	233.1.1 = { holder = mirdan_99 }
+	487.1.1 = { holder = mirdan_100 }
+	592.1.1 = { holder = arialia_100 }
+	3182.1.1 = { holder = atla_1 }
+	3228.1.1 = { holder = atla_2 }
+	3259.1.1 = { holder = atla1_3 }
+	3293.1.1 = { holder = atla1_4 }
+	3305.1.1 = { holder = atla_5 }
+	3311.1.1 = { holder = atla_98 }
+	3333.1.1 = { holder = atla_99 }
+	3355.1.1 = { holder = atla_100 }
+	3378.1.1 = { holder = atla_100b }
+	3397.1.1 = { holder = atla_101 }
+	3426.1.1 = { holder = atla_102 }
+	3451.1.1 = { holder = atla_103 }
+	#History ToDo: taken by these guys after Knahaten, decide on exact year
+	3488.1.1 = { holder = anzawmee1_101 }
+	3494.1.1 = { holder = anzawmee1_102 }
+}
+c_chasepoint = {
+	3182.1.1 = { holder = atla_1 }
+	3228.1.1 = { holder = atla_2 }
+	3259.1.1 = { holder = atla1_3 }
+	3293.1.1 = { holder = atla1_4 }
+	3305.1.1 = { holder = atla_5 }
+	3311.1.1 = { holder = atla_98 }
+	3333.1.1 = { holder = atla_99 }
+	3355.1.1 = { holder = atla_100 }
+	3378.1.1 = { holder = atla_100b }
+	3397.1.1 = { holder = atla_101 }
+	3426.1.1 = { holder = atla_102 }
+	#Conquered by Naga warlord
+	3439.1.1 = { holder = xalxith_100 }
+	3466.1.1 = { holder = xalxith_101 }
+	3481.1.1 = { holder = xalxith_102 }
+	3499.1.1 = { holder = xalxith_103 }
+}
+c_seastone  = {
+	3182.1.1 = { holder = atla_1 }
+	3228.1.1 = { holder = atla_2 }
+	3259.1.1 = { holder = atla1_3 }
+	3293.1.1 = { holder = atla1_4 }
+	3305.1.1 = { holder = atla_5 }
+	3311.1.1 = { holder = atla_98 }
+	3333.1.1 = { holder = atla_99 }
+	3355.1.1 = { holder = atla_100 }
+	3378.1.1 = { holder = atla_100b }
+	3397.1.1 = { holder = atla_101 }
+	3426.1.1 = { holder = atla_102 }
+	3451.1.1 = { holder = atla_103 }
+	#History ToDo: taken by these guys after Knahaten, decide on exact year
+	3488.1.1 = { holder = anzawmee1_101 }
+	3494.1.1 = { holder = anzawmee1_102 }
+}
+c_hearthshield = {
+	3293.1.1 = { holder = atla1_4 }
+	3305.1.1 = { 
+		holder = atla_5b
+		liege = k_soulrest 
+	}
+	3328.1.1 = { holder = hatkhe_99 }
+	3356.1.1 = { holder = hatkhe_100 }
+	3399.1.1 = { holder = hatkhe_101 }
+	3412.1.1 = { holder = hatkhe_102 }
+	3438.1.1 = { holder = hatkhe_103 }
+	#History ToDo: too early, Knahaten happens in 3480
+	#3420.1.1 = { holder = anzawmee_101 }
+	#3432.1.1 = { holder = anzawmee_102 }
+}
+
+d_onkobra = {
+	300.1.1 = { 
+		change_development_level = 3
+	}
+}
+c_riverkeep = {
+	300.1.1 = { change_development_level = 6 }
+	3269.1.1 = { 
+		holder = atul_97
+		liege = k_soulrest  
+	}
+	3283.1.1 = { holder = atul_98 }
+	3319.1.1 = { holder = atul_99 }
+	3356.1.1 = { holder = atul_100 }
+	3379.1.1 = { holder = atul_101 }
+	3411.1.1 = { holder = atul_102 }
+	3414.1.1 = { holder = atul_103 }
+	3440.1.1 = { holder = atul_104 }
+}
+c_shahe_bak = {
+	300.1.1 = { change_development_level = 4 }
+	3308.1.1 = {
+		liege = k_soulrest 
+		holder = ninas_98 
+	}
+	3335.1.1 = { holder = ninas_99 }
+	3343.8.11 = {holder = ninas_100 }
+	3409.1.1 = { holder = ninas_101b }
+	3430.1.1 = { holder = ninas_102 }
+	#History ToDO: taken by these guys after Knahaten, decide on exact year
+	3489.1.1 = { holder = anzawmee_102 }
+}
+c_ojel_bak = {
+	3308.1.1 = {
+		liege = k_soulrest 
+		holder = ninas_98 
+	}
+	3335.1.1 = { holder = ninas_99 }
+	3343.8.11 = {holder = ninas_100 }
+	3409.1.1 = { holder = ninas_101b }
+	3430.1.1 = { holder = ninas_102 }
+	3431.1.1 = { #Conquered by Agaceph warlord
+		holder = anzawmee_100
+		liege = 0 
+	}
+	3462.1.1 = { holder = anzawmee_101 }
+	3469.1.1 = { holder = anzawmee_102 }
+}
+c_ove_shu = {
+	3270.1.1 = { holder = akneinas_98 }
+	3298.1.1 = { holder = akneinas_99 }
+	3325.1.1 = { holder = akneinas_100 }
+	3349.1.1 = { #Granted to second child after Topal is conquered
+		liege = d_topal
+		holder = quarori_99 
+	}
+	3359.1.1 = { holder = quarori_100 }
+	3368.6.8 = { liege = k_soulrest } #Topal captured by pirates
+	3394.1.1 = { holder = quarori_101 }
+	#Eventually becomes Khajiit Pirates?
+}
+
+d_rockgrove = {
+	300.1.1 = { change_development_level = 4 }
+	3311.1.1 = { holder = cauxith_98 }
+	3334.1.1 = { holder = cauxith_99 }
+	3359.4.6 = { holder = cauxith_100 }
+	3383.1.1 = { holder = cauxith_101 }
+	3416.1.1 = { holder = cauxith_102 }
+	3443.1.1 = { holder = cauxith_103 }
+}
+c_rockgrove = {
+	300.1.1 = { change_development_level = 9 }
+	3311.1.1 = { holder = cauxith_98 }
+	3334.1.1 = { holder = cauxith_99 }
+	3359.4.6 = { holder = cauxith_100 }
+	3383.1.1 = { holder = cauxith_101 }
+	3416.1.1 = { holder = cauxith_102 }
+	3443.1.1 = { holder = cauxith_103 }
+}
+c_hleba_xul = {
+	3311.1.1 = { holder = cauxith_98 }
+	3334.1.1 = { holder = cauxith_99 }
+	3359.4.6 = { 
+		liege = d_rockgrove
+		holder = cauxith1_100
+	}
+	3359.11.5 = { holder = cauxith1_101 }
+	3422.1.1 = { holder = cauxith1_102 }
+	3501.1.1 = { liege = 0 }
+}
+c_xeemhok = {
+	3351.1.1 = { holder = sharpeye_100 }
+	3367.9.15 = { holder = sharpeye_101 }
+	3407.1.1 = { holder = sharpeye_102 }
+}
+
+d_topal = {
+	300.1.1 = { change_development_level = 6 }
+	3339.1.1 = { 
+		holder = xanthianus_99
+		liege = k_leyawiin 
+	}
+	3349.1.1 = { 
+		liege = k_soulrest
+		holder = akneinas_100
+	}
+	3362.1.1 = { holder = akneinas_101 }
+	3367.1.1 = { holder = 0 }
+}
+c_topal = {
+	3339.1.1 = { holder = xanthianus_99 }
+	3349.1.1 = { holder = akneinas_100 }
+	3362.1.1 = { holder = akneinas_101 }
+	3367.1.1 = {
+		holder = vogian_100
+		government = pirate_government
+	}
+	3393.1.1 = {
+		holder = vogian_101b
+	}
+}
+c_brittlecoast = {
+	3339.1.1 = { holder = xanthianus_99 }
+	3349.1.1 = { holder = akneinas_100 }
+	3362.1.1 = { holder = akneinas_101 }
+	3367.1.1 = {
+		holder = vogian_100
+		government = pirate_government
+	}
+	3393.1.1 = {
+		holder = vogian_101b
+	}
+}
+
+k_shadowfen = {
+	200.1.1 = { holder = silyanorn_002 }
+	350.1.1 = { holder = 0 }
+}
+
+d_stormhold = {
+	200.1.1 = { holder = silyanorn_002 }
+	350.1.1 = { holder = 0 }
+	2940.1.1 = { holder = silyanorn_004 }
+	3180.1.1 = { holder = silyanorn_99 }	
+	3351.1.1 = {
+		holder = melur_100
+		liege = k_dres 
+	}
+	3352.1.1 = { liege = 0 } #Cut off by Madesi's rebellion
+	3384.1.1 = { holder = melur_101 }
+	#History ToDo: should be Dres by 527, but could use a concrete date
+	3440.1.1 = { liege = k_dres }
+	3495.1.1 = { 
+		holder = stormhold_eso
+		liege = 0
+		government = tribal_government 
+	}
+}
+c_stormhold = {
+	200.1.1 = { holder = silyanorn_002 }
+	300.1.1 = { change_development_level = 8 }
+	2940.1.1 = { holder = silyanorn_004 }	
+	3180.1.1 = { holder = silyanorn_99 }	
+	3351.1.1 = { holder = melur_100 }
+	3384.1.1 = { holder = melur_101 }
+	3495.1.1 = { holder = stormhold_eso }
+}
+c_cradle_of_shadows = {
+	3332.1.1 = { holder = abaakul_100 }
+	3369.1.1 = { holder = abaakul_101 }
+}
+c_mazzatun = {
+	3351.1.1 = { 
+		holder = xitxaht_100 
+	}
+	3391.1.1 = { holder = xitxaht_101 }
+	3414.1.1 = { holder = xitxaht_102 }
+	3428.1.1 = { holder = xitxaht_103 }
+	3456.1.1 = { holder = xitxaht_104 }
+	3467.1.1 = { holder = xitxaht_105 }
+	3494.1.1 = { holder = xitxaht_eso }
+}
+c_hei_halai = {
+	3351.1.1 = { 
+		holder = xitxaht_100c 
+		liege = d_stormhold
+	}
+	3385.1.1 = { holder = xitxaht_100 }
+	#Mazzatun keep this until Blackdrake
+	3391.1.1 = { holder = xitxaht_101 }
+	3414.1.1 = { holder = xitxaht_102 }
+	3428.1.1 = { holder = xitxaht_103 }
+	#Conquered by Dres
+	3456.1.1 = { holder = melur_101 }
+}
+c_hajta_mehthux = {
+	3351.1.1 = { 
+		holder = xitxaht_100b 
+		liege = d_stormhold
+	}
+	#Dres leader of Stormhold dies, Mazzatun takes advantage of that
+	3385.1.1 = { holder = xitxaht_100 }
+	#Dres take this "back"
+	3390.1.1 = { holder = melur_101 }
+}
+
+d_alten_tormont = {
+	3350.1.1 = { holder = suzahleel_100 }
+    3358.1.1 = {
+        government = tribal_government
+    }
+	3373.1.1 = { holder = suzahleel_101 }
+	3381.1.1 = { holder = suzahleel_102 }
+	#3384 - Dres leader of Stormhold is assasinated, they decide to stop the offensive, Suzahleel survive with 1 county
+	3421.1.1 = { holder = suzahleel_103 }
+}
+c_alten_tormont = {
+	3350.1.1 = { holder = suzahleel_100b }
+	#Takes over the city as the most competent leader after previous ruler dies in battle
+	3379.1.1 = { holder = suzahleel_101 }
+	3381.1.1 = { holder = suzahleel_102 }
+	3421.1.1 = { holder = suzahleel_103 }
+}
+c_merciful_reduction = {
+	3350.1.1 = { holder = suzahleel_100 }
+	3373.1.1 = { holder = suzahleel_101 }
+	3381.1.1 = { holder = melur_100 }
+	3384.1.1 = { holder = melur_101 }
+	#History ToDo: vassalized by Bashipal during Knahaten
+}
+c_xal_haj_ei = {
+	3350.1.1 = { holder = suzahleel_100 }
+	3373.1.1 = { holder = melur_100 }
+	3384.1.1 = { holder = melur_101 }
+	#History ToDo: vassalized by Bashipal during Knahaten
+}
+c_ten_maur_wolk = {
+	3350.1.1 = { holder = suzahleel_100 }
+	3373.1.1 = { holder = suzahleel_101 }
+	3381.1.1 = { holder = suzahleel_102 }
+	3421.1.1 = { holder = suzahleel_103 }
+}
+
+#d_alten_corimont
+c_alten_corimont = {
+	3350.1.1 = { holder = suzahleel_100b }
+	#Yokul's children keep less important land
+	3379.1.1 = { 
+		holder = suzahleel1_101
+		liege = d_alten_tormont 
+	}
+	3426.1.1 = { holder = suzahleel1_102 }
+	3432.1.1 = { holder = suzahleel1_103 }
+}
+c_percolating_mire = {
+	3359.6.1 = {
+		holder = mota_1000
+		liege = d_greenglade
+	}
+	3371.1.1 = {
+		holder = mota_1001
+		liege = d_greenglade
+	}
+}
+c_leafwater = {
+	3274.1.1 = { holder = haj_97 }
+	3299.1.1 = { holder = haj_98 }
+	3331.1.1 = { 
+		holder = haj1_99
+		liege = d_rockpoint 
+	}
+	3352.8.5 = { holder = haj1_100 }
+}
+c_deep_graves = {
+	3274.1.1 = { holder = haj_97 }
+	3299.1.1 = { holder = haj_98 }
+	3331.1.1 = { 
+		holder = haj1_99
+		liege = d_rockpoint 
+	}
+	3352.8.5 = { holder = haj1_100 }
+}
+c_hatching_pools = {
+	3350.1.1 = { holder = suzahleel_100b }
+	#Yokul's children keep less important land
+	3379.1.1 = { 
+		holder = suzahleel1_101
+		liege = d_alten_tormont 
+	}
+	3426.1.1 = { holder = suzahleel1_102 }
+	3432.1.1 = { holder = suzahleel1_103 }
+}
+
+d_murkwater = {
+	200.1.1 = { holder = carandol_002 }
+	450.1.1 = { holder = 0 }
+}
+c_loriasel = {
+	200.1.1 = { holder = carandol_002 }
+	300.1.1 = { change_development_level = 8 }
+	2500.1.1 = { holder = carandol_98 }
+	3050.1.1 = { holder = carandol_99 }
+	3300.1.1 = { holder = carandol_100 }
+}
+c_murkwater = {
+	2500.1.1 = { holder = carandol_98 }
+	3050.1.1 = { holder = carandol_99 }
+	3300.1.1 = { holder = carandol_100 }
+}
+c_sul = {
+	2940.1.1 = { holder = zuukir_1 }
+	3297.3.6 = { holder = zuukir_98 }
+	3321.2.12 = { holder = zuukir_99 }
+	3343.4.4 = { holder = zuukir_100 }
+}
+c_arx_corinium  = {
+	2940.1.1 = { holder = zuukir_1 }
+	3297.3.6 = { holder = zuukir_98 }
+	3321.2.12 = { holder = zuukir_99 }
+	3343.4.4 = { holder = zuukir_100 }
+}
+c_hill_xeel = {
+	3319.1.1 = { holder = tymrokk_99 }
+	3349.11.4 = { holder = tymrokk_100 }
+	3385.6.22 = { holder = tymrokk_101b }
+}
+
+#k_murkwood
+k_murkwood  = {
+	3000.1.1 = { holder = thuxis_100b }
+	3050.1.1 = { holder = 0 }
+}
+d_blackrose = {
+	1016.1.1 = { holder = bramman_100 }
+	1032.1.1 = { holder = 0 }
+	3257.8.2 = { holder = dyaan_96 }
+	3286.1.9 = { holder = dyaan_97 }
+	3305.5.26 = { holder = dyaan_98 }
+	3318.9.14 = { holder = dyaan_99 }
+	3359.11.24 = { holder = dyaan_100b }
+	3367.11.12 = { holder = dyaan_100f } #Seized by sibling
+}
+c_blackrose = {
+	300.1.1 = { change_development_level = 8 }
+	1016.1.1 = { holder = bramman_100 }
+	3257.8.2 = { holder = dyaan_96 }
+	3286.1.9 = { holder = dyaan_97 }
+	3305.5.26 = { holder = dyaan_98 }
+	3318.9.14 = { holder = dyaan_99 }
+	3359.11.24 = { holder = dyaan_100b }
+	3367.11.12 = { holder = dyaan_100f } #Seized by sibling
+}
+c_xul_thuxis = {
+	3000.1.1 = { holder = thuxis_100b }
+	3286.6.12 = { 
+		holder = zmaan_98
+		liege = d_blackrose 
+	}
+	3321.5.2 = { holder = zmaan_99 }
+	3342.11.18 = { holder = zmaan_100 }
+	3344.1.4 = { holder = zmaan_100c }
+}
+c_teel_asutire = {
+	3296.9.4 = {
+		holder = nmaat_98
+		liege = d_blackrose
+	}
+	3325.5.20 = { holder = nmaat_99 }
+	3347.1.22 = { holder = nmaat_100 }
+	3354.12.8 = { holder = nmaat_100b }
+}
+
+d_murkwood = {
+	3300.1.1 = { holder = jujju_99 }
+	3360.1.1 = { holder = jujju_100 }
+}
+c_deepmarch = {
+	3360.1.1 = { 
+		holder = deepmarch_100
+		government = theocracy_government #we want this guy to be theocracy despite being c_tier
+		liege = d_murkwood
+	}
+}
+c_dewei = {
+	3360.1.1 = { holder = rasakur_100 }
+}
+c_gilul = {
+	3360.1.1 = { holder = jujju_100 }
+}
+c_lu_whis = {
+	3360.1.1 = { 
+		holder = rasakur_100
+		liege = d_murkwood
+	}
+}
+c_xerjeeli = {
+	3360.1.1 = { holder = jujju_100 }
+}
+c_deensap = {
+	3360.1.1 = { holder = jujju_100 }
+}
+
+#d_buwomousa
+c_buwomousa = {
+	3294.1.1 = { holder = mispatiit_98 }
+	3338.6.27 = { holder = mispatiit_99 }
+	3350.3.12 = { holder = mispatiit_100 }
+}
+c_shageel = {
+	3294.1.1 = { holder = mispatiit_98 }
+	3338.6.27 = { holder = mispatiit_99 }
+	3350.3.12 = { holder = mispatiit_100 }
+}
+c_vil_ireek = {
+	3360.1.1 = { holder = olidanju_100 }
+}
+
+#d_vunalk
+c_vunalk = {
+	3351.1.1 = { holder = sharpeye_100 }
+	3367.9.15 = { holder = sharpeye_101b }
+	3399.1.1 = { holder = sharpeye_101b1 }
+	3410.1.1 = { holder = sharpeye_102 }
+}
+c_xith_izkul = {
+	3280.1.1 = { holder = neius_98 }
+	3315.1.1 = { holder = neius_99 }
+	3360.1.1 = { holder = neius_100 }
+}
+
+#k_helstrom
+k_helstrom = {
+	300.1.1 = { change_development_level = 1 }
+	2.1.1 = { holder = rajtaee_1 }
+	122.1.1 = { holder = 0 }
+	#Proclaims himself king after conquering surrounding territories
+	3223.1.5 = { holder = jassa_95 }
+	3269.12.19 = { holder = jassa_96 } 
+	3292.7.6 = { holder = jassa_97 }
+	3298.6.9 = { holder = 0 }
+}
+d_helstrom = {
+	2.1.1 = { holder = rajtaee_1 }
+	3216.5.3 = { holder = jassa_95 }
+	3269.12.19 = { holder = jassa_96 }
+	3292.7.6 = { holder = jassa_97 }
+	3298.6.9 = { holder = jassa_98 }	
+	3315.1.1 = { holder = jassa_99 }	
+	3359.1.1 = { holder = jassa_100 }
+	3381.5.9 = { holder = jassa_101 }
+	3391.10.7 = { holder = jassa_101d }
+	3441.3.5 = { holder = jassa_103 }
+}
+c_helstrom = {
+	300.1.1 = { change_development_level = 9 }
+	2.1.1 = { holder = rajtaee_1 }
+	3216.5.3 = { holder = jassa_95 }
+	3269.12.19 = { holder = jassa_96 }
+	3292.7.6 = { holder = jassa_97 }
+	3298.6.9 = { holder = jassa_98 }	
+	3315.1.1 = { holder = jassa_99 }	
+	3359.1.1 = { holder = jassa_100 }
+	3381.5.9 = { holder = jassa_101 }
+	3391.10.7 = { holder = jassa_101d }
+	3441.3.5 = { holder = jassa_103 }
+}
+c_xal_ko = {
+	3359.1.1 = {
+		liege = d_helstrom
+		holder = elradaleius_1000
+	}
+}
+c_thit = {
+	3359.1.1 = {
+		liege = d_helstrom
+		holder = genikeiuslan_1000
+	}
+}
+c_hat_vol = {
+	3359.1.1 = {
+		liege = d_helstrom
+		holder = genikeiuslan_1000
+	}
+}
+
+d_rockpoint = {
+	3221.7.5 = { holder = jassa_95 }
+	3269.12.19 = { holder = jassa_96 }
+	3274.1.1 = { holder = haj_97 }
+	3299.1.1 = { holder = haj_98 }
+	3331.1.1 = { holder = haj_99 }
+	3352.1.1 = { holder = haj_100 }
+	3366.1.1 = { holder = 0 }
+}
+c_rockpoint = {
+	3221.7.5 = { holder = jassa_95 }
+	3269.12.19 = { holder = jassa_96 }
+	3274.1.1 = { holder = haj_97 }
+	3299.1.1 = { holder = haj_98 }
+	3331.1.1 = { holder = haj_99 }
+	3352.1.1 = { holder = haj_100 }
+	3367.1.1 = { liege = d_helstrom }
+}
+c_shuxith = {
+	3221.7.5 = { holder = jassa_95 }
+	3269.12.19 = { holder = jassa_96 }
+	3274.1.1 = { holder = haj_97 }
+	3299.1.1 = { holder = haj_98 }
+	3331.1.1 = { holder = haj_99 }
+	3352.1.1 = { holder = haj_100 }
+	3367.1.1 = { holder = sulxan_100 } #Given to Sul-Xans
+}
+c_veekhat = {
+	3270.1.1 = { holder = sulxan_99 }
+	3355.1.1 = { holder = sulxan_100 }
+	3359.1.1 = { liege = d_helstrom }
+	3399.1.1 = { holder = sulxan_101 }
+	3409.1.1 = { holder = sulxan_102 }
+}
+
+d_greenglade = {
+	3223.1.5 = { holder = jassa_95 }
+	3269.12.19 = { holder = veestassa_98 }
+	3291.1.1 = { holder = veestassa_99 }
+	3304.1.1 = { holder = veestassa_99b }
+	3331.1.1 = { holder = veestassa_100 }
+	3368.1.1 = { holder = veestassa_101 }
+}
+c_greenglade = {
+	3223.1.5 = { holder = jassa_95 }
+	3269.12.19 = { holder = veestassa_98 }
+	3291.1.1 = { holder = veestassa_99 }
+	3304.1.1 = { holder = veestassa_99b }
+	3331.1.1 = { holder = veestassa_100 }
+	3368.1.1 = { holder = veestassa_101 }
+}
+c_stoothil_havu = {
+	3346.1.1 = { 
+		holder = wihju_100
+		liege = d_greenglade
+	}
+}
+c_greelvola = {
+	3332.1.1 = {
+		holder = walul_99
+		liege = d_greenglade
+	}
+	3357.1.1 = { holder = walul_100 }
+	3366.1.1 = { holder = walul_100b }
+}
+
+d_felmarsh = {
+	3220.4.29 = { holder = jassa_95 }
+	3269.12.19 = { holder = nikassa_96 }
+	3287.1.1 = { holder = nikassa_97 }
+	3303.1.1 = { holder = nikassa_98 }
+	3327.1.1 = { holder = nikassa_99 }
+	3358.8.4 = { holder = nikassa_100 }
+}
+c_xomagahme = {
+	3220.4.29 = { holder = jassa_95 }
+	3269.12.19 = { holder = nikassa_96 }
+	3287.1.1 = { holder = nikassa_97 }
+	3303.1.1 = { holder = nikassa_98 }
+	3327.1.1 = { holder = nikassa_99 }
+	3358.8.4 = { holder = nikassa_100 }
+}
+c_al_tsota = {
+	3269.12.19 = { holder = nikassa_96 }
+	3287.1.1 = { holder = nikassa_97 }
+	3303.1.1 = { holder = nikassa_98 }
+	3327.1.1 = { holder = nikassa_99 }
+	3358.8.4 = { holder = nikassa_100 }
+}
+c_lutankasu = {
+	3351.1.1 = {
+		holder = lei_100
+		liege = d_felmarsh
+	}
+	3365.1.1 = { liege = d_helstrom }
+}
+
+#d_alten_markmont
+c_alten_markmont = {
+	3166.4.9 = { holder = jassa_93 }
+	3189.7.18 = { holder = jassa_94 }
+	3211.2.9 = { holder = jassa_95 }
+	3269.12.19 = { holder = jassa_96 }
+	3292.7.6 = { holder = jassa_97 }
+	3298.6.9 = { holder = jassa_98 }	
+	3315.1.1 = { holder = jassa_99 }	
+	3359.1.1 = { holder = jassa_100 }
+	3381.5.9 = { holder = jassa_101 }
+	3391.10.7 = { holder = jassa_101d }
+	3441.3.5 = { holder = jassa_103 }
+}
+c_greenspring = {
+	3350.1.1 = { holder = jassa_100 }
+	3359.1.1 = {
+		liege = d_helstrom
+		holder = junaleel_100
+	}
+}
+
+#k_thorn
+k_thorn = {
+	300.1.1 = { change_development_level = 3 }	
+}
+
+d_thorn = {
+	3214.1.1 = { holder = othral_98 }
+	3336.1.1 = { holder = othral_99 }
+	3350.7.16 = {
+		holder = toteikhleel_100
+		liege = 0
+	}
+	3366.5.7 = { #Othrals are deposed for being incompetent
+		holder = rivul_100
+		liege = k_dres
+	}
+	3489.1.1 = { holder = othral_101 } #Othrals get Thorn back with support of Grand Magnate	
+}
+c_thorn = {
+	300.1.1 = { change_development_level = 9 }
+	255.1.1 = { holder = thorn_1 }
+	336.11.2 = { holder = dres_1 } #House Dres founded after conquest of Thorn
+	398.9.14 = { holder = dres_2 }
+	428.5.15 = { holder = alandro_2 } #House Dres ruled by Sul for most of the First Council
+	454.10.5 = { holder = alandro_3 }
+	509.1.25 = { holder = alandro_4 }
+	603.2.26 = { holder = alandro_5 }
+	701.3.9 = { holder = maren_1 } #Sul deposed by other great houses for obvious reasons
+	2920.1.1 = { liege = k_dres }
+	3214.1.1 = { holder = othral_98 }
+	3336.1.1 = { holder = othral_99 }	
+	3350.7.16 = { 
+		holder = othral_100
+		liege = k_dres
+	}
+	3366.5.7 = { holder = rivul_100 } #Othrals are deposed for being incompetent
+	3489.1.1 = { holder = othral_101 } #Othrals get Thorn back with support of Grand Magnate	
+}
+c_wagahleel = {
+	3214.1.1 = { holder = othral_98 }
+	3336.1.1 = { holder = othral_99 }
+	3350.7.16 = { holder = toteikhleel_100 }
+	3366.5.7 = { #Othrals allowed to keep this land to not make situation even worse
+		holder = othral_100
+		liege = d_thorn
+	}
+	3422.1.1 = { holder = othral_101 }
+}
+c_weko = {
+	3225.1.1 = { holder = rivul_98 }
+	3306.1.1 = { holder = rivul_99 }
+	3351.8.19 = { holder = toteikhleel_100 }
+	3366.5.7 = { #CoSR is victorious, the Argonians are routed and their land is awarded
+		holder = rivul_100
+		liege = d_thorn
+	}
+}
+c_marr = {
+	3105.6.11 = { holder = nedalor_97 }
+	3198.11.21 = { holder = nedalor_98 }
+	3291.12.6 = { holder = nedalor_99 }
+	3348.9.17 = { holder = nedalor_100 }
+	3350.11.4 = { holder = toteikhleel_100 }
+	3366.5.7 = { #CoSR is victorious, the Argonians are routed and their land is again under Dres management
+		holder = nedalor_100
+		liege = d_yengrith
+	}
+}
+c_shadowmarsh = {
+	3130.1.1 = { holder = vian_98 }
+	3253.1.1 = { holder = vian_99 }
+	3301.1.1 = { holder = vian_100 }
+	3351.9.16 = { holder = toteikhleel_100 }
+	3366.5.7 = { #CoSR is victorious, the Argonians are routed and their land is awarded
+		holder = vian_100
+		liege = d_thorn
+	}
+	3402.1.1 = { holder = vian_101 }
+}
+
+d_shaie_creek = {
+	2920.12.6 = { holder = sylla_97 }
+	3137.1.8 = { holder = sylla_98 }
+	3291.5.26 = { holder = sylla_99 }
+	3338.2.6 = { holder = sylla_100_mother }
+	3340.8.18 = { holder = sylla_100 }
+}
+c_shaie_creek = {
+	2920.12.6 = { holder = sylla_97 }
+	3137.1.8 = { holder = sylla_98 }
+	3291.5.26 = { holder = sylla_99 }
+	3338.2.6 = { holder = sylla_100_mother }
+	3340.8.18 = { holder = sylla_100 }
+}
+c_atanaz = {
+	3360.1.1 = { holder = shaie_100 }
+}
+c_sakpoint = {
+	2920.12.6 = { holder = sylla_97 }
+	3137.1.8 = { holder = sylla_98 }
+	3291.5.26 = { holder = sylla_99 }
+	3338.2.6 = { holder = sylla_100_mother }
+	3340.8.18 = { holder = sylla_100 }
+}
+c_hollowmont = {
+	3350.1.1 = { holder = voseihleel_100 }
+}
+c_tohleetht = {
+	#History ToDo: add voseihleel ancestor here?
+	3350.1.1 = { holder = voseihleel_100 }
+}
+
+d_branchmont = {
+	3300.1.1 = { holder = voseihleel_99 }
+	3350.1.1 = { holder = 0 }
+	3366.6.4 = { holder = voseihleel_100 } #The Toteikhleel invades and the tribe is forced to reunite
+	#History ToDo: with Toteikleels reduced to 1 county Voseihleel start infighting again
+}
+c_branchmont = {
+	3300.1.1 = { holder = voseihleel_99 }
+	3350.1.1 = { holder = voseihleel_100 }
+}
+c_glenbrid = {
+	3300.1.1 = { holder = voseihleel_99 }
+	3350.1.1 = { holder = voseihleel_100b }
+	3366.7.18 = { liege = d_branchmont } #She submits to her sister in order to retain some power
+}
+c_tsoon_stranmarch = {
+	3300.1.1 = { holder = voseihleel_99 }
+	3350.1.1 = { holder = voseihleel_100b }
+	3365.1.1 = { holder = toteikhleel_100 }
+	3401.1.1 = { holder = toteikhleel_101 }
+	3415.1.1 = { 
+		holder = voseihleel1_101
+		liege = d_branchmont 
+	}
+	3423.1.1 = { holder = voseihleel1_102 }
+	3444.1.1 = { holder = voseihleel1_103 }
+}
+c_riverwalk = {
+	3300.1.1 = { holder = voseihleel_99 }
+	3350.1.1 = { holder = voseihleel_100c } 
+	3365.1.1 = { holder = toteikhleel_100 }
+	3401.1.1 = { holder = toteikhleel_101 }
+	3415.1.1 = { holder = voseihleel1_101 }
+	3423.1.1 = { holder = voseihleel1_102 }
+	3444.1.1 = { holder = voseihleel1_103 }
+}
+c_xalkend = {
+	3300.1.1 = { holder = voseihleel_99 }
+	3350.1.1 = { holder = voseihleel_100c }
+	3365.1.1 = { holder = toteikhleel_100 }
+	3401.1.1 = { holder = toteikhleel_101c }
+}
+c_seasptal = {
+	300.1.1 = { change_development_level = 3 }
+	3166.1.1 = { holder = kusin_98 }
+	3258.1.1 = { holder = kusin_99 }
+	3302.1.1 = { holder = kusin_100 }
+	3410.1.1 = { holder = kusin_101 }
+}
+
+d_arnesia = {
+	1148.1.1 = { holder = cantemir_100 }
+	3140.1.1 = { holder = turib_99 }
+	3197.1.1 = { holder = turib_100 }
+	3270.5.6 = { holder = zainat_99 }
+	3290.8.9 = { holder = 0 }
+}
+c_arnesia = {
+	1148.1.1 = { holder = cantemir_100 }
+	3140.1.1 = { holder = turib_99 }
+	3197.1.1 = { holder = turib_100 }
+	3270.5.6 = { holder = zainat_99 }
+	3290.8.9 = { holder = zainat_100 }
+	3442.11.20 = { holder = zainat_101 }
+	3482.4.16 = { holder = zainat_103 }
+	3482.4.19 = { holder = zainat_103b }
+	3482.4.20 = { holder = zainat1_101 }
+	#3482.6.27 - last Zainat dies, argonians move in by 3492
+}
+c_atltok = {
+	3350.1.1 = { holder = thuxleel_100e }
+}
+c_ruhn_morasi = {
+	3120.1.1 = { holder = belen_97 }
+	3255.12.23 = { holder = belen_98 }
+	3286.6.12 = { holder = belen_99 }
+	3363.11.13 = { holder = belen_100 }
+	3408.4.8 = { holder = belen_101 }
+	3461.3.28 = { holder = belen_102 }
+}
+c_jeekat = {
+	3140.1.1 = { holder = turib_99 }
+	3197.1.1 = { holder = turib_100 }
+	3270.5.6 = { holder = zainat_99 }
+	3290.8.9 = { holder = zainat_100 }
+	3442.11.20 = { holder = zainat_101 }
+	3482.4.16 = { holder = zainat_103 }
+	3482.4.19 = { holder = zainat_103b }
+	3482.4.20 = { holder = zainat1_101 }
+}
+d_riverbridge = {
+	3290.1.1 = { holder = orma_ka_98 }
+	3330.1.1 = { holder = orma_ka_99 }
+	3350.1.1 = { holder = orma_ka_100 }
+}
+c_riverbridge = {
+	3190.1.1 = { holder = orma_ka_96 }
+	3221.1.1 = { holder = orma_ka_97 }
+	3290.1.1 = { holder = orma_ka_98 }
+	3330.1.1 = { holder = orma_ka_99 }
+	3350.1.1 = { holder = orma_ka_100 }
+}
+c_redrock = {
+	3290.1.1 = { 
+		holder = orma_ka_98
+		liege = d_riverbridge 
+	}
+	3330.1.1 = { holder = orma_ka_99 }
+	3350.1.1 = { holder = orma_ka_100 }
+	3359.1.1 = { holder = orma_ka_100b }
+}
+c_drywell = {
+	3221.1.1 = { holder = orma_ka_97 }
+	3290.1.1 = { holder = orma_ko_98 }
+	3330.1.1 = { holder = orma_ko_99 }
+	3350.1.1 = {
+		holder = orma_ko_100
+		liege = d_riverbridge
+	}
+}
+
+d_padomeic = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee1_99 }
+	3358.6.5 = { holder = 0 }	
+}
+c_padomeic = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee1_99 }
+	3358.6.5 = { holder = balakas_101b }
+	3359.1.1 = { holder = tzel_keshu_100 }	
+}
+c_eastfar = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee1_99 }
+	3350.1.1 = { 
+		holder = balakas_101b 
+		government = pirate_government
+	}
+	3442.1.1 = { holder = faren_101d }
+}
+
+k_murkmire = {
+	200.1.1 = { holder = myfrandi_002b } #Ayleids conquer Murkmire for a while
+	280.1.1 = { holder = 0 }
+	350.1.1 = { holder = dyaan_1 }
+	400.1.1 = { holder = 0 }	
+}
+
+#d_murkmire
+# SOUTH ARGONIA MONEY SINK CORP LTD #
+# used to be vassals of the 2nd empire, eventually got abandoned and became independant. notoriously unfruitful project.
+c_lilmoth = {
+	300.1.1 = { change_development_level = 2 }
+	350.1.1 = { holder = dyaan_1 }
+	2837.1.1 = { holder = south_argonia_amagrina }
+	2845.1.1 = { holder = south_argonia_caldaria }
+	3309.7.19 = {
+		government = republic_government
+		holder = south_argonia_0998 
+	}
+	3326.9.8 = { holder = south_argonia_0999 }
+	3359.2.17 = { holder  = south_argonia_1000 }
+}
+c_xinchei_konu = {
+	3360.1.1 = {
+		holder = mossskin_100
+		government = tribal_government
+		liege = d_south_argonia
+	}
+}
+c_ixtaxh_xanmeer = {
+	3360.1.1 = {
+		holder = blacktongue_099
+		government = tribal_government
+		liege = d_south_argonia
+	}
+}
+c_alten_meerhleel = {
+	3360.1.1 = {
+		holder = roothouse_100
+		government = tribal_government
+	}
+}
+c_keel_sakka = {
+	3360.1.1 = {
+		holder = blacktongue_099 
+		government = tribal_government
+		liege = d_south_argonia
+	}
+}
+c_bright_throat_whisper = {
+	3360.1.1 = {
+		holder = brightthroat_1000
+		government = tribal_government
+	}
+}
+
+#d_dead_water
+c_dead_water = {
+	3355.1.1 = { holder = kur_100 }
+	3375.1.1 = { holder = kur_101 }
+	3409.1.1 = { holder = kur_102 }
+}
+# ilniviri enclave, ex vassal of the South Argonia Development Province #
+c_blackrose_prison = {		
+	300.1.1 = { change_development_level = 8 }
+	2804.1.11 = { holder = reman_101 } #Kastav exile in 2804, it is here that he will die in 2812
+	3220.1.1 = { 
+		holder = zidakye_101 
+		government = autocracy_government
+	}
+	3349.1.1 = { holder = zidakye_103 }
+}
+c_moonmarch = {
+	3355.1.1 = { holder = kur_100 
+	government = tribal_government}
+	3375.1.1 = { holder = kur_101 }
+	3409.1.1 = { holder = kur_102 }
+}
+c_bok_xul = {
+	3350.1.1 = { holder = roothouse_100 }
+}
+
+d_lakemire = {
+	3359.11.24 = { holder = dyaan_100 }
+	3367.11.17 = { holder = 0 } #Falls apart after Xir dies
+}
+c_lakemire = {
+	3257.8.2 = { holder = dyaan_96 }
+	3286.1.9 = { holder = dyaan_97 }
+	3305.5.26 = { holder = dyaan_98 }
+	3318.9.14 = { holder = dyaan_99 }
+	3359.11.24 = { holder = dyaan_100 }
+	3367.11.17 = { holder = dyaan_101 }
+}
+c_echoing_hollow = {
+	3257.8.2 = { holder = dyaan_96 }
+	3286.1.9 = { holder = dyaan_97 }
+	3305.5.26 = { holder = dyaan_98 }
+	3318.9.14 = { holder = dyaan_99 }
+	3359.11.24 = { holder = dyaan_100 }
+	3367.11.17 = { holder = qdiir_100 } #Seized by Qdiir
+}
+c_teeth_of_sithis = {
+	3312.12.28 = { 
+		holder = qdiir_98
+		liege = d_blackrose 
+	}
+	3334.11.1 = { holder = qdiir_99 }
+	3347.10.6 = {  holder = qdiir_100 }
+	3359.11.25 = { liege = d_lakemire }
+	3367.11.17 = { liege = 0 }
+	3382.5.8 = { holder = qdiir_101b }
+}
+
+#d_deepmire
+c_root_whisper = {
+	200.1.1 = { holder = myfrandi_002b } #Ayleids raid and 'destroy' root-whisper tribe
+	3257.8.2 = { holder = dyaan_96 }
+	3286.1.9 = { holder = dyaan_97 }
+	3305.5.26 = { holder = dyaan_98 }
+	3318.9.14 = { holder = dyaan_99 }
+	3359.11.24 = { holder = dyaan_100b }
+	3365.7.11 = { holder = dyaan_100 } #Taken by Xir
+	3365.7.12 = { holder = dyaan_100e } #Given to sister who supported him
+}
+
+#non de-jure vassals of South Argonia
+c_dominus_fatum = {
+	3360.1.1 = {
+		holder = south_argonia_1000_vassal
+		government = republic_government
+		liege = d_south_argonia
+	}
+}
+c_sweet_breeze = {
+	3360.1.1 = {
+		holder = south_argonia_1000_vassal
+		government = republic_government
+		liege = d_south_argonia
+	}	
+}
+
+#k_archon
+
+k_archon = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee_99 }
+	3355.1.1 = { holder = 0 } #Urseth
+}
+d_archon = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee_99 }
+	3355.1.1 = { holder = shuluni_100 } #Urseth
+	3368.11.29 = { holder = shuluni_101 } #Goes to the oldest son
+}
+c_archon = {
+	300.1.1 = { change_development_level = 9 }
+	2240.1.1 = { holder = archon_1 } #Cantemiric
+	2283.1.1 = { holder = archon_argonian_1 } #Cantemirics abandon Archon
+	#Switches between argonians and horwalii during this period
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee_99 }
+	3355.1.1 = { holder = shuluni_100 } #Urseth
+	3368.11.29 = { holder = shuluni_101 } #Goes to the oldest son
+}
+c_archal = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee_99 }
+	3355.1.1 = { holder = tharumee_100b }
+	3358.1.1 = { holder = shuluni_100 } #Urseth
+	3368.11.29 = { holder = shuluni_101 } #Goes to the oldest son
+}
+c_vertmarsh = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee_99 }
+	3355.1.1 = { holder = tharumee_100 }
+}
+c_marshwell = {
+	3200.1.1 = { holder = oligazawmee_100 }
+	3280.1.1 = { holder = oligazawmee_101 }
+	3330.1.1 = { holder = oligazawmee_102 }
+	3355.1.1 = { 
+		liege = d_seafalls
+	}
+}
+c_anchormoot = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee_99 }
+	3355.1.1 = { holder = tharumee_100 }
+}
+
+d_bogwraith = {
+	3300.1.1 = { holder = bogwraith_99 }
+	3350.1.1 = { holder = 0 }
+}
+c_bogwraith = {
+	3300.1.1 = { holder = bogwraith_99 }
+	3350.1.1 = { 
+		holder = bogwraith_102
+		government = tribal_government #otherwise he starts as theocracy due to holding a Hist
+	}
+}
+c_rockpark = {
+	3301.1.1 = { holder = uzuwari_98 }
+	3329.1.1 = { holder = uzuwari_99 }
+	3332.1.1 = { 
+		holder = yakap_99
+		liege = d_branchgrove 
+	}
+	3343.1.1 = { holder = yakap_100 }
+}
+c_ajeek = {
+	3300.1.1 = { holder = bogwraith_99 }
+	3350.1.1 = { holder = bogwraith_101 }
+}
+c_stormleya = {
+	3300.1.1 = { holder = bogwraith_99 }
+	3350.1.1 = { holder = bogwraith_100 }
+}
+c_norg_tzel = {
+	1000.1.1 = { holder = priest_queen_keerasa }
+}
+
+d_branchgrove = {
+	3334.1.1 = { holder = shuluni_100 } #Urseth unites most of the Horwalli
+	3368.11.29 = { holder = shuluni_101b } #Goes to the second son
+}
+c_branchgrove = {
+	3272.1.1 = { holder = ghirikana_99 }
+	3291.1.1 = { holder = ghirikana_100 }
+	3326.1.1 = { holder = shuluni_100 }
+	3368.11.29 = { holder = shuluni_101b } #Goes to the second son
+}
+c_luloor = {
+	3312.1.1 = { holder = cozca_99 }
+	3331.1.1 = { holder = cozca_100 }
+	3339.1.1 = { holder = shuluni_100 } #Conquered by Urseth
+	3368.11.29 = { 
+		holder = shuluni_101c #Goes to the third child
+		liege = d_archon #Listen to brother in Archon
+	}
+}
+
+#d_seaspring
+c_seaspring = {
+	3331.1.1 = { holder = zemaita_100 }
+	3334.1.1 = { liege = d_branchgrove }
+}
+
+c_xajmoor = {
+	3349.1.1 = { holder = elfejumee_100 }
+	#Tributary of Urseth
+}
+
+c_wotasu = {
+	3302.1.1 = { holder = thuxis_99 }
+	3329.1.1 = { holder = thuxis_100 }
+	3367.1.1 = { holder = thuxis_101 }	
+}
+
+d_portmarsh = { 
+	3300.1.1 = { holder = keeolisalei_99 }
+	3350.1.1 = { holder = keeolisalei_100 }
+}
+c_portdun_mont = { 
+	3300.1.1 = { holder = keeolisalei_99 }
+	3350.1.1 = { holder = keeolisalei_100 }
+}
+c_shutan = {
+	3314.1.1 = { holder = kuhlap_98 }
+	3336.1.1 = { holder = kuhlap_99 }
+	3352.1.1 = { holder = kuhlap_100 }
+}
+c_xulpan = {
+	3300.1.1 = { holder = keeolisalei_99 }
+	3347.1.1 = { holder = kuhlap_99 }
+	3352.1.1 = { holder = kuhlap_100 }
+}
+
+d_nootanara = {
+	3200.1.1 = { holder = paatru_hajan_98 }
+	3285.1.1 = { holder = paatru_hajan_99 }
+	3350.1.1 = { holder = paatru_hajan_100 }
+}
+c_nootanara = {
+	3302.1.1 = { holder = thuxis_99 }
+	3329.1.1 = { holder = thuxis_100 }
+	3367.1.1 = { holder = thuxis_101 }
+}
+c_veki = {
+	3300.1.1 = { holder = keeolisalei_99 }
+	3350.1.1 = { holder = keeolisalei_100 }
+}
+c_shakegek = {
+	3285.1.1 = { holder = paatru_hajan_98 }
+	3282.1.1 = { holder = paatru_hajan_99 }
+	3350.1.1 = { holder = paatru_hajan_102 }
+	3360.1.1 = { liege = d_nootanara }
+}
+c_marshmine = {
+	3285.1.1 = { holder = paatru_hajan_98 }
+	3282.1.1 = { holder = paatru_hajan_99 }
+	3350.1.1 = { holder = paatru_hajan_101 }
+	3360.1.1 = { liege = d_nootanara }	
+}
+c_hajan = {
+	3285.1.1 = { holder = paatru_hajan_98 }
+	3282.1.1 = { holder = paatru_hajan_99 }
+	3350.1.1 = { holder = paatru_hajan_100 }
+}
+
+d_seafalls = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3342.12.11 = { holder = tharumee_99 }
+	3355.1.1 = { holder = tharumee_100 }
+}
+c_seafalls = {
+	3269.9.15 = { holder = tharumee_96 }
+	3303.7.3 = { holder = tharumee_97 }
+	3319.2.16 = { holder = tharumee_98 }
+	3355.1.1 = { holder = tharumee_100 }
+}
+c_garthim = {
+	3350.1.1 = { holder = thuxleel_100e }
+}
+c_shadowspring = {
+	3231.7.14 = { holder = whetfang_100 }
+	3478.3.28 = { holder = whetfang_101 }
+}
+c_leelansak = {
+	3250.1.1 = { holder = thuxleel_98 }
+	3320.1.1 = { holder = thuxleel_99 }
+	3350.1.1 = { holder = thuxleel_100 }
+}

@@ -1,0 +1,236 @@
+﻿
+might_cheat_on_partner_trigger = {
+	NOT = { has_trait = celibate }
+	is_eunuch_trigger = no
+	
+	trigger_if = {
+		limit = { is_ai = no }
+		# Players always have the option to cheat - we check this here so that we don't constantly need to OR it when using might_cheat_on_every_partner_trigger.
+		always = yes
+	}
+	
+	trigger_else_if = {
+		limit = {
+			$PARTNER$ = {
+				government_has_flag = government_is_nomadic 
+			}
+		}
+		NOT = {
+			$PARTNER$ = {
+				domicile ?= {
+					has_domicile_parameter = nomad_yurt_spouse_will_not_cheat
+				}
+			}
+		}
+	}
+	
+	trigger_else_if = {
+		limit = {
+			# If $PARTNER$ isn't actually my partner, it's not cheating!
+			OR = {
+				has_relation_lover = $PARTNER$
+				is_consort_of = $PARTNER$ # Includes both spouses and concubines
+				betrothed ?= $PARTNER$
+			}
+
+			# Additionally, in faiths with the Polyamory doctrine, extramarital relationships aren't considered to be cheating on partners.
+			accepts_adultery_without_penalty_trigger = no
+		}
+		
+		NOR = {
+			has_trait = loyal
+			has_trait = depressed
+			has_trait = pregnant
+		}
+		
+		# First we do a check to see if this is a character that would cheat AT ALL
+		willing_to_cheat_on_character = { CHARACTER = $PARTNER$ }
+
+		# Otherwise, check for soulmate - even a character that might cheat
+		# still won't unless they're Lustful/Seducer and have low Honor
+		trigger_if = {
+			limit = { has_relation_soulmate = $PARTNER$ }
+			ai_honor <= medium_negative_ai_value
+			calc_true_if = {
+				amount >= 2
+				has_trait = lustful
+				has_trait = seducer
+				has_focus = intrigue_temptation_focus
+			}
+		}
+
+		# Non-soulmates have slightly more complex criteria
+		trigger_else = {
+			OR = {
+				# Having one of these things that makes characters always willing to cheat:
+				OR = {
+					has_trait = lustful
+					has_trait = seducer
+					has_focus = intrigue_temptation_focus
+
+					AND = {
+						# Dishonorable and callous enough to not care about current partners (regardless of opinion).
+						ai_compassion <= high_negative_ai_value
+						ai_honor <= high_negative_ai_value 
+					}
+					AND = {
+						# Needs aren't getting met
+						is_deviant_trigger = yes
+						$PARTNER$ = { is_deviant_trigger = no }
+					}
+					AND = {
+						# Needs aren't getting met and low honor
+						ai_honor <= low_positive_ai_value
+						NOR = {
+							has_trait = celibate
+							has_trait = chaste
+						}
+						$PARTNER$ = { has_trait = celibate }
+					}
+					AND = {
+						# Needs aren't getting met and low honor
+						ai_honor <= 0
+						ai_energy >= 0
+						NOR = {
+							has_trait = celibate
+							has_trait = chaste
+							has_trait = infirm
+							has_trait = incapable
+						}
+						$PARTNER$ = { has_trait = incapable }
+					}
+					AND = {
+						# Needs can't be met by partner
+						has_sexuality = homosexual
+						sex_opposite_of = $PARTNER$
+						ai_boldness >= 0
+						NOR = {
+							has_trait = celibate
+							has_trait = chaste
+							has_trait = infirm
+							has_trait = incapable
+						}
+					}
+					AND = {
+						# is young vs old spouse and low honor/not low energy
+						ai_honor <= 0
+						ai_energy >= 0
+						age <= 25
+						NOR = {
+							has_trait = celibate
+							has_trait = chaste
+						}
+						$PARTNER$ = { age >= 50 }
+					}
+					# Rakish character that's about to have a mental breakdown.
+					AND = {
+						has_trait = rakish
+						stress_level >= 2
+					}
+				}
+
+				# Otherwise they need to not be honorable and not have a strong like of this partner
+				trigger_if = {
+					limit = { ai_honor <= medium_negative_ai_value }
+					# Consorts (spouses, concubines).
+					trigger_if = {
+						limit = { is_consort_of = $PARTNER$ }
+						opinion = {
+							target = $PARTNER$
+							value <= neutral_opinion # 0 or lower for spouses, concubines
+						}
+					}
+					# Lovers.
+					trigger_else = {
+						opinion = {
+							target = $PARTNER$
+							value <= low_positive_opinion # 20 or lower for lovers
+						}
+					}
+				}
+				
+				# Otherwise they need to not be honorable and not have a dislike of this partner
+				trigger_else_if = {
+					limit = { ai_honor <= 0 }
+					# Consorts (spouses, concubines).
+					trigger_if = {
+						limit = { is_consort_of = $PARTNER$ }
+						# Consorts (spouses, concubines) 
+						opinion = {
+							target = $PARTNER$
+							value <= low_negative_opinion # -20 or lower for spouses, concubines
+						}
+					}
+					# Lovers.
+					trigger_else = {
+						opinion = {
+							target = $PARTNER$
+							value <= neutral_opinion # 0 for lovers
+						}
+					}
+				}
+
+				# Might also cheat if they just dislike their partner and aren't highly honorable
+				trigger_else_if = {
+					limit = { ai_honor < medium_positive_ai_value }
+					opinion = {
+						target = $PARTNER$
+						value < medium_negative_opinion # -40 or lower for spouses, concubines, or lovers
+					}
+				}
+				
+				# May cheat if they hate their partner, regardless of honor
+				trigger_else = {
+					opinion = {
+						target = $PARTNER$
+						value <= high_negative_opinion # -60 or lower for spouses, concubines, or lovers
+					}
+				}
+			}
+		}
+	}
+	trigger_else = { always = yes } # Having an extramarital relationship with someone else would not count as cheating on this person.
+}
+
+might_cheat_on_every_partner_trigger = {
+	save_temporary_scope_as = potential_cheater
+	is_eunuch_trigger = no
+	NOT = { has_trait = celibate }
+	any_spouse = {
+		count = all
+		save_temporary_scope_as = partner2
+		scope:potential_cheater = { might_cheat_on_partner_trigger = { PARTNER = scope:partner2 } }
+	}
+	any_relation = {
+		type = lover
+		count = all
+		save_temporary_scope_as = partner3
+		scope:potential_cheater = { might_cheat_on_partner_trigger = { PARTNER = scope:partner3 } }
+	}
+	trigger_if = {
+		limit = { exists = betrothed }
+		scope:potential_cheater = { might_cheat_on_partner_trigger = { PARTNER = scope:potential_cheater.betrothed } }
+	}
+}
+
+is_below_ai_lover_soft_cap_trigger = {
+	trigger_if = {
+		limit = { is_ai = no }
+		always = yes
+	}
+	trigger_else_if = {
+		limit = {
+			# added the OR here because I'm pretty sure this is a mistake in vanilla and they didn't intend that the AI needed all THREE at once
+			OR = {
+				has_trait = lustful
+				has_trait = seducer
+				has_focus = intrigue_temptation_focus
+			}
+		}
+		num_of_relation_lover < 3
+	}
+	trigger_else = {
+		num_of_relation_lover < 1
+	}
+}
+

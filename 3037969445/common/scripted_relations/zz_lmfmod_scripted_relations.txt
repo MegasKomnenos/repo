@@ -1,0 +1,10 @@
+﻿parent_in_law = {
+	title_grant_target = no
+	corresponding = child_in_law
+}
+
+child_in_law = {
+	title_grant_target = no
+	corresponding = parent_in_law
+}
+

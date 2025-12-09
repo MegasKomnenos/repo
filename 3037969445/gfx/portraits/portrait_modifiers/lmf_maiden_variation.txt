@@ -1,0 +1,71 @@
+﻿lmf_maiden_variation = {
+	usage = game
+	priority = 10
+	
+	maiden_height = {
+	
+		dna_modifiers = {
+			morph = {
+				mode = modify_multiply
+				gene = gene_height
+				range = { 0.8 1.5 }
+			}
+		}
+		
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_character_flag = is_created_maiden
+			}
+		}
+	}
+	maiden_fairness = {
+	
+		dna_modifiers = {
+			morph = {
+				mode = replace
+				gene = complexion
+				template = complexion_1
+				value = 1.0
+			}
+		}
+		
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_character_flag = is_created_maiden
+			}
+			modifier = {
+				factor = 0
+				exists = this
+				OR = {
+					has_trait = beauty_good
+					has_trait = beauty_bad
+				}
+			}
+		}
+	}
+	maiden_bust = {
+	
+		dna_modifiers = {
+			morph = {
+				mode = modify_multiply
+				gene = gene_bs_bust
+				range = { 1.0 1.8 }
+			}
+		}
+		
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_character_flag = is_created_maiden
+			}
+		}
+	}
+}

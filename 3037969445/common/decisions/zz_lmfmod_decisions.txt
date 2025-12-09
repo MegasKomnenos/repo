@@ -1,0 +1,864 @@
+﻿invite_maidens_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_maidens.dds"
+	}
+	
+	sort_order = 80
+
+	desc = invite_maidens_decision_desc
+	selection_tooltip = invite_maidens_decision_effect_tooltip
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 240
+		duchy = 120
+		kingdom = 60
+		empire = 60
+		hegemony = 60
+	}
+	
+	decision_group_type = courtier
+
+	is_shown = {
+		NOT = { has_game_rule = lmf_no_additional_maidens }
+		is_landed = yes
+		exists = capital_province
+		NOR = {
+			has_government = mercenary_government
+			has_government = republic_government
+			has_government = theocracy_government
+			has_government = holy_order_government
+		}
+	}
+
+	cooldown = { days = 3650 }
+
+	is_valid_showing_failures_only = {
+		is_imprisoned = no
+		is_at_war = no
+		
+		custom_description = {
+			text = "already_plenty_of_maidens"
+			any_courtier = {
+				count < root.highest_held_title_tier
+				is_female = yes
+				age >= 12
+				age <= 24
+				can_marry_common_trigger = yes
+				is_married = no
+				is_concubine = no
+				is_betrothed = no
+				is_imprisoned = no
+				is_hostage = no
+			}
+		}
+	}
+
+	effect = {
+		set_variable = {
+			name = number_of_maidens_invite
+			value = {
+				add = {
+					value = root.highest_held_title_tier
+					subtract = 1 #so 1 for a count, 2 for a duke, etc.
+				}
+			}
+			days = 1000
+		}
+		
+		trigger_event = {
+			id = lmf_maiden.1002
+			days = { 20 40 }
+		}
+		
+		custom_tooltip = invite_maidens_decision_effect_tooltip
+	}
+	
+	ai_potential = {
+		is_available_quick = {
+			landed = yes
+			at_war = no
+			adult = yes
+		}
+	}
+
+	ai_will_do = {
+		base = 100
+		modifier = {
+			factor = 0
+			has_game_rule = lmf_player_only_additional_maidens
+		}
+		modifier = {
+			factor = 0
+			highest_held_title_tier < tier_duchy
+			OR = {
+				is_married = yes
+				is_betrothed = yes
+			}
+		}
+		modifier = {
+			factor = 0
+			years_as_ruler < 1
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				AND = {
+					exists = character:7757
+					root = character:7757 #Matilda Canossa, her bookmark start is about overcoming the issue of no heir
+				}
+				AND = {
+					exists = character:33358
+					root = character:33358 #Aethelred, also should have no child and he'll adopt if he has the chance
+				}
+			}
+		}
+	}
+}
+
+ai_ruler_marry_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	
+	sort_order = 1
+	
+	desc = ai_ruler_marry_decision_desc
+	selection_tooltip = ai_ruler_marry_decision_effect_tooltip
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 60
+		duchy = 36
+		kingdom = 24
+		empire = 24
+		hegemony = 24
+	}
+	
+	is_shown = {
+		age >= 25
+		is_married = no
+		is_betrothed = no
+		has_been_promised_grand_wedding = no
+		
+		can_marry_common_trigger = yes
+		is_physically_able_ai_adult = yes
+		has_contagious_deadly_disease_trigger = no
+		is_landed = yes
+		exists = capital_province
+		
+		is_imprisoned = no
+		bp2_valid_for_standard_interactions_trigger = yes
+		
+		NOR = {
+			has_variable = use_introduction
+			has_government = mercenary_government
+			has_government = republic_government
+			has_government = theocracy_government
+			has_government = holy_order_government
+			#not impossible for the below to get married, but they'll use the regular system
+			has_trait = depressed
+			has_trait = lunatic
+			has_trait = possessed
+		}
+	}
+	
+	cooldown = { days = 1825 }
+	
+	effect = {
+		root = {
+			save_scope_as = actor
+			save_scope_as = secondary_actor
+		}
+		save_scope_value_as = { name = hook value = no }
+		save_scope_value_as = { name = grand_wedding_promise value = no }
+		save_scope_value_as = { name = influence_send_option value = no }
+		save_scope_value_as = { name = herd_send_option value = no }
+		# do we need a matrilineal marriage?
+		if = {
+			limit = {
+				is_female = yes
+				NOT = { has_personality_submissive_trigger = yes }
+				trigger_if = {
+					limit = { has_game_rule = matrilineal_marriages_never }
+					OR = {
+						has_realm_law = female_only_law
+						has_realm_law = female_preference_law
+						faith = { has_doctrine_parameter = female_dominated_law }
+					}
+				}
+				trigger_if = {
+					limit = { has_game_rule = matrilineal_marriages_female_and_equal }
+					OR = {
+						has_realm_law = female_only_law
+						has_realm_law = female_preference_law
+						faith = { has_doctrine_parameter = female_dominated_law }
+						root = { has_realm_law = equal_law }
+					}
+				}
+			}
+			save_scope_value_as = { name = matrilineal value = yes }
+		}
+		else = {
+			save_scope_value_as = { name = matrilineal value = no }
+		}		
+		
+		# create a list of suitable candidates within a medium distance
+		every_opposite_sex_spouse_candidate = {
+			limit = { is_good_ai_marriage_candidate = yes }
+			add_to_list = potential_candidates
+		}
+		
+		# proceed if there are any candidates to choose from
+		if = {
+			limit = { list_size:potential_candidates > 0 }
+			# now whittle them down to only those who the ruler approves of and who would also accept a proposal
+			every_in_list = {
+				list = potential_candidates
+				
+				save_temporary_scope_as = candidate
+				root = {
+					save_temporary_opinion_value_as = { name = match_opinion target = prev }
+					save_temporary_scope_as = match
+				}
+				
+				if = {
+					limit = {
+						introduction_candidate_interest_value > 0
+						# female rulers can't marry lowborn unless it's a matrilineal match
+						trigger_if = {
+							limit = {
+								root = { is_female = yes }
+							}
+							OR = {
+								scope:matrilineal = yes
+								has_dynasty = yes
+							}
+						}
+					}
+					set_variable = {
+						name = marriage_interest_value
+						value = introduction_candidate_interest_value
+						days = 1
+					}
+					
+					save_temporary_scope_as = secondary_recipient
+					if = {
+						limit = { exists = matchmaker }
+						matchmaker = { save_temporary_scope_as = recipient }
+					}
+					else = { save_temporary_scope_as = recipient }					
+					
+					random = {
+						chance = 0
+						marriage_ai_accept_modifier = yes
+						evaluate_action_increasing_house_unity = { VALUE = 100 }
+						modifier = { factor = 100 }
+						
+						add_to_list = shortlist_candidates
+					}
+				}
+			}
+			
+			# now pick out the top one and marry them
+			if = {
+				limit = {
+					list_size = { name = shortlist_candidates value > 0 }
+				}
+				ordered_in_list = {
+					list = shortlist_candidates
+					order_by = {
+						value = var:marriage_interest_value
+						if = {
+							limit = { any_heir_title = {} }
+							add = 50
+						}
+						if = {
+							limit = {
+								NOT = { any_heir_title = {} }
+								exists = matchmaker
+								is_close_or_extended_family_of = matchmaker
+								matchmaker = { is_landed = yes }
+							}
+							add = 25
+						}
+						if = {
+							limit = {
+								NOT = { any_heir_title = {} }
+								exists = matchmaker
+								is_close_or_extended_family_of = matchmaker
+								matchmaker = {
+									is_landed = yes
+									is_vassal_of = root
+								}
+							}
+							add = 25
+						}
+						if = {
+							limit = { is_lowborn = yes }
+							multiply = 0.5
+						}
+						if = {
+							limit = { dynasty ?= root.dynasty }
+							add = -25
+						}
+						if = {
+							limit = {
+								is_ruler = no
+								exists = matchmaker
+								matchmaker = {
+									is_ruler = yes
+									highest_held_title_tier < tier_county
+								}
+							}
+							add = -25
+						}
+						if = {
+							limit = {
+								is_ruler = yes
+								highest_held_title_tier < tier_county
+							}
+							add = -50
+						}
+					}
+					save_scope_as = secondary_recipient
+					if = {
+						limit = { exists = matchmaker }
+						matchmaker = { save_scope_as = recipient }
+					}
+					else = { save_scope_as = recipient }
+					if = {
+						limit = { scope:recipient = scope:actor }
+						if = {
+							limit = {
+								scope:matrilineal = yes
+								is_adult = no
+							}
+							create_betrothal_matrilineal = root
+						}
+						else_if = {
+							limit = {
+								scope:matrilineal = yes
+								is_adult = yes
+							}
+							marry_matrilineal = root
+						}
+						else_if = {
+							limit = { is_adult = no }
+							create_betrothal = root
+						}
+						else = {
+							marry = root
+						}
+					}
+					else_if = {
+						limit = {
+							scope:matrilineal = yes
+							is_adult = no
+						}
+						create_betrothal_matrilineal = root
+						check_alliance_set_up_effect = { PROPOSER_LIEGE = root TARGET_LIEGE = scope:recipient PROPOSER = root TARGET = scope:secondary_recipient }
+					}
+					else_if = {
+						limit = { scope:matrilineal = yes }
+						marry_matrilineal = root
+						check_alliance_set_up_effect = { PROPOSER_LIEGE = root TARGET_LIEGE = scope:recipient PROPOSER = root TARGET = scope:secondary_recipient }
+					}
+					else = {
+						scope:actor = {
+							run_interaction = {
+								interaction = marry_off_interaction
+								actor = scope:actor
+								recipient = scope:recipient
+								secondary_actor = scope:secondary_actor
+								secondary_recipient = scope:secondary_recipient
+								send_threshold = decline
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	ai_potential = {
+		is_available_quick = {
+			landed = yes
+			adult = yes
+		}
+	}
+	
+	ai_will_do = {
+		base = 25
+		# really need a child like right right now
+		modifier = {
+			add = 75
+			needs_child_quickly_trigger = yes
+		}
+		# need a child at some point
+		modifier = {
+			add = 25
+			needs_child_quickly_trigger = no
+			NOT = {
+				any_child = {
+					count > 0
+					is_alive = yes
+					NOT = { has_trait = bastard }
+				}
+			}
+		}
+		# eventually it will be time
+		modifier = {
+			add = 25
+			years_as_ruler >= 3
+			needs_child_quickly_trigger = no
+		}
+		# they just  don't wanna
+		modifier = {
+			factor = 0.5
+			OR = {
+				has_sexuality = homosexual
+				has_sexuality = asexual
+				ai_sociability <= medium_negative_ai_value
+				AND = {
+					is_male = yes
+					age < 30
+				}
+			}
+		}
+		# give them a bit more chance to spend time seducing
+		modifier = {
+			factor = 0.5
+			OR = {
+				has_trait = lustful
+				has_trait = seducer
+				is_deviant_trigger = yes
+				has_trait = rakish
+				has_focus = intrigue_temptation_focus
+			}
+		}
+		# they already have a lover or concubine that can make baby
+		modifier = {
+			factor = 0.5
+			fertility > 0.1
+			OR = {
+				any_relation = {
+					type = lover
+					fertility > 0.1
+					sex_opposite_of = root
+				}
+				any_consort = {
+					fertility > 0.1
+					sex_opposite_of = root
+				}
+			}
+		}
+		# kings and emperors should be less likely to use this
+		modifier = {
+			factor = 0.5
+			highest_held_title_tier > tier_duchy
+		}
+		# the AI has a year after taking on the title to find a spouse normally
+		modifier = {
+			factor = 0
+			years_as_ruler < 1
+			needs_child_quickly_trigger = no
+		}
+		# give them at least a year if their spouse recently died
+		modifier = {
+			factor = 0
+			any_spouse = {
+				even_if_dead = yes
+				is_alive = no
+				time_since_death = { months < 12 }
+			}
+			needs_child_quickly_trigger = no
+		}
+	}
+}
+
+ai_ruler_reduce_stress_army_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	
+	sort_order = 1
+	
+	desc = ai_ruler_reduce_stress_army_decision_desc
+	selection_tooltip = ai_ruler_reduce_stress_army_decision_effect_tooltip
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 60
+		kingdom = 36
+		empire = 36
+		hegemony = 36
+	}
+	
+	is_shown = {
+		is_ai = yes
+		has_raised_armies = yes
+		highest_held_title_tier > tier_county
+		top_liege = this
+		
+		NOR = {
+			has_game_rule = lmf_independent_ruler_army_events
+			has_game_rule = lmf_no_army_events
+		}
+		
+		OR = {
+			# check for myself
+			AND = {
+				stress >= normal_baseline_stress
+				exists = commanding_army
+				has_any_debilitating_illness = no
+				NOR = {
+					is_malformed_trigger = yes
+					has_trait = celibate
+					has_trait = infirm
+					has_sexuality = asexual
+				}
+				commanding_army ?= { army_can_have_army_events = yes }
+			}
+			# check for any knight with high stress
+			any_knight = {
+				stress >= normal_baseline_stress
+				is_in_army = yes
+				has_any_debilitating_illness = no
+				NOR = {
+					is_malformed_trigger = yes
+					has_trait = celibate
+					has_trait = infirm
+					has_sexuality = asexual
+				}
+				OR = {
+					is_playable_character = yes
+					is_close_or_extended_family_of = root
+				}
+				OR = {
+					commanding_army ?= { army_can_have_army_events = yes }
+					knight_army ?= { army_can_have_army_events = yes }
+				}
+			}
+		}
+	}
+	
+	cooldown = { days = 1095 }
+	
+	effect = {
+		# first make a list of candidates
+		every_in_list = {
+			list = event_knights
+			remove_from_list = event_knights
+		}
+		if = {
+			limit = {
+				stress >= normal_baseline_stress
+				exists = commanding_army
+				has_any_debilitating_illness = no
+				NOR = {
+					is_malformed_trigger = yes
+					has_trait = celibate
+					has_trait = infirm
+					has_sexuality = asexual
+				}
+				commanding_army ?= { army_can_have_army_events = yes }
+			}
+			add_to_list = event_knights
+		}
+		every_knight = {
+			limit = {
+				stress >= normal_baseline_stress
+				is_in_army = yes
+				has_any_debilitating_illness = no
+				NOR = {
+					is_malformed_trigger = yes
+					has_trait = celibate
+					has_trait = infirm
+					has_sexuality = asexual
+				}
+				OR = {
+					is_playable_character = yes
+					is_close_or_extended_family_of = root
+				}
+				OR = {
+					commanding_army ?= { army_can_have_army_events = yes }
+					knight_army ?= { army_can_have_army_events = yes }
+				}
+			}
+			add_to_list = event_knights
+		}
+	
+		# now find the one with the highest stress
+		ordered_in_list = {
+			list = event_knights
+			order_by = {
+				value = stress
+				if = {
+					limit = { this = root }
+					add = 50
+				}
+				if = {
+					limit = { is_playable_character = yes }
+					add = 25
+				}
+				if = {
+					limit = { is_close_family_of = root }
+					add = 25
+				}
+				if = {
+					limit = { is_extended_family_of = root }
+					multiply = 0.5
+				}
+				if = {
+					limit = { likely_to_take_lover_trigger = yes }
+					multiply = 2
+				}
+			}
+			save_scope_as = stress_knight
+			if = {
+				limit = { exists = commanding_army }
+				commanding_army = { save_scope_as = army }
+			}
+			else = {
+				knight_army = { save_scope_as = army }
+			}			
+			
+			random_list = {
+				250 = { # Do nothing
+					modifier = {
+						factor = 0.5
+						stress >= medium_stress
+					}
+					modifier = {
+						factor = 0.5
+						stress >= high_stress
+					}
+				}
+				50 = { # The Camp Follower
+					trigger = {
+						NOR = {
+							has_trait = celibate
+							has_sexuality = asexual
+							has_character_flag = had_army_event_1010
+						}
+					}
+					trigger_event = lmf_army.1010
+				}
+				50 = { # The Tavern Wench
+					trigger = {
+						scope:army = { is_army_in_siege = no }
+						is_attracted_to_women = yes
+						NOT = { has_character_flag = had_army_event_1020 }
+					}
+					trigger_event = lmf_army.1020
+				}
+				50 = { # Rowdy Night at the Tavern
+					trigger = {
+						scope:army = { is_army_in_siege = no }
+						has_personality_submissive_trigger = no
+						has_personality_levelheaded_trigger = no
+						NOT = { has_character_flag = had_army_event_1030 }
+					}
+					ai_value_modifier = {
+						ai_vengefulness = 0.5
+					}
+					trigger_event = lmf_army.1030
+				}
+				50 = { # A Night of Merriment
+					trigger = {
+						NOR = {
+							has_trait = temperate
+							has_character_flag = had_army_event_1040
+						}
+					}
+					modifier = {
+						has_trait = drunkard
+						factor = 2
+					}
+					modifier = {
+						factor = 2
+						stress >= medium_stress
+					}
+					trigger_event = lmf_army.1040
+				}
+				50 = { # Lost and Found
+					trigger = {
+						scope:army = { is_army_in_siege = no }
+						NOR = {
+							has_trait = chaste
+							num_of_relation_soulmate > 0
+							is_involved_in_any_romantic_scheme = yes
+							has_character_flag = had_army_event_1180
+						}
+						is_old_age_or_not_have_children = no
+						trigger_if = {
+							limit = { is_ai = yes }
+							is_below_ai_lover_soft_cap_trigger = yes
+							might_cheat_on_every_partner_trigger = yes
+						}
+						trigger_if = {
+							limit = {
+								OR = {
+									is_clergy = yes
+									has_trait = devoted
+									has_council_position = councillor_court_chaplain
+								}
+							}
+							OR = {
+								faith = { has_doctrine = tenet_carnal_exaltation }
+								is_deviant_trigger = yes
+								has_trait = lustful
+								ai_zeal <= medium_negative_ai_value
+							}
+						}
+					}
+					trigger_event = lmf_army.1180
+				}
+				50 = { # The Eye of a Soldier
+					trigger = {
+						NOT = { has_character_flag = had_army_event_1250 }
+						stress >= lower_than_baseline_stress
+						trigger_if = {
+							limit = {
+								is_attracted_to_women = yes
+								is_attracted_to_men = no
+							}
+							scope:army.army_owner = {
+								OR = {
+									culture = { has_cultural_parameter = martial_custom_equal_combatant }
+									culture = { has_cultural_parameter = high_prowess_ignores_knight_restrictions }
+									faith = { has_doctrine_parameter = combatant_can_be_either_gender_if_no_roco }
+									culture = { has_cultural_parameter = martial_custom_female_only_combatant }
+									faith = { has_doctrine_parameter = combatant_must_be_female_if_no_roco }
+								}
+							}
+						}
+						trigger_if = {
+							limit = {
+								is_attracted_to_women = no
+								is_attracted_to_men = yes
+							}
+							scope:army.army_owner = {
+								OR = {
+									culture = { has_cultural_parameter = martial_custom_equal_combatant }
+									culture = { has_cultural_parameter = high_prowess_ignores_knight_restrictions }
+									faith = { has_doctrine_parameter = combatant_can_be_either_gender_if_no_roco }
+									culture = { has_cultural_parameter = martial_custom_male_only_combatant }
+									faith = { has_doctrine_parameter = combatant_must_be_male_if_no_roco }
+								}
+							}
+						}
+					}
+					modifier = {
+						factor = 2
+						stress >= medium_stress
+					}
+					trigger_event = lmf_army.1250
+				}
+				50 = { # Caught at the Spring
+					trigger = {
+						scope:army = { is_army_in_siege = no }
+						NOT = { has_character_flag = had_army_event_1260 }
+					}
+					trigger_event = lmf_army.1260
+				}			
+			}
+		}
+	}
+	
+	ai_potential = {
+		highest_held_title_tier > tier_county
+		top_liege = this
+	}
+	
+	ai_will_do = {
+		base = 100
+	}
+}
+
+end_mourning_period_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	
+	sort_order = 1
+	
+	desc = end_mourning_period_decision_desc
+	selection_tooltip = end_mourning_period_decision_effect_tooltip
+	
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 36
+		duchy = 24
+		kingdom = 12
+		empire = 12
+		hegemony = 12
+	}
+	
+	is_shown = {
+		has_trait = widowed
+	}
+	
+	cost = {
+		prestige = {
+			value = 0
+			if = {
+				limit = { has_character_flag = lmf_mourning_period_base }
+				add = medium_prestige_value
+			}
+		}
+	}
+	
+	effect = {
+		remove_trait_force_tooltip = widowed
+		remove_character_flag = lmf_mourning_period
+		stress_impact = {
+			base = major_stress_impact_gain
+			compassionate = medium_stress_impact_gain
+			stubborn = minor_stress_impact_gain
+			callous = medium_stress_impact_loss
+			fickle = minor_stress_impact_loss
+		}
+		if = {
+			limit = { has_character_flag = lmf_mourning_period_base }
+			remove_character_flag = lmf_mourning_period_base
+			every_vassal = {
+				limit = {
+					has_vassal_stance = zealot
+					ai_compassion <= 0
+				}
+				add_opinion = {
+					target = root
+					modifier = disappointed_opinion
+					opinion = -10
+				}
+			}
+		}
+	}
+	
+	ai_potential = {
+		is_available_quick = {
+			landed = yes
+			adult = yes
+		}
+	}
+	
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 100
+			needs_child_quickly_trigger = yes
+			NOT = { has_character_flag = lmf_mourning_period_base }
+		}
+		modifier = {
+			add = 100
+			NOR = {
+				has_character_flag = lmf_mourning_period_base
+				has_character_flag = lmf_mourning_period
+			}
+		}
+	}
+}
+

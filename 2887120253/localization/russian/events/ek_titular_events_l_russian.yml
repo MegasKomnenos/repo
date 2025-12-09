@@ -1,0 +1,56 @@
+﻿l_russian:
+ ### Unify nativity region
+ ektitulartitle.0001.t:0 "[new_kingdom.GetName]"
+ ektitulartitle.0001.desc:0 "Объединив свои родные земли, [ROOT.Char.GetNameNoTooltip] [Select_CString(ROOT.Char.IsFemale, 'объявила', 'объявил')] себя новым правителем королевства [new_kingdom.GetName]. По всей земле пройдут празднования, от [city_1.GetNameNoTier] до [city_2.GetNameNoTier]!"
+ ektitulartitle.0001.a:0 "Да начнётся моё правление!"
+ ### Forming an Empire
+ ## Reach
+ ektitulartitle.1001.t:0 "[Select_CString(ROOT.Char.IsFemale, 'Истинная верховная королева', 'Истинный верховный король')] Предела?"
+ ektitulartitle.1001.desc:0 "Многообразные земли и народы Предела тысячелетиями были разделены. Каждым племенем правил свой вождь, и, хотя многие вожди вождей осмеливались провозглашать себя «Ардом» или верховным вождём, никто по-настоящему не занимал титул короля Предела.\n\nСегодня, [ROOT.Char.GetName] официально [Select_CString(ROOT.Char.IsFemale, 'была коронована', 'был коронован')] как [ROOT.Char.GetTitleTierName] Предела, [Select_CString(ROOT.Char.IsFemale, 'первая', 'первый')] за всю историю."
+ ektitulartitle.1001.a:0 "Это не предел моих свершений!"
+ ektitulartitle.1001.b:0 "Теперь мои люди могут отдохнуть."
+ ektitulartitle.1002.desc:0 "По невероятному стечению обстоятельств разобщённые племена и города Предела объединились вокруг одного правителя! [FROM.Char.GetTitledFirstName] теперь единолично правит Пределом, став серьёзной силой в Тамриэле.\n\nСоседние правители затаили дыхание, ожидая, что уготовила для них судьба."
+ ektitulartitle.1002.a:0 "Дикари, не более."
+ ektitulartitle.1002.b:0 "Выдержат ли они проверку временем?"
+## Vvardenfell
+ ektitulartitle.1101.t:0 "Вварденфелл объединён!"
+ ektitulartitle.1101.desc:0 "Великий остров Вварденфелл, в сердце которого — могучая Красная гора, был объединён в одну державу, отдельную от Морровинда. Там, где раньше были разрозненные кланы кочевых племён, теперь единый Вварденфелл, и во главе него — [ROOT.Char.GetTitledFirstName]. Иго Великих домов и их Храма сброшено."
+ ektitulartitle.1101.a:0 "Мы будем стоять здесь до конца!"
+ ektitulartitle.1102.desc:0 "Великий остров Вварденфелл, в сердце которого — могучая Красная гора, был объединён в одну державу, отдельную от Морровинда. Там, где раньше были разрозненные кланы кочевых племён, теперь единый Вварденфелл, и во главе него — [FROM.Char.GetTitledFirstName]. Иго Великих домов и их Храма сброшено."
+ ektitulartitle.1102.a:0 "Эти дикари не останутся безнаказанными!"
+ ektitulartitle.1102.b:0 "Как на это отреагирует Великий совет?"
+
+ ektitulartitle.1201.t:0 "Вварденфелл возвращён!"
+ ektitulartitle.1201.desc:0 "Объединённый Вварденфелл, который ранее объявил о независимости, [Select_CString(ROOT.Char.IsFemale, 'вернула', 'вернул')] в лоно Храма Трибунала его [Select_CString(ROOT.Char.IsFemale, 'верная последовательница', 'верный последователь')], [ROOT.Char.GetTitledFirstName]. Мечты кланов Вварденфелла о независимости оказались самонадеянными и не выдержали проверку временем."
+ ektitulartitle.1201.a:0 "Теперь #L МЫ#! будем водить тут корованы."
+ ektitulartitle.1202.desc:0 "Объединённый Вварденфелл, который ранее объявил о независимости, [Select_CString(FROM.Char.IsFemale, 'вернула', 'вернул')] в лоно Храма Трибунала его [Select_CString(FROM.Char.IsFemale, 'верная последовательница', 'верный последователь')], [FROM.Char.GetTitledFirstName]. Мечты кланов Вварденфелла о независимости оказались самонадеянными и не выдержали проверку временем."
+ ektitulartitle.1202.a:0 "Они получили то, что заслуживают."
+ ektitulartitle.1202.b:0 "Данмеры Домов ответили праведным гневом."
+ 
+ # Cantemiris
+ ektitulartitle.1301.t:0 "Восход кантемирцев!"
+ ektitulartitle.1301.desc:0 "Падомаические Топи усыпаны разрозненными городами-крепостями. Здесь кантемирские велотийцы делали то, что другие считали безнадёжным в этих землях: строили замки из камня и металла.\n\nСегодня эти кланы объединены под единым знаменем, и возглавляет их [ROOT.Char.GetTitledFirstName]. Море и топь покорились перед камнем и перед верой."
+ ektitulartitle.1301.a:0 "Это держава на века!"
+ ektitulartitle.1302.desc:0 "Падомаические Топи усыпаны разрозненными городами-крепостями. Здесь кантемирские велотийцы делали то, что другие считали безнадёжным в этих землях: строили замки из камня и металла.\n\nСегодня эти кланы объединены под единым знаменем, и возглавляет их [ROOT.Char.GetTitledFirstName]. Море и топь покорились перед камнем и перед верой."
+ ektitulartitle.1302.a:0 "Пусть их замки сгорят, обрушатся и утонут в болоте!"
+ ektitulartitle.1302.b:0 "Они чего-то достигли?"
+ ektitulartitle.1302.c:0 "Воспрянул новый маорханат…"
+ 
+ #Barsaebica
+ ektitulartitle.1401.t: "[barsaebica.GetNameNoTierNoTooltip] Solidifies"
+ ektitulartitle.1401.desc: "A power of eld forms amidst the fens and darkness of Black Marsh, emerging from millennia of struggle and strife.  Order has been brought to this once bleak demesne, this land of numerous divisions. Once more, this region recognizes Barsaebic rule!\n\nFrom Silyanorn to Solhrest, the land has been unified into the new [barsaebica.GetName] under the enlightened reign of [ROOT.Char.GetTitledFirstName]."
+ ektitulartitle.1401.a: "Finally, our people are secure."
+
+ ektitulartitle.1402.t: "[barsaebica.GetNameNoTierNoTooltip] Emerges"
+ ektitulartitle.1402.desc: "Early in the #LORE [compendium_first_era]#!, over three millennia ago, the Barsaebic Ayleids first fled to Black Marsh following the #LORE [compendium_narfinsel_schism]#!. Since then they have endured in this inhospitable land.\n\nThere have been many Barsaebic rulers in these lands before, but never have they formed an interconnected realm throughout the fens. Now marks the emergence of the [barsaebica.GetName] under the rule of [founder.GetName], the tamer of large swathes of a land that many have considered untameable."
+ ektitulartitle.1402.a: "A Crown forged in endurance..."
+
+#Nedic Confederation
+ ektitulartitle.1501.t: "An Heir of Durac?"
+ ektitulartitle.1501.desc: "Blood, Flame, Forest, Frost, Shadow, Spirit, Storm and Sun, these were the Nedic Kings who paid homage to Durac before the Fall of Skyreach. Much has been lost to time, but now I have secured the Nedic Confederation and Eight Kingdoms once more answer the call of the [founder.GetTitleTierName]. What limits can my revived realm find?"
+ ektitulartitle.1501.a: "Let us reach for the sky."
+
+ ektitulartitle.1502.t: "Reforging of the Nedic Confederation"
+ ektitulartitle.1502.desc: "Not since the #LORE [compendium_ragada]#! incursions and the Fall of Skyreach have the Nedes of Craglorn been able to assert their full sovereignty over the lands of their legendary Eight Nedic Kings. Today [founder.GetTitledFirstName] claims to have asserted they are the true Heir of Durac, having coincidentally secured eight Kingdoms beneath their banner."
+ ektitulartitle.1502.a: "Do we even know which kingdoms swore to Durac?"
+ 

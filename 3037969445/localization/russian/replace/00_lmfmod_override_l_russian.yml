@@ -1,0 +1,31 @@
+﻿l_russian:
+ MARRIAGE_DESPERATION:0 "[secondary_recipient.GetShortUINameNoTooltip|U] [Select_CString( secondary_recipient.IsLocalPlayer, 'are', 'is' )] desperate to marry: $VALUE|+=0$"
+ 
+ scheme_interaction_tt_courtship_approved:1 "Attempt to romance [recipient.GetShortUINameNoTooltip] by the rules of courtly love. If you are successful, it may gain you [prestige|E] and improve their [opinion|E] of you, but you will not become [soulmates|E] unless you are already married, are [recipient.GetShortUINamePossessiveNoTooltipNoFormat] [lover|E], or you either propose [marriage|E] or promise elopement (if either are possible)."
+ 
+ can_be_granted_titles_interaction_tt:0 "[recipient.GetWomenMen|U] must either be a Dominant, Equal, or Clerical Gender within your [faith|E] ([actor.GetFaith.GetName]) or they must both be your [primary_heir|E] and have the [GetTrait('education_heir_training_1').GetName( GetNullCharacter )] [trait|E]"
+ 
+ court_ongoing.public_regular_rejection.0503.desc:0 "[target.GetFirstNamePossessiveNoTooltip] reaction is not what I hoped for. "Desist this ridiculous public display, [ROOT.Char.Custom2('RelationToMeAddress', target)], and do not embarrass yourself further. I have no interest in your attentions, nor shall I ever!""
+ court_ongoing.written_regular_rejection.0503.desc:0 "\n\n[target.GetFirstNamePossessiveNoTooltip] reply is swift and unambiguous. "I received your note, [ROOT.Char.Custom2('RelationToMeAddress', target)], if indeed it is yours and not a cruel jest played by some villain. If it was you after all, then I insist you stop this foolish endeavor immediately. I have no romantic interest in you, nor shall I ever.""
+ 
+ court_ongoing.1000.t:1 "$court_event_title$ The Uncomfortable Dance"
+ court_ongoing.1000.desc:0 "While attending a social function in [location.GetNameNoTooltip], an effort to be closer to [target.GetFirstNameNoTooltip], the musicians fire up a merry tune and a dance begins. My eyes search out the object of my affections, but it is too late... [target.GetSheHe] is already dancing with [social_bore.GetTitledFirstNameNoTooltip]. Not by choice, it appears, for not only does [target.GetSheHe] not like [social_bore.GetTitledFirstNameNoTooltip] much, the [social_bore.Custom('polite_gender_ref')] dancing terribly and [target.GetFirstNameNoTooltip] is too polite to disengage even though [target.GetSheHe] is clearly desperate to.\n\n[target.GetFirstNameNoTooltip] looks at me from across the dance floor, begging me with [target.GetHerHis] eyes to come to [target.GetHerHis] rescue."
+ court_ongoing.1000.a:0 "Attempt to gracefully cut in."
+ court_ongoing.1000.a.success:0 "You successfully cut in and dance with [target.GetFirstNameNoTooltip] yourself"
+ court_ongoing.1000.a.failure:0 "[social_bore.GetTitledFirstNameNoTooltip] refuses and makes the situation even more awkward"
+ court_ongoing.1000.b:0 "[target.GetFirstNameNoTooltip] is on [target.GetHerHis] own, I'm afraid."
+ 
+ court_ongoing.1120.desc:0 "I am attending a social gathering in [target_location.GetNameNoTooltip] to spend some time with [target.GetTitledFirstName]. The mere thought of touching hands makes my heart jump! But when I arrive, I find [target.GetHerHim] stuck in a conversation with [unpleasant_guest.Custom2('MyCharacterIntroductionNoComma', ROOT.Char)].\n\nThe [unpleasant_guest.Custom('InsultAdjective')] [unpleasant_guest.GetWomanMan] drones on and on, totally oblivious to [target.GetFirstNamePossessiveNoTooltip] discomfort."
+ court_ongoing.1121.start.desc:0 "When I sent out invitations to a social gathering, I was looking forward to an evening of good company and frivolous fun. Instead, I have found myself stuck in a dreadful conversation with [unpleasant_guest.Custom2('MyCharacterIntroductionNoComma', ROOT.Char)]...\n\n"
+ 
+ court_outcome.0003.a.tt:0 "I will lay with [owner.GetShortUIName|U] and [owner.GetSheHe] might become my Soulmate"
+ court_outcome.1003.b:0 "We share one kiss, sweet like honey."
+ 
+ court_outcome.1105.a:0 "[owner.GetSheHe|U] proposed marriage and I accepted!"
+ 
+ ChildhoodPersonalityTrait_charming:0 "[GetTrait('charming').GetNameNoTooltip( ROOT.Char )]"
+ ChildhoodPersonalityTrait_rowdy:0 "[GetTrait('rowdy').GetNameNoTooltip( ROOT.Char )]"
+ ChildhoodPersonalityTrait_bossy:0 "[GetTrait('bossy').GetNameNoTooltip( ROOT.Char )]"
+ ChildhoodPersonalityTrait_curious:0 "[GetTrait('curious').GetNameNoTooltip( ROOT.Char )]"
+ ChildhoodPersonalityTrait_pensive:0 "[GetTrait('pensive').GetNameNoTooltip( ROOT.Char )]"
+ 

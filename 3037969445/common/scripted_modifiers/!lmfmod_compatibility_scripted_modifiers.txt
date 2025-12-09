@@ -1,0 +1,14 @@
+﻿# these effects are here only to suppress errors - if the mod they belong to is loaded, they will be replaced by the natural file loading order
+
+ao_marriage_ai_accept_modifier = {}
+ao_cc_marriage_ai_accept_modifier = {}
+cc_marriage_ai_accept_modifier = {}
+cc_seduce_ai_modifier = {}
+cc_court_ai_modifier = {}
+ttd_major_distance_ai_modifier = {}
+ttd_major_distance_pentalty_modifier = {}
+ttd_marriage_ai_accept_modifier = {}
+ttd_minor_distance_ai_modifier = {}
+ttd_minor_distance_penalty_acceptance_modifier = {}
+ttd_minor_distance_pentalty_modifier = {}
+

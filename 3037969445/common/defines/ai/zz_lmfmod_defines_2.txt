@@ -1,0 +1,21 @@
+﻿NAI = {
+	MAX_NUMBER_OF_COURTS_TO_SEARCH_FOR_SPOUSES = { # Number of courts that are searched for spouse candidates, per tier.
+		0
+		16
+		64
+		64
+		64
+		64
+		64
+	}
+	
+	MAX_NUMBER_OF_SPOUSE_CANDIDATES = { # Number of spouse candidates before the search is aborted, per tier.
+		0
+		32
+		64
+		64
+		64
+		64
+		64
+	}
+}

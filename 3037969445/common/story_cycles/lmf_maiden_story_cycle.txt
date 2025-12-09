@@ -1,0 +1,254 @@
+﻿lmf_maiden_story_cycle = {
+
+	on_setup = {
+	}
+	
+	on_owner_death = {
+		end_story = yes
+	}
+	
+	on_end = {
+		story_owner = {
+			if = {
+				limit = { has_trait = maiden }
+				remove_trait = maiden
+			}
+		}
+	}
+	
+	effect_group = {
+		days = { 300 400 }
+		first_valid = {
+			# first check if we should still have the maiden story cycle any longer
+			triggered_effect = {
+				trigger = {
+					story_owner = {
+						OR = {
+							NOT = { has_trait = maiden }
+							is_married = yes
+							is_concubine = yes
+							is_betrothed = yes
+							is_courtier = no
+							is_ai = no
+						}
+					}
+				}
+				effect = {
+					end_story = yes
+				}
+			}
+			# check if maiden will remain at court permanently
+			triggered_effect = {
+				trigger = {
+					story_owner = {
+						age >= 25
+						OR = {
+							# has a (good) job at court
+							is_councillor = yes
+							is_knight = yes
+							AND = {
+								has_any_court_position = yes
+								NOR = {
+									has_court_position = wet_nurse_court_position
+									has_court_position = lady_in_waiting_court_position
+									has_court_position = court_jester_court_position
+									has_court_position = stooge_camp_officer
+								}
+							}
+							# is ward to liege's family member
+							any_relation = {
+								type = ward
+								any_close_family_member = { this = root.story_owner.liege }
+							}
+							# has an important lover at the same court
+							any_relation = {
+								type = lover
+								OR = {
+									is_courtier_of = root.story_owner.liege
+									this = root.story_owner.liege
+
+								}
+							}
+							# has a parent at court
+							any_parent = {
+								is_courtier_of = root.story_owner.liege
+							}
+							# liege is a close relative
+							is_close_family_of = root.story_owner.liege
+							# has a child who is close relative to the liege
+							any_child = {
+								OR = {
+									any_close_family_member = { this = root.story_owner.liege }
+									real_father ?= {
+										OR = {
+											any_close_family_member = { this = root.story_owner.liege }
+											this = root.story_owner.liege
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				effect = {
+					# inform the liege that she's staying
+					story_owner = {
+						save_scope_as = maiden_check
+						liege = {
+							send_interface_message = {
+								type = event_generic_good_with_text
+								title =  lmf_maiden.1003.t.staying
+								desc =  lmf_maiden.1003.desc.staying
+								left_icon = scope:maiden_check
+								scope:maiden_check = { remove_trait_force_tooltip = maiden }
+							}
+						}
+					}
+					end_story = yes
+				}
+			}
+			# or is fleeing the court in disgrace
+			triggered_effect = {
+				trigger = {
+					story_owner = {
+						is_available_healthy_adult = yes
+						has_any_debilitating_illness = no
+						OR = {
+							AND = {
+								has_trait = fornicator
+								trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = fornicator GENDER_CHARACTER = root.story_owner }
+							}
+							AND = {
+								has_trait = witch
+								trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = witch GENDER_CHARACTER = root.story_owner }
+							}
+							AND = {
+								has_trait = deviant
+								trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = deviant GENDER_CHARACTER = root.story_owner }
+							}
+							AND = {
+								has_trait = cannibal
+								trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = cannibal GENDER_CHARACTER = root.story_owner }
+							}
+							has_trait = excommunicated
+							has_relation_rival = root.story_owner.liege
+							root.story_owner.liege = { has_imprisonment_reason = root.story_owner }
+						}
+						NOR = {
+							has_relation_lover = root.story_owner.liege
+							has_relation_friend = root.story_owner.liege
+						}
+					}
+				}
+				effect = {
+					# inform the liege she's fleeing
+					story_owner = {
+						save_scope_as = maiden_check
+						liege = {
+							send_interface_message = {
+								type = event_generic_neutral_with_text
+								title =  lmf_maiden.1003.t.fleeing
+								desc =  lmf_maiden.1003.desc.fleeing
+								left_icon = scope:maiden_check
+								scope:maiden_check = { maiden_leaves_court_effect = yes }
+							}
+						}
+					}
+				}
+			}
+			# or is old enough to simply go back to her family
+			triggered_effect = {
+				trigger = {
+					story_owner = {
+						age >= 25
+						is_available_healthy_adult = yes
+						has_any_debilitating_illness = no
+					}
+				}
+				effect = {
+					# inform the liege she's leaving
+					story_owner = {
+						save_scope_as = maiden_check
+						liege = {
+							send_interface_message = {
+								type =  event_generic_neutral_with_text
+								title =  lmf_maiden.1003.t.departing
+								desc =  lmf_maiden.1003.desc.departing
+								left_icon = scope:maiden_check
+								scope:maiden_check = { maiden_leaves_court_effect = yes }
+							}
+						}
+					}
+				}
+			}
+			# failing that, see if she'll start a scheme
+			triggered_effect = {
+				trigger = {
+					story_owner = {
+						is_available_healthy_adult = yes
+						has_any_debilitating_illness = no
+						NOT = { has_game_rule = lmf_scheming_courtiers_disabled }
+					}
+				}
+				effect = {
+					story_owner = {
+						random_list = {
+							# start a courting scheme
+							10 = {
+								trigger = { is_appropriate_ai_courtship_courtier = yes }
+								modifier = {
+									OR = {
+										has_trait = lustful
+										has_trait = rakish
+										is_deviant_trigger = yes
+										faith = { trait_is_virtue = lustful }
+									}
+									factor = 0.1
+								}
+								remove_character_flag ?= made_recent_courtship_check
+								remove_character_flag ?= made_recent_seduction_check
+								trigger_event = lmf_scheme.1010
+							}
+							# start a seduction scheme
+							10 = {
+								trigger = { is_appropriate_ai_seduction_courtier = yes }
+								modifier = {
+									OR = {
+										has_trait = chaste
+										AND = {
+											ai_honor >= 0
+											ai_compassion >= 0
+										}
+									}
+									factor = 0.1
+								}
+								remove_character_flag ?= made_recent_courtship_check
+								remove_character_flag ?= made_recent_seduction_check
+								trigger_event = lmf_scheme.1020
+							}
+							# do nothing
+							80 = {
+								modifier = {
+									add = 20
+									OR = {
+										has_character_flag = made_recent_courtship_check
+										has_character_flag = made_recent_seduction_check
+									}
+								}
+								modifier = {
+									add = -20
+									age >= 20
+								}
+								modifier = {
+									add = -20
+									liege = { is_ai = no }
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+

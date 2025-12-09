@@ -1,0 +1,153 @@
+﻿# Will AI for this character try to arrange matrilineal marriages?
+# Note that the AI can still arrange patrilineal marriages based on the SPOUSE_SCORE_LINEALITY_MISMATCH_SCORE AI define
+# root: the arranging AI character
+# scope:secondary_actor: the character to be married
+ai_wants_matrilineal_marriage = {
+	scope:secondary_actor = {
+		is_female = yes
+	}
+	trigger_if = { # AI's always want to matrilineally marry their Dynasty members
+		limit = {
+			has_game_rule = matrilineal_marriages_always
+		}
+		scope:secondary_actor.dynasty = root.dynasty
+	}
+	trigger_else_if = { # AI's want matrilineal marriages if female dominated or equal, but not otherwise
+		limit = {
+			has_game_rule = matrilineal_marriages_female_and_equal
+		}
+		OR = { # Either Matrilineal Marriages are the norm
+			has_realm_law = female_only_law
+			has_realm_law = female_preference_law
+			faith = { has_doctrine_parameter = female_dominated_law }
+			AND = {
+				exists = dynasty
+				scope:secondary_actor.dynasty = root.dynasty
+				root = {
+					OR = {
+						has_realm_law = equal_law
+						faith = { has_doctrine_parameter = gender_equal_law }
+					}
+				}
+				scope:secondary_actor = {
+					OR = {
+						this = root #Either I am a woman
+						any_heir_title = { holder ?= root } #Or they're an heir to one of my titles
+						any_pretender_title = { # Or they're in second or third place to one of my titles
+							holder ?= root
+							place_in_line_of_succession = {
+								target = scope:secondary_actor
+								value <= 2
+							}
+						}
+						is_eldest_preferred_grandchild_of = { GRANDPARENT = root } # Or they're a grandchild expected to inherit
+					}
+				}
+			}
+		}
+	}
+	trigger_else_if = { # Only Female Dominated realms want matrilineal marriages
+		limit = {
+			has_game_rule = matrilineal_marriages_never
+		}
+		OR = { # Matrilineal Marriages are the norm
+			has_realm_law = female_only_law
+			has_realm_law = female_preference_law
+			faith = {
+				has_doctrine_parameter = female_dominated_law
+			}
+		}
+	}
+	trigger_else_if = { # Default, but no player exception
+		limit = {
+			has_game_rule = matrilineal_marriages_no_player_exception
+		}
+		OR = { # Either Matrilineal Marriages are the norm
+			has_realm_law = female_only_law
+			has_realm_law = female_preference_law
+			faith = { has_doctrine_parameter = female_dominated_law }
+			AND = { # Or there's a good reason to pursue them, such as being of a Reputable dynasty or ruling a Duchy
+				exists = dynasty
+				scope:secondary_actor.dynasty = root.dynasty
+				OR = {
+					scope:secondary_actor = root # Either I am a woman
+					scope:secondary_actor = { #Or they're an heir to one of my titles
+						any_heir_title = { holder ?= root }
+					}
+					AND = { # Or I'm under Equal
+						OR = {
+							has_realm_law = equal_law
+							faith = { has_doctrine_parameter = gender_equal_law }
+						}
+						scope:secondary_actor = {
+							OR = {
+								any_pretender_title = { # And they're in second or third place to one of my titles
+									holder ?= root
+									place_in_line_of_succession = {
+										target = scope:secondary_actor
+										value <= 2
+									}
+								}
+								is_eldest_preferred_grandchild_of = { GRANDPARENT = root } # Or they're a grandchild expected to inherit
+							}
+						}
+					}
+				}
+				root = {
+					OR = {
+						highest_held_title_tier >= tier_duchy
+						dynasty = { dynasty_prestige_level >= 4 }
+						has_realm_law = equal_law
+						faith = { has_doctrine_parameter = gender_equal_law }
+					}
+				}
+			}
+		}
+	}
+	trigger_else = { # Default rules
+		OR = { # Either Matrilineal Marriages are the norm
+			has_realm_law = female_only_law
+			has_realm_law = female_preference_law
+			faith = { has_doctrine_parameter = female_dominated_law }
+			AND = { # Or there's a good reason to pursue them, such as being of a Reputable dynasty or ruling a Duchy
+				exists = dynasty
+				scope:secondary_actor.dynasty = root.dynasty
+				scope:secondary_actor = {
+					OR = {
+						this = root # Either I am a woman
+						any_heir_title = { holder ?= root } #Or they're an heir to one of my titles
+						AND = { # Or I'm under Equal
+							OR = {
+								root = { has_realm_law = equal_law }
+								root.faith = { has_doctrine_parameter = gender_equal_law }
+							}
+							OR = {
+								any_pretender_title = { # And they're in second or third place to one of my titles
+									holder ?= root
+									place_in_line_of_succession = {
+										target = scope:secondary_actor
+										value <= 2
+									}
+								}
+								is_eldest_preferred_grandchild_of = { GRANDPARENT = root } # Or they're a grandchild expected to inherit
+							}
+						}
+					}
+				}
+				root = {
+					OR = {
+						highest_held_title_tier >= tier_duchy
+						dynasty = { dynasty_prestige_level >= 4 }
+						has_realm_law = equal_law
+						faith = { has_doctrine_parameter = gender_equal_law }
+						any_player = { # Very close to a player
+							dynasty ?= scope:secondary_actor.dynasty
+							is_close_family_of = scope:secondary_actor
+						}
+					}
+				}
+			}
+		}
+	}
+}
+

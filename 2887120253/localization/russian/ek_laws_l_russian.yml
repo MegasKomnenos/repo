@@ -1,0 +1,40 @@
+﻿l_russian:
+ autocracy_authority_3_effects:0 "$EFFECT_LIST_BULLET$Сюзерены могут [Concept( 'revoke', 'лишать' )|E] титулов и [Concept( 'retract', 'отзывать' )|E] вассалов, и это не будет считаться [Concept( 'tyranny', 'тиранией' )|E]"
+ 
+ crown_authority_0_feudal:0 "Аристократическая монархия"
+ crown_authority_0_autocracy:0 "Сильная землевладельческая олигархия"
+ crown_authority_0_hierocracy:0 "Дуалистический совет"
+ crown_authority_0_default:0 "Свободные вассалы"
+ crown_authority_1_feudal:0 "Олигархическая монархия"
+ crown_authority_1_autocracy:0 "Влиятельная землевладельческая олигархия"
+ crown_authority_1_hierocracy:0 "Слабый иерократический совет"
+ crown_authority_1_default:0 "Ограниченный авторитет короны"
+ crown_authority_2_feudal:0 "Деспотическая монархия"
+ crown_authority_2_autocracy:0 "Сильная автократия"
+ crown_authority_2_hierocracy:0 "Сильный иерократический совет"
+ crown_authority_2_default:0 "Высокий авторитет короны"
+ crown_authority_3_feudal:0 "Абсолютная монархия"
+ crown_authority_3_autocracy:0 "Абсолютная автократия"
+ crown_authority_3_hierocracy:0 "Абсолютная иерократия"
+ crown_authority_3_default:0 "Абсолютный авторитет короны"
+ 
+ feudal_government_authority_modifier:0 "Феодальный строй — авторитет короны"
+ liege_modify_vassal_contract_cannot_exceed_tyranny_cap_0:0 "Ваш текущий авторитет короны не позволяет вам требовать любое [Concept( 'tyrannical', 'тираническое' )|E] изменение.\n#weak Справка: сюзерены с законом #V $crown_authority_2$#! могут совершить одно изменение, иначе считающееся [Concept( 'tyrannical', 'тираническим' )|E], бесплатно.#!"
+ 
+ feudal_contrib_normal_ca:0 "[crown_authority|E] [Concept( 'liege', 'сюзерена' )|E] должен быть #V $crown_authority_1$#!, #V $crown_authority_2$#! или #V $crown_authority_3$#!"
+ feudal_contrib_high_ca:0 "[crown_authority|E] [Concept( 'liege', 'сюзерена' )|E] должен быть #V $crown_authority_2$#! или #V $crown_authority_3$#!"
+ feudal_contrib_extortionate_ca:0 "[crown_authority|E] [Concept( 'liege', 'сюзерена' )|E] должен быть #V $crown_authority_3$#!"
+
+ religious_tolerance_law: "Религиозная терпимость"
+ religious_tolerance_law_0: "Нет терпимости"
+ religious_tolerance_law_0_effects_not_in_prev: "$EFFECT_LIST_BULLET$#indent_newline:3 Можно требовать обращения у персонажей, чья конфессия считается [Concept('faith_hostile', 'враждебной')|E] или [Concept('faith_evil', 'воплощённым злом')|E] со стороны [Concept('state_faith', 'государственной конфессии')|E]#!\n$EFFECT_LIST_BULLET$#indent_newline:3 #bold Нельзя#! требовать обращения у персонажей, чья конфессия считается [Concept('faith_astray', 'заблудшей')|E], если у [Concept('state_faith', 'государственной конфессии')|E] доктрина [GetFaithDoctrine('doctrine_pluralism_righteous').GetBaseName] или [GetFaithDoctrine('doctrine_pluralism_pluralistic').GetBaseName]#!\n$EFFECT_LIST_BULLET$#indent_newline:3 #bold Можно#! требовать обращения у персонажей, чья конфессия считается [Concept('faith_astray', 'заблудшей')|E], если у [Concept('state_faith', 'государственной конфессии')|E] доктрина [GetFaithDoctrine('doctrine_pluralism_fundamentalist').GetBaseName]#!"
+ religious_tolerance_law_1: "Частичная терпимость"
+ religious_tolerance_law_1_effects_not_in_prev: "$EFFECT_LIST_BULLET$#indent_newline:3 Можно требовать обращения у персонажей, чья конфессия считается [Concept('faith_evil', 'воплощённым злом')|E] со стороны [Concept('state_faith', 'государственной конфессии')|E]\n$EFFECT_LIST_BULLET$#indent_newline:3 #bold Нельзя#! требовать обращения у персонажей, чья конфессия считается [Concept('faith_astray', 'заблудшей')|E] или [Concept('faith_hostile', 'враждебной')|E] со стороны [Concept('state_faith', 'государственной конфессии')|E]#!"
+ religious_tolerance_law_2: "Абсолютная терпимость"
+ religious_tolerance_law_2_effects_not_in_prev: "$EFFECT_LIST_BULLET$#indent_newline:3 #bold Нельзя#! требовать обращения#!"
+ admin_religious_tolerance_none_trigger: "Нельзя требовать обращения у персонажа из-за [Concept('law', 'закона')|E]
+ [GetLaw('religious_tolerance_law_0').GetName]"
+ admin_religious_tolerance_partial_trigger: "Нельзя требовать обращения у персонажа из-за [Concept('law', 'закона')|E] [GetLaw('religious_tolerance_law_1').GetName]"
+ admin_religious_tolerance_full_trigger: "Нельзя требовать обращения у персонажа из-за [Concept('law', 'закона')|E] [GetLaw('religious_tolerance_law_2').GetName]"
+ have_cyrodiilic_cult_or_adaptive: "У [Concept('state_faith', 'государственной конфессии')|E] есть одна из следующих [Concept('doctrines', 'доктрин')|E]: [GetFaithDoctrine('doctrine_pluralism_pluralistic').GetBaseName], [GetFaithDoctrine('tenet_adaptive').GetBaseName], [GetFaithDoctrine('special_doctrine_cyrodiilic_cult').GetBaseName]"
+ 

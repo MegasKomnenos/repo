@@ -1,0 +1,49 @@
+﻿l_russian:
+  #Falmer
+  culture_resurrection_event.0001.t:0 "Возвращение фалмеров"
+  culture_resurrection_event.0001.desc:0 "Тысячи лет назад норды изгнали наш народ из наших земель.\n\nС тех пор, в тайных анклавах, подобных моему, расположенному в местечке под названием [GetPlayer.GetCurrentLocation.GetNameNoTooltip], мы вынуждены были укрываться под защитой магии и удалённости наших поселений, чтобы никто больше не причинил нам зла.\n\nМагические барьеры и заслоны поработали на славу — и не только они одни. Голод, который мучит наш народ так, как не мучал нас ни один смертный со времён древних нордов, заставил нас пойти на отчаянные меры. Наш народ слишком разросся, а почва слишком обнищала и не может больше поддерживать нас. Пришла пора мне повести мой народ назад, в суровый мир за магической завесой."
+  culture_resurrection_event.0001.option1:0 "С нами [GetPlayer.GetFaith.HighGodName|U]!"  
+  culture_resurrection_event.0001.option2:0 "Надо покинуть эти морозные земли."  
+  culture_resurrection_event.0001.option3:0 "Нам не стоит раскрывать наше существование…"    
+  culture_resurrection_event.0001.option1.flavor:0 "Предстоит тяжёлая работа…\n\n @warning_icon! #X Ваша культура будет считаться [Concept('living_culture_short', 'живой')|E], и её можно будет распространять как любую другую культуру! #!" 
+  culture_resurrection_event.0001.option2.flavor:0 "Your culture will remain a [dead_culture|E] for now.\n\nHowever, if you later become [landed|E], your culture will again be considered [living_culture_short|E] and can be used to [promote_culture|E]!"
+  culture_resurrection_event.0001.option3.flavor:0 "@warning_icon! #X Ваша культура останется [Concept('dead_culture_short', 'мёртвой')|E], и её нельзя будет распространять. Делайте выбор обдуманно, это событие не появится дважды! #!" 
+  #Betrayed
+  culture_resurrection_event.0002.t:0 "Восход преданных"
+  culture_resurrection_event.0002.desc:0 "Нашему народу не свойственно жить на поверхности. Окружащие звуки и запахи нам дики — что уж там говорить о свете, который мы не можем ни учуять, ни потрогать.\n\nОбосноваться в мире на поверхности будет непросто, ведь мы будем окружены этими #L зрячими#!, что желают нам только вреда. Но мы не боимся.\n\nПод моим предводительством наша культура, наши корусы и мы сами выйдем на поверхность — навстречу новым испытаниям."
+  culture_resurrection_event.0002.option1:0 "С нами [GetPlayer.GetFaith.HighGodName|U]!" 
+  culture_resurrection_event.0002.option2:0 "Сможем ли мы найти на поверхности новый дом?"   
+  culture_resurrection_event.0002.option3:0 "Нам не стоит раскрывать наше существование…"  
+  culture_resurrection_event.0002.option1.flavor:0 "Предстоит тяжёлая работа…\n\n @warning_icon! #X Ваша культура будет считаться [Concept('living_culture_short', 'живой')|E], и её можно будет распространять как любую другую культуру! #!"
+  culture_resurrection_event.0002.option2.flavor:0 "Your culture will remain a [dead_culture|E] for now.\n\nHowever, if you later become [landed|E], your culture will again be considered [living_culture_short|E] and can be used to [promote_culture|E]!"
+  culture_resurrection_event.0002.option3.flavor:0 "@warning_icon! #X Ваша культура останется [Concept('dead_culture_short', 'мёртвой')|E], и её нельзя будет распространять. Делайте выбор обдуманно, это событие не появится дважды! #!" 
+  #Dwemer
+  culture_resurrection_event.0003.t:0 "Сквозь время"
+  culture_resurrection_event.0003.desc.intro:0 "ДОКЛАД ГЛАВНОГО ТОНАЛЬНОГО АРХИТЕКТОРА — #italic Декомпрессия дракона. Акхатические ахрононумеронуклеусы возведены в приемлемые значения джиллью след-последовательность Камертон. Следуя надлежащим протоколам,#!\n\n"
+  culture_resurrection_event.0003.desc.resdayn:0 "#italic Хор Ресдайн:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Краген-частота:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Руркен-частота:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Нерегулируемые гармонии:#! #N НЕДОСТИЖИМЫ#!"
+  culture_resurrection_event.0003.desc.kragen:0 "#italic Краген-частота:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Руркен-частота:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Хор Ресдайн:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Нерегулируемые гармонии:#! #N НЕДОСТИЖИМЫ#!"
+  culture_resurrection_event.0003.desc.rourken:0 "#italic Руркен-частота:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Краген-частота:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Хор Ресдайн:#! #N КРАСНОЕ МОЛЧАНИЕ#!\n#italic Нерегулируемые гармонии:#! #N НЕДОСТИЖИМЫ#!"
+  culture_resurrection_event.0003.desc.outro:0 "\n\n#italic Попытки выйти на связь с другими тональными мастерами для подтверждения и синхронизации не увенчались успехом вследствие несуществования оных. Активность в районе Красной Горы — предполагаемая причина неожиданного поведения реальности.#!\n\nЭтот мир совершенно иной, не тот, в котором мы находились пару мгновений назад. Мы не знаем как или почему это случилось. Нам известно лишь то, что дракон был прорван и джилли выкорчевали нас из потока времени, чтобы сшить его обратно.\n\n#bold К добру это или нет, но вся некогда великая двемерская раса теперь ограничивается лишь нами одними.#!"
+  culture_resurrection_event.0003.option1:0 "Отстроить. Восстановить. Переосмыслить."  \
+  culture_resurrection_event.0003.option2:0 "Мы вернём свои древние города."  
+  culture_resurrection_event.0003.option3:0 "Наш долг — выяснить, что погубило остальной наш народ."  
+  culture_resurrection_event.0003.option1.flavor:0 "Предстоит тяжёлая работа…\n\n @warning_icon! #X Ваша культура будет считаться [Concept('living_culture_short', 'живой')|E], и её можно будет распространять как любую другую культуру! #!" 
+  culture_resurrection_event.0003.option2.flavor:0 "Your culture will remain a [dead_culture|E] for now.\n\nHowever, if you later become [landed|E], your culture will again be considered [living_culture_short|E] and can be used to [promote_culture|E]!"
+  culture_resurrection_event.0003.option3.flavor:0 "@warning_icon! #X Ваша культура останется [Concept('dead_culture_short', 'мёртвой')|E], и её нельзя будет распространять. Делайте выбор обдуманно, это событие не появится дважды! #!" 
+  #Atmoran
+  culture_resurrection_event.0004.t:0 "Возвращение"
+  culture_resurrection_event.0004.desc:0 "Прошло много веков, с тех пор как наши предки провожали корабли, отплывавшие с Атморы, старого леса наших давних воспоминаний. Попутного ветра, Йоррваскр, в добрый путь, Сирод, прощай, судно из неопределённой древесины, прощай, корабль с кристальной мачтой. Наши праотцы произносили это, стоя на заснеженных берегах Моры, и тогда ещё им было знакомо солнце за туманом и снегом, что опускается с наших возлюбленных небес.\n\nЭти дни давно в прошлом. Обледенение, начало морозов, вечная зима — много названий у этого события, но значение одно и то же. Тех, кто остался в Атморе, ждал только холод, смертельный холод. Как и древние переселенцы, мы отправились в далёкое и долгое плавание в Скайрим, навсегда оставив родину. И пусть наши корабли уступают в размере великим кораблям, на которых норды возвращались к Глотке Мира, они ничуть не хуже. Наконец-то мы покинули замёрзший континет и можем начать всё заново на новой родине."
+  culture_resurrection_event.0004.option1:0 "Да пребудет с нами [GetPlayer.GetFaith.HighGodName|U]!"  culture_resurrection_event.0004.option2:0 "Будем надеяться, что нам будет, куда пристать."  
+  culture_resurrection_event.0004.option3:0 "Пройдёт время, и память об Атморе растворится."   
+  culture_resurrection_event.0004.option1.flavor:0 "Предстоит тяжёлая работа…\n\n @warning_icon! #X Ваша культура будет считаться [Concept('living_culture_short', 'живой')|E], и её можно будет распространять как любую другую культуру! #!" 
+  culture_resurrection_event.0004.option2.flavor:0 "Your culture will remain a [dead_culture|E] for now.\n\nHowever, if you later become [landed|E], your culture will again be considered [living_culture_short|E] and can be used to [promote_culture|E]!"
+  culture_resurrection_event.0004.option3.flavor:0 "@warning_icon! #X Ваша культура останется [Concept('dead_culture_short', 'мёртвой')|E], и её нельзя будет распространять. Делайте выбор обдуманно, это событие не появится дважды! #!" 
+  
+ culture_resurrection_event.1000.t: "End of the Road"
+ culture_resurrection_event.1000.desc: "Gone are the camps and wagons of my adventuring days, sleeping under stars and temporary lodgings. We have finally found a lasting residence in the [ROOT.Char.GetCapitalLocation.GetTerrain.GetNameNoTooltip|l] of [ROOT.Char.GetCapitalLocation.GetCounty.GetTitle.GetNameNoTierNoTooltip].\n\nI have led the first party of wandering [ROOT.Char.GetCulture.GetCollectiveNounNoTooltip] in this strange new land to a new home, and have assumed the position as our master. Already some weary feet have found their way here, and news of this will soon spread so our scattered and hidden people may again be one."
+ culture_resurrection_event.1000.option1: "Ура!"
+ culture_resurrection_event.1000.option1.flavor: "Because you have become [landed|E], your culture is now considered [living_culture_short|E] and can be used to [promote_culture|E]."
+
+ culture_resurrection_event.1001.t:0 "The Road Goes Ever On"
+ culture_resurrection_event.1001.desc:0 "Dawn's beauty greets us at the rising of the sun, marking the first morning of my people in this new world. This land is strange to us and us to it. I look around and I see no army - we cannot carve ourselves a realm by force. May we yet make for us a home?\n\nA decision is quickly reached. We will send out scouts, small bands of bold men and women who are to go their separate ways and seek their fortunes as traders, mercenaries or otherwise. The rest will remain hidden for now. And perhaps one day we will again be one people, with a land to call our own.\n\nNow, I must decide my path. Who am I to take with me on my adventure?"
+  

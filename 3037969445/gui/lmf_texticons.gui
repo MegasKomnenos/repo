@@ -1,0 +1,10 @@
+texticon = {
+	icon = lmf_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_lmf_mod.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+

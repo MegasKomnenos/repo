@@ -1,0 +1,12 @@
+﻿btw_struggle = {
+	start_phase = struggle_iberia_phase_opportunity	
+
+	phase_list = {
+		struggle_iberia_phase_opportunity = {
+			ending_decisions = {
+				struggle_iberia_ending_hostility_decision
+			}
+		}
+	}
+}
+

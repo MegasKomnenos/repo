@@ -1,0 +1,56 @@
+﻿clothing_widow = {
+
+	usage = game
+	selection_behavior = weighted_random
+	priority = 2
+	
+	lmf_widow = {
+		dna_modifiers = {
+			accessory = {
+				mode = add
+				gene = clothes
+				template = western_stealth
+				range = { 0 1 }
+			}
+			accessory = {
+				mode = add
+				gene = cloaks
+				template = no_cloak
+				range = { 0 1 }
+			}
+            accessory = {
+                mode = add
+                gene = headgear
+				template = all_headgear
+				accessory = female_headgear_secular_dde_hre_high_nobility_01
+                type = female
+            }
+		}
+		weight = {
+			base = 0
+			modifier = {
+				add = 100
+				exists = this
+				has_trait = widowed
+				is_female = yes
+				portrait_wear_armor_trigger = no
+				culture ?= {
+					OR = {
+						has_graphical_western_culture_group_trigger = yes
+						has_graphical_mediterranean_culture_group_trigger = yes
+					}
+				}
+				NOR = {
+					#government_has_flag = government_is_tribal
+					government_has_flag = government_is_nomadic
+					government_has_flag = government_is_herder
+				}
+			}
+			modifier = {
+				factor = 0
+				should_be_naked_trigger = yes
+			}
+		}
+	}
+}
+

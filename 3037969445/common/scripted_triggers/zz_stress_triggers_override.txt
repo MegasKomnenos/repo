@@ -1,0 +1,16 @@
+﻿#overriding this because reclusive was missed
+has_a_bad_stress_coping_trait_trigger = {
+	OR = {
+		has_trait = drunkard
+		has_trait = hashishiyah
+		has_trait = rakish
+		has_trait = irritable
+		has_trait = flagellant
+		has_trait = profligate
+		has_trait = contrite
+		has_trait = comfort_eater
+		has_trait = inappetetic
+		has_trait = reclusive
+	}
+}
+

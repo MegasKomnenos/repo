@@ -1,0 +1,8 @@
+﻿ansf.halfsibling.exspouse.tt = {
+	first = ansf.halfsibling.exspouse.tt
+}
+
+ansf.halfsibling.expouse.tt.warning = {
+	first = ansf.halfsibling.expouse.tt.warning
+}
+

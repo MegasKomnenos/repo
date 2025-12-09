@@ -1,0 +1,35 @@
+﻿#this is an override of the vanilla trigger in order to add the seclusion trait and include introductions
+bp2_valid_for_standard_interactions_trigger = {
+    # BP2
+	is_hostage = no
+	NOT = { has_trait = seclusion }
+	custom_tooltip = {
+		text = hostage_travelling_tt
+		NOR = {
+			exists = var:hostage_travelling_to_warden
+			exists = var:ward_travelling_to_guardian
+			exists = var:guardian_travelling_to_ward
+		}
+	}
+	custom_description = {
+		text = is_available_for_introduction
+		subject = this
+		NAND = {
+			has_variable = intro_secondary_actor
+			has_variable = intro_secondary_recipient
+			OR = {
+				this = var:intro_secondary_actor
+				this = var:intro_secondary_recipient
+			}
+		}
+	}
+	custom_description = {
+		text = is_awaiting_visit
+		subject = this
+		NOR = {
+			has_variable = visited_by_target
+			has_variable = visited_by_heir
+		}
+	}
+}
+

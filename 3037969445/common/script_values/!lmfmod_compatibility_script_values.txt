@@ -1,0 +1,33 @@
+﻿ao_cc_same_sex_fertility_penalty = {
+	# Basics, other mod overwrites and adds more
+	value = -200
+	if = {
+		limit = {
+			scope:secondary_recipient = {
+				any_child = {
+					count >= 1
+					even_if_dead = yes
+					OR = {
+						is_alive = yes
+						any_child = { is_alive = yes }
+					}
+				}
+			}
+		}
+		multiply = 0.5
+	}
+}
+
+ao_fertility_penalty_100 = {
+	# Basics, other mod overwrites and adds more
+	value = -100
+}
+
+ao_fertility_penalty_200 = {
+	value = -200
+}
+
+FF_ward_limit = {
+	value = 2
+}
+

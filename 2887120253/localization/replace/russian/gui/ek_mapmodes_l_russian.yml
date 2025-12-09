@@ -1,0 +1,3 @@
+﻿l_russian:
+  NATIVITY_REGIONS: "Этническая родина"
+  NATIVITY_REGIONS_TOOLTIP: "#T Этническая родина#!\nПоказывает на карте расположение регионов [Concept('nativity_regions', 'этнической родины')|E].\n#low Не работает в режиме наблюдателя.#!"

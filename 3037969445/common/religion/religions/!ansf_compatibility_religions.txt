@@ -1,0 +1,5 @@
+﻿# this is added for LMF & ANSF3 compatibility with AGOT
+
+the_pact_religion = { family = rf_abrahamic }
+the_seven_religion = { family = rf_abrahamic }
+

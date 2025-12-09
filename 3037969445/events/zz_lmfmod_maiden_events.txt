@@ -1,0 +1,763 @@
+﻿namespace = lmf_maiden
+
+######################
+# ADDITIONAL MAIDENS #
+######################
+
+scripted_trigger can_create_existing_dynasty_maidens = {
+	# does the game rule allow it?
+	OR = {
+		has_game_rule = lmf_yes_additional_maidens
+		AND = {
+			is_ai = yes
+			has_game_rule = lmf_non_dynasty_additional_maidens
+			NOT = { any_player = { dynasty = root.dynasty } }
+		}
+	}
+	#does the dynasty go back at least two levels?
+	any_close_family_member = {
+		even_if_dead = yes
+		dynasty = root.dynasty
+		is_grandparent_of = root
+	}
+}
+
+scripted_trigger is_possible_maiden_parent = {
+	save_temporary_scope_as = potential_parent
+	# old enough to have at least a 12-year old daughter, but not too old
+	age >= 28
+	age <= 60
+	has_dynasty = yes
+	# an acceptable culture
+	OR = {
+		culture = root.culture
+		root.culture = {
+			cultural_acceptance = {
+				target = scope:potential_parent.culture
+				value >= 25
+			}
+		}
+	}
+	# an acceptable faith
+	OR = {
+		faith = root.faith
+		root.faith = {
+			faith_hostility_level = {
+				target = scope:potential_parent.faith
+				value <= faith_astray_level
+			}
+		}
+	}
+	NOR = {
+		# they're a created character
+		exists = mother
+		exists = father
+		# unmarried and not betrothed
+		is_betrothed = yes
+		any_consort = {}
+		# we don't want them related to ruler's court in any way
+		dynasty = root.dynasty
+		is_close_or_extended_family_of = root
+		is_ruler = yes
+		# they can only have children of their own dynasty
+		# and those children can't have a parent in a court
+		any_child = {
+			OR = {
+				dynasty = root.dynasty 
+				NOT = { dynasty = scope:potential_parent.dynasty }
+				any_parent = { is_pool_character = no }
+			}
+		}
+		# they wouldn't ordinarily have children (ignoring that they might have had the child before the trait)
+		has_trait = impotent
+		has_trait = infertile
+		has_trait = celibate
+		has_trait = eunuch
+		has_trait_with_flag = can_not_marry
+		# no existing relations with anyone
+		any_relation = { always = yes }
+		# doesn't hate the ruler or is hated by them
+		opinion = { target = root value <= -20 }
+		reverse_opinion = { target = root value <= -20 }
+	}
+	# ignore clergy who can't marry
+	trigger_if = {
+		limit = {
+			OR = {
+				is_clergy = yes
+				has_trait = devoted
+				has_council_position = councillor_court_chaplain
+			}
+		}
+		faith = { has_doctrine_parameter = clergy_can_marry }
+	}
+}
+
+scripted_effect find_maiden_house_effect = {
+	dynasty = {
+		random_dynasty_member = {
+			limit = { is_ruler = yes }
+			weight = {
+				base = 1
+				modifier = {
+					add = 3
+					house = {
+						any_house_member = {
+							even_if_dead = yes
+							count > 3
+						}
+					}
+				}
+				modifier = {
+					add = 3
+					house = {
+						any_house_member = {
+							even_if_dead = yes
+							count > 10
+						}
+					}
+				}
+				modifier = {
+					add = 3
+					top_liege = root.top_liege
+				}
+				modifier = {
+					add = 1
+					house = root.house
+				}
+			}
+			save_scope_as = new_maiden_house
+		}
+	}
+	if = {
+		limit = {
+			NOT = { exists = scope:new_maiden_house }
+		}
+		root.house = { save_scope_as = new_maiden_house }
+	}
+}
+
+scripted_effect find_maiden_origin_effect = {
+	random_directly_owned_province = {
+		weight = {
+			base = 1
+			modifier = {
+				add = 2
+				culture = root.culture
+			}
+			modifier = {
+				add = 2
+				faith = root.faith
+			}
+		}
+		save_scope_as = origin_province
+	}
+	if = {
+		limit = {
+			NOT = { exists = scope:origin_province }
+		}
+		capital_province = { save_scope_as = origin_province }
+	}
+}
+
+scripted_effect find_maiden_parent_effect = {
+	random_in_list = {
+		list = maiden_parent
+		# we restrict them to 2 children and only send one a year max
+		limit = {
+			NOR = {
+				has_character_flag = already_sent_maiden
+				any_child = { count >= 2 }
+			}
+		}
+		weight = {
+			base = 1
+			modifier = {
+				add = 1
+				is_male = yes
+			}
+			modifier = {
+				add = 1
+				sum_of_all_skills_value >= 50
+			}
+			modifier = {
+				add = 2
+				opinion = { target = root value >= 20 }
+			}
+			modifier = {
+				add = -1
+				any_child = { count > 0 }
+			}
+		}
+		save_scope_as = new_maiden_parent
+		if = {
+			limit = { is_female = yes }
+			save_scope_as = new_maiden_mother
+		}
+		else = {
+			save_scope_as = new_maiden_father
+		}
+	}
+}
+
+scripted_effect check_maiden_twin_effect = {
+	if = {
+		limit = {
+			any_sibling = { age = scope:new_maiden.age }
+		}
+		random_sibling = {
+			limit = {
+				age = scope:new_maiden.age
+				NOT = { has_trait = twin }
+			}
+			add_trait = twin
+			scope:new_maiden = { add_trait = twin }
+		}
+	}
+}
+
+scripted_effect generate_initial_maiden_effect = {
+	random_list = {
+		100 = {
+			trigger = {
+				any_in_list = {
+					list = maiden_parent
+					# we restrict them to 2 children max
+					NOR = {
+						has_character_flag = already_sent_maiden
+						any_child = { count >= 2 }
+					}
+				}
+			}
+			find_maiden_parent_effect = yes
+			if = {
+				limit = { exists = scope:new_maiden_father }
+				create_character = {
+					age = {
+						integer_range = {
+							min = age_existing_character_maiden_min
+							max = age_existing_character_maiden_max
+						}
+					}
+					gender = female
+					employer = root
+					culture = scope:new_maiden_parent.culture
+					faith = scope:new_maiden_parent.faith
+					dynasty = none
+					father = scope:new_maiden_father
+					random_traits_list = {
+						count = { 0 1 }
+						beauty_good_1 = {}
+						fecund = {}
+						chaste = {}
+						humble = {}
+						gregarious = {}
+						lustful = {}
+						ambitious = {}
+					}
+					random_traits = yes
+					save_scope_as = new_maiden
+					after_creation = {
+						add_trait = maiden
+						set_house = scope:new_maiden_parent.house
+						inherit_parent_quirk_effect = yes
+						replace_bad_maiden_traits_effect = yes
+						check_maiden_twin_effect = yes
+					}
+				}
+				clear_saved_scope = new_maiden_parent
+				clear_saved_scope = new_maiden_father
+			}
+			else = {
+				create_character = {
+					age = {
+						integer_range = {
+							min = age_existing_character_maiden_min
+							max = age_existing_character_maiden_max
+						}
+					}
+					gender = female
+					employer = root
+					culture = scope:new_maiden_parent.culture
+					faith = scope:new_maiden_parent.faith
+					dynasty = none
+					mother = scope:new_maiden_mother
+					random_traits_list = {
+						count = { 0 1 }
+						beauty_good_1 = {}
+						fecund = {}
+						chaste = {}
+						humble = {}
+						gregarious = {}
+						lustful = {}
+						ambitious = {}
+					}
+					random_traits = yes
+					save_scope_as = new_maiden
+					after_creation = {
+						add_trait = maiden
+						set_house = scope:new_maiden_parent.house
+						inherit_parent_quirk_effect = yes
+						replace_bad_maiden_traits_effect = yes
+						check_maiden_twin_effect = yes
+						create_story = { type = lmf_maiden_story_cycle }
+					}
+				}
+				clear_saved_scope = new_maiden_parent
+				clear_saved_scope = new_maiden_mother
+			}
+		}
+		50 = {
+			trigger = { can_create_existing_dynasty_maidens = yes }
+			find_maiden_house_effect = yes
+			create_character = {
+				age = { 12 18 }
+				gender = female
+				employer = root
+				culture = scope:new_maiden_house.culture
+				faith = scope:new_maiden_house.faith
+				dynasty = none
+				random_traits_list = {
+					count = { 0 1 }
+					beauty_good_1 = {}
+					fecund = {}
+					chaste = {}
+					humble = {}
+					gregarious = {}
+					lustful = {}
+					ambitious = {}
+					weak = {}
+				}
+				random_traits = yes
+				save_scope_as = new_maiden
+				after_creation = {
+					add_trait = maiden
+					set_house = scope:new_maiden_house.house
+					replace_bad_maiden_traits_effect = yes
+					create_story = { type = lmf_maiden_story_cycle }
+				}
+			}
+		}
+		50 = {
+			find_maiden_origin_effect = yes
+			create_character = {
+				age = { 12 18 }
+				gender = female
+				employer = root
+				culture = scope:origin_province.culture
+				faith = scope:origin_province.faith
+				dynasty = generate
+				random_traits_list = {
+					count = { 0 1 }
+					beauty_good_1 = {}
+					fecund = {}
+					chaste = {}
+					humble = {}
+					gregarious = {}
+					lustful = {}
+					ambitious = {}
+					weak = {}
+				}
+				random_traits = yes
+				save_scope_as = new_maiden
+				after_creation = {
+					add_trait = maiden
+					replace_bad_maiden_traits_effect = yes
+					create_story = { type = lmf_maiden_story_cycle }
+				}
+			}
+		}
+	}
+}
+
+# Triggered from on_game_start
+lmf_maiden.1000 = {
+	scope = none
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_game_rule = lmf_no_additional_maidens }
+			}
+			every_independent_ruler = {
+				trigger_event = lmf_maiden.1001
+				every_vassal_or_below = {
+					trigger_event = lmf_maiden.1001
+				}
+			}
+		}
+		
+		#adding the in-law relation
+		every_living_character = {
+			limit = {
+				is_married = yes
+				OR = {
+					AND = {
+						is_male = yes
+						patrilinear_marriage = yes
+					}
+					AND = {
+						is_female = yes
+						matrilinear_marriage = yes
+					}
+				}
+			}
+			save_temporary_scope_as = spouse_1
+			every_spouse = {
+				save_temporary_scope_as = spouse_2
+				every_parent = {
+					limit = {
+						is_alive = yes
+						NOR = {
+							has_relation_child_in_law = scope:spouse_1
+							is_parent_of = scope:spouse_1
+							is_child_of = scope:spouse_1
+							is_consort_of = scope:spouse_1
+							this = scope:spouse_1
+						}
+					}
+					set_relation_child_in_law = scope:spouse_1
+				}
+				scope:spouse_1 = {
+					every_parent = {
+						limit = {
+							is_alive = yes
+							NOR = {
+								has_relation_child_in_law = scope:spouse_2
+								is_parent_of = scope:spouse_2
+								is_child_of = scope:spouse_2
+								is_consort_of = scope:spouse_2
+								this = scope:spouse_2
+							}
+						}
+						set_relation_child_in_law = scope:spouse_2
+					}
+				}
+			}
+		}
+	}
+}
+
+# Event for every landed ruler to generate additional maidens
+lmf_maiden.1001 = {
+	hidden = yes
+	
+	trigger = {
+		is_landed = yes
+		highest_held_title_tier > tier_barony
+		exists = capital_province
+		NOR = {
+			has_game_rule = lmf_no_additional_maidens
+			has_government = mercenary_government
+			has_government = republic_government
+			has_government = theocracy_government
+			has_government = holy_order_government
+			AND = {
+				exists = character:7757
+				this = character:7757 #Matilda Canossa, her bookmark start is about overcoming the issue of no heir
+			}
+			AND = {
+				exists = character:33358
+				this = character:33358 #Aethelred, also should have no child and he'll adopt if he has the chance
+			}
+		}
+	}
+
+	immediate = {
+		#creates a list of courtiers who could be parents to maidens
+		every_courtier = {
+			limit = { is_possible_maiden_parent = yes }
+			add_to_list = maiden_parent
+		}
+		
+		#1 for counts, 2 for dukes, 3 for kings, 4 for emperors
+		generate_initial_maiden_effect = yes
+		if = {
+			limit = { highest_held_title_tier > tier_county }
+			generate_initial_maiden_effect = yes
+		}
+		if = {
+			limit = { highest_held_title_tier > tier_duchy }
+			generate_initial_maiden_effect = yes
+		}
+		if = {
+			limit = { highest_held_title_tier > tier_kingdom }
+			generate_initial_maiden_effect = yes
+		}
+	}
+}
+
+# Maidens are recruited to court (from decision)
+lmf_maiden.1002 = {
+	hidden = yes
+
+	trigger = {
+		exists = var:number_of_maidens_invite
+		is_landed = yes
+		exists = capital_province
+		NOR = {
+			has_government = mercenary_government
+			has_government = republic_government
+			has_government = theocracy_government
+			has_government = holy_order_government
+		}
+	}
+	
+	immediate = {
+		# check for pool characters in the ruler's realm if a duke+
+		if = {
+			limit = { highest_held_title_tier > tier_county }
+			every_realm_province = {
+				save_temporary_scope_as = pool_province
+
+				every_pool_character = {
+					province = scope:pool_province
+					limit = { is_possible_maiden_parent = yes }
+					add_to_list = maiden_parent
+				}
+			}
+		}
+		
+		random_list = {
+			50 = {
+				trigger = {
+					highest_held_title_tier > tier_county
+					any_in_list = {
+						list = maiden_parent
+						# we restrict them to 2 children and only send one a year max
+						NOR = {
+							has_character_flag = already_sent_maiden
+							any_child = { count >= 2 }
+						}
+					}
+				}
+				find_maiden_parent_effect = yes
+				scope:new_maiden_parent = {
+					add_character_flag = { flag = already_sent_maiden months = 12 }
+				}
+				if = {
+					limit = { exists = scope:new_maiden_father }
+					create_character = {
+						age = {
+							integer_range = {
+								min = age_existing_character_maiden_min
+								max = age_existing_character_maiden_max
+							}
+						}
+						gender = female
+						location = root.capital_province
+						culture = scope:new_maiden_parent.culture
+						faith = scope:new_maiden_parent.faith
+						dynasty = none
+						father = scope:new_maiden_father
+						random_traits_list = {
+							count = { 0 1 }
+							beauty_good_1 = {}
+							fecund = {}
+							chaste = {}
+							humble = {}
+							gregarious = {}
+							lustful = {}
+							ambitious = {}
+						}
+						random_traits = yes
+						save_scope_as = new_maiden
+						after_creation = {
+							add_trait = maiden
+							set_house = scope:new_maiden_parent.house
+							inherit_parent_quirk_effect = yes
+							replace_bad_maiden_traits_effect = yes
+							check_maiden_twin_effect = yes
+						}
+					}
+					clear_saved_scope = new_maiden_father
+				}
+				else = {
+					create_character = {
+						age = {
+							integer_range = {
+								min = age_existing_character_maiden_min
+								max = age_existing_character_maiden_max
+							}
+						}
+						gender = female
+						location = root.capital_province
+						culture = scope:new_maiden_parent.culture
+						faith = scope:new_maiden_parent.faith
+						dynasty = none
+						mother = scope:new_maiden_mother
+						random_traits_list = {
+							count = { 0 1 }
+							beauty_good_1 = {}
+							fecund = {}
+							chaste = {}
+							humble = {}
+							gregarious = {}
+							lustful = {}
+							ambitious = {}
+						}
+						random_traits = yes
+						save_scope_as = new_maiden
+						after_creation = {
+							add_trait = maiden
+							set_house = scope:new_maiden_parent.house
+							inherit_parent_quirk_effect = yes
+							replace_bad_maiden_traits_effect = yes
+							check_maiden_twin_effect = yes
+						}
+					}
+					clear_saved_scope = new_maiden_mother
+				}
+				send_interface_message = {
+					type = event_generic_good_with_text
+					title =  lmf_maiden.1002.t.pool
+					desc =  lmf_maiden.1002.desc.pool
+					left_icon = scope:new_maiden
+				}
+			}
+			50 = {
+				trigger = { can_create_existing_dynasty_maidens = yes }
+				find_maiden_house_effect = yes
+				create_character = {
+					age = { 12 18 }
+					gender = female
+					location = root.capital_province
+					culture = root.culture
+					faith = root.faith
+					dynasty = none
+					random_traits_list = {
+						count = { 0 1 }
+						beauty_good_1 = {}
+						fecund = {}
+						chaste = {}
+						humble = {}
+						gregarious = {}
+						lustful = {}
+						ambitious = {}
+						weak = {}
+					}
+					random_traits = yes
+					save_scope_as = new_maiden
+					after_creation = {
+						set_house = scope:new_maiden_house.house
+						replace_bad_maiden_traits_effect = yes
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good_with_text
+					title =  lmf_maiden.1002.t.relative
+					desc =  lmf_maiden.1002.desc.relative
+					left_icon = scope:new_maiden
+				}
+			}
+			50 = {
+				find_maiden_origin_effect = yes
+				create_character = {
+					age = { 12 18 }
+					gender = female
+					location = root.capital_province
+					culture = scope:origin_province.culture
+					faith = scope:origin_province.faith
+					dynasty = generate
+					random_traits_list = {
+						count = { 0 1 }
+						beauty_good_1 = {}
+						fecund = {}
+						chaste = {}
+						humble = {}
+						gregarious = {}
+						lustful = {}
+						ambitious = {}
+						weak = {}
+					}
+					random_traits = yes
+					save_scope_as = new_maiden
+					after_creation = {
+						replace_bad_maiden_traits_effect = yes
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good_with_text
+					title =  lmf_maiden.1002.t.origin
+					desc =  lmf_maiden.1002.desc.origin
+					left_icon = scope:new_maiden
+				}
+			}
+		}
+		
+		add_courtier = scope:new_maiden
+		scope:new_maiden = {
+			add_trait = maiden
+			hidden_effect = {
+				create_story = {
+					type = lmf_maiden_story_cycle
+				}
+			}
+		}
+		
+		#Count down the number of maidens still to go
+		change_variable = {
+			name = number_of_maidens_invite
+			subtract = 1
+		}
+		
+		#Clear the pool character list
+		if = {
+			limit = { highest_held_title_tier > tier_county }
+			if = {
+				limit = { exists = scope:new_maiden_parent }
+				clear_saved_scope = new_maiden_parent
+			}
+			every_in_list = {
+				list = maiden_parent
+				this = { remove_from_list = maiden_parent }
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					#Are we out of the assigned number of maidens?
+					var:number_of_maidens_invite = 0
+					#Or have we already hit our cap?
+					any_courtier = {
+						count >= root.highest_held_title_tier
+						is_female = yes
+						age >= 12
+						age <= 24
+						can_marry_common_trigger = yes
+						is_married = no
+						is_concubine = no
+						is_betrothed = no
+						is_imprisoned = no
+						is_hostage = no
+					}
+				}
+			}
+			remove_variable = number_of_maidens_invite
+		}
+		else = {
+			clear_saved_scope = new_maiden
+			trigger_event = {
+				id = lmf_maiden.1002
+				days = { 30 90 }
+			}
+		}
+	}
+}
+
+# Making a pointless maiden disappear for good
+lmf_maiden.1004 = {
+	hidden = yes
+	
+	trigger = {
+		is_pool_character = yes
+	}	
+
+	immediate = {
+		set_to_lowborn = yes
+		silent_disappearance_effect = yes
+	}
+}
+

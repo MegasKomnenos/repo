@@ -1,0 +1,13 @@
+﻿# overrides vanilla modifier
+ignores_gender_army_rules = {
+	icon = martial_positive
+	martial = 1
+	prowess = 1
+	
+	attraction_opinion = -10
+	zealot_same_faith_opinion = -20
+	
+	ai_boldness = high_positive_ai_value
+	ai_energy = high_positive_ai_value
+}
+

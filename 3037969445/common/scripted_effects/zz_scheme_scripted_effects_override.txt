@@ -1,0 +1,505 @@
+﻿elope_opinion_list_builder_effect = {
+	$OWNER$ = {
+		every_spouse = {
+			limit = { NOT = { this = $TARGET$ } }
+			add_to_temporary_list = $LIST_NAME$
+		}
+		if = {
+			limit = {
+				exists = liege
+				is_playable_character = no
+			}
+			liege = {
+				if = {
+					limit = {
+						is_ai = yes
+						NOR = {
+							is_in_list = $LIST_NAME$
+							this = $OWNER$
+						}
+					}
+					add_to_temporary_list = $LIST_NAME$
+				}
+			}
+		}
+	}
+	$TARGET$ = {
+		every_spouse = {
+			limit = { NOT = { this = $OWNER$ } }
+			add_to_temporary_list = $LIST_NAME$
+		}
+		liege = {
+			if = {
+				limit = {
+					is_ai = yes
+					NOR = {
+						is_in_list = $LIST_NAME$
+						this = $OWNER$
+					}
+				}
+				add_to_temporary_list = $LIST_NAME$
+			}
+		}
+	}
+}
+
+elope_flee_court_effect = {
+	show_as_tooltip = {
+		$OWNER$ = {
+			if = {
+				limit = { exists = liege }
+				liege = { remove_courtier_or_guest = $OWNER$ }
+			}
+		}
+		$TARGET$.liege = { remove_courtier_or_guest = $TARGET$ }
+	}
+	hidden_effect = {
+		if = {
+			limit = { exists = $OWNER$.liege }
+			lose_guardians_and_wards_effect = { LIEGE = $OWNER$.liege COURTIER = $OWNER$ }
+		}
+		if = {
+			limit = { exists = $TARGET$.liege }
+			lose_guardians_and_wards_effect = { LIEGE = $TARGET$.liege COURTIER = $TARGET$ }
+		}
+		$OWNER$ = {
+			every_traveling_family_member = {
+				select_and_move_to_pool_effect = yes
+			}
+		}
+		# this is here just in case something goes wrong
+		$TARGET$ = {
+			if = {
+				limit = { is_courtier = yes }
+				every_traveling_family_member = {
+					select_and_move_to_pool_effect = yes
+				}
+			}
+		}
+	}
+}
+
+elope_success_effect = {
+	elope_opinion_list_builder_effect = { OWNER = $OWNER$ TARGET = $TARGET$ LIST_NAME = elope_opinion_list }
+
+	#Because this can be used in events or interaction window, we save root_scope here
+	if = {
+		limit = { exists = scope:actor }
+		scope:actor = { save_temporary_scope_as = root_scope }
+	}
+	else = {
+		root = { save_temporary_scope_as = root_scope }
+	}
+
+	#Target prisoner release
+	$TARGET$ = {
+		if = {
+			limit = { is_imprisoned = yes }
+			release_from_prison = yes
+		}
+		remove_religious_traits_effect = yes
+	}
+
+	$OWNER$ = {
+		remove_religious_traits_effect = yes
+		#Tooltip for marriage
+		show_as_tooltip = {
+			if = {
+				limit = {
+					is_female = yes
+					trigger_if = {
+						limit = { has_game_rule = matrilineal_marriages_never }
+						OR = {
+							has_realm_law = female_only_law
+							has_realm_law = female_preference_law
+							faith = { has_doctrine_parameter = female_dominated_law }
+						}
+					}
+					trigger_if = {
+						limit = { has_game_rule = matrilineal_marriages_female_and_equal }
+						OR = {
+							has_realm_law = female_only_law
+							has_realm_law = female_preference_law
+							faith = { has_doctrine_parameter = female_dominated_law }
+							root = { has_realm_law = equal_law }
+						}
+					}
+				}
+				marry_matrilineal = $TARGET$
+			}
+			else = {
+				marry = $TARGET$
+			}
+		}
+
+		#Owner's personal consequences (hidden or not), divorce happens here
+		if = {
+			limit = {
+				scope:root_scope = $OWNER$
+			}	
+			elope_success_personal_consequences_effect = { CHARACTER = $OWNER$ }
+		}
+		else = {
+			hidden_effect = { elope_success_personal_consequences_effect = { CHARACTER = $OWNER$ } }
+		}
+	}
+
+	#Opinions
+	ordered_in_list = {
+		list = elope_opinion_list
+		max = 10 #To make sure we include all
+		check_range_bounds = no
+		order_by = ai_vengefulness
+
+		#Towards owner
+		if = {
+			limit = {
+				OR = { #Owner wants to see everything, root wants to see their own
+					scope:root_scope = $OWNER$
+					scope:root_scope = this
+				}
+			}
+			elope_success_opinion_rivalry_effect = { CHARACTER = $OWNER$ }
+		}
+		else = {
+			hidden_effect = { elope_success_opinion_rivalry_effect = { CHARACTER = $OWNER$ } }
+		}
+
+		#Towards target
+		if = {
+			limit = { scope:root_scope = this } #Root wants to see their own
+			elope_success_opinion_rivalry_effect = { CHARACTER = $TARGET$ }
+		}
+		else = {
+			hidden_effect = { elope_success_opinion_rivalry_effect = { CHARACTER = $TARGET$ } }
+		}
+	}
+	
+	hidden_effect = {
+		#Target's personal consequences, divorce happens here
+		elope_success_personal_consequences_effect = { CHARACTER = $TARGET$ }
+
+		#Marriage
+		$OWNER$ = { #We do this last so old spouses remain when we run personal consequences effect
+			if = {
+				limit = {
+					is_female = yes
+					trigger_if = {
+						limit = { has_game_rule = matrilineal_marriages_never }
+						OR = {
+							has_realm_law = female_only_law
+							has_realm_law = female_preference_law
+							faith = { has_doctrine_parameter = female_dominated_law }
+						}
+					}
+					trigger_if = {
+						limit = { has_game_rule = matrilineal_marriages_female_and_equal }
+						OR = {
+							has_realm_law = female_only_law
+							has_realm_law = female_preference_law
+							faith = { has_doctrine_parameter = female_dominated_law }
+							root = { has_realm_law = equal_law }
+						}
+					}
+				}
+				marry_matrilineal = $TARGET$
+			}
+			else = {
+				marry = $TARGET$
+			}
+			
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_story = {
+							type = lmf_waiting_to_elope_story_cycle
+							var:elope_target ?= $TARGET$
+						}
+					}
+					random_owned_story = {
+						type = lmf_waiting_to_elope_story_cycle
+						limit = { var:elope_target ?= $TARGET$ }
+						end_story = yes
+					}
+				}
+				if = {
+					limit = { has_variable = waiting_to_elope }
+					remove_variable = waiting_to_elope
+				}
+				$TARGET$ = {
+					if = {
+						limit = { has_variable = waiting_to_elope }
+						remove_variable = waiting_to_elope
+					}
+				}
+			}
+		}
+	}
+	
+	#Do they need to make a run for it?
+	if = {
+		limit = {
+			$OWNER$ = {
+				is_playable_character = no
+				exists = liege
+				liege = { is_ai = yes }
+				$TARGET$.liege = { is_ai = yes }
+			}
+		}
+		elope_flee_court_effect = { OWNER = $OWNER$ TARGET = $TARGET$ }
+	}
+}
+
+end_court_scheme_effect = {
+	save_temporary_scope_value_as = {
+		name = court_outcome
+		value = flag:$OUTCOME$
+	}
+
+	scope:owner = {
+		# SUCCESS: SOULMATES
+		# (This is the only one which target also needs to see, run it in owner scope in show_as_tooltip first and then execute in target's scope)
+		if = {
+			limit = { scope:court_outcome = flag:success_soulmate }
+			
+			scope:target = { set_relation_soulmate = { reason = $REASON$ target = scope:owner } }
+			had_sex_with_effect = { #Run this in target scope because owner has own tooltip
+				CHARACTER = scope:target
+				PREGNANCY_CHANCE = pregnancy_chance
+			}
+
+			hidden_effect = {
+				reverse_add_opinion = {
+					target = scope:target
+					modifier = romance_scheme_courtship_opinion #Blocks courtship
+				}
+				#Maybe break off existing lover relationships
+				scope:target = { soulmate_lover_breakup_effect = { EXCLUDE = scope:owner } }
+				scope:owner = { soulmate_lover_breakup_effect = { EXCLUDE = scope:target } }
+			}
+		}
+		# SUCCESS: MARRIAGE
+		else_if = {
+			limit = { scope:court_outcome = flag:success_marriage }
+			#First add the soulmate status
+			court_scheme_add_soulmate_effect = { PROPOSER = scope:owner TARGET = scope:target REASON = $REASON$ }
+
+			# Then check if they first need permission to marry
+			if = {
+				limit = { needs_permission_to_marry_trigger = { CHARACTER1 = scope:owner CHARACTER2 = scope:target } }
+				if = {
+					limit = {
+						exists = scope:proposer_liege
+						exists = scope:proposer_target_liege
+						scope:proposer_target_liege = scope:proposer_liege
+					}
+					custom_tooltip = court_outcome_seek_permission_proposer_both_liege_to_marry_tt
+					scope:proposer_liege = { trigger_event = court_outcome.2000 }
+				}
+				else_if = {
+					limit = {
+						exists = scope:proposer_liege
+						exists = scope:proposer_target_liege
+					}
+					custom_tooltip = court_outcome_seek_permission_both_to_marry_tt
+					scope:proposer_liege = { trigger_event = court_outcome.2000 }
+				}
+				else_if = {
+					limit = { exists = scope:proposer_liege }
+					custom_tooltip = court_outcome_seek_permission_proposer_own_liege_to_marry_tt
+					scope:proposer_liege = { trigger_event = court_outcome.2000 }
+				}
+				else = {
+					custom_tooltip = court_outcome_seek_permission_proposer_target_liege_to_marry_tt
+					scope:proposer_target_liege = { trigger_event = court_outcome.2002 }
+				}
+			}
+			# Otherwise they can marry immediately
+			else = {
+				court_scheme_marriage_effect = yes
+				add_marry_for_love_flag_effect = { PARTNER1 = scope:owner PARTNER2 = scope:target }
+				if = {
+					limit = {
+						should_marry_matrilineally_trigger = { PROPOSER = scope:owner TARGET = scope:target }
+					}
+					marry_matrilineal = scope:target
+				}
+				else = {
+					marry = scope:target
+				}
+			}
+		}
+		# SUCCESS: ELOPEMENT
+		else_if = {
+			limit = { scope:court_outcome = flag:success_elope }
+			#First add the soulmate status
+			court_scheme_add_soulmate_effect = { PROPOSER = scope:owner TARGET = scope:target REASON = $REASON$ }
+			
+			if = {
+				limit = {
+					scope:target = {
+						is_ai = no
+						can_start_scheme = {
+							type = elope
+							target_character = scope:owner
+						}
+					}
+				}
+				scope:target = {
+					begin_scheme_basic_effect = {
+						SCHEME_TYPE = elope
+						TARGET_TYPE = target_character
+						TARGET_SCOPE = scope:owner
+					}
+					random_scheme = {
+						type = elope
+						limit = { scheme_target_character = scope:owner }
+						add_scheme_modifier = {
+							type = determined_elopement_modifier
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:owner = {
+						can_start_scheme = {
+							type = elope
+							target_character = scope:target
+						}
+					}
+				}
+				scope:owner = {
+					begin_scheme_basic_effect = {
+						SCHEME_TYPE = elope
+						TARGET_TYPE = target_character
+						TARGET_SCOPE = scope:target
+					}
+					random_scheme = {
+						type = elope
+						limit = { scheme_target_character = scope:target }
+						add_scheme_modifier = {
+							type = determined_elopement_modifier
+						}
+					}
+					set_variable = { name = waiting_to_elope value = scope:target years = 20 }
+				}
+				scope:target = {
+					set_variable = { name = waiting_to_elope value = scope:owner years = 20 }
+				}
+			}
+			else_if = {
+				limit = {
+					scope:target = {
+						can_start_scheme = {
+							type = elope
+							target_character = scope:owner
+						}
+					}
+				}
+				scope:target = {
+					begin_scheme_basic_effect = {
+						SCHEME_TYPE = elope
+						TARGET_TYPE = target_character
+						TARGET_SCOPE = scope:owner
+					}
+					random_scheme = {
+						type = elope
+						limit = { scheme_target_character = scope:owner }
+						add_scheme_modifier = {
+							type = determined_elopement_modifier
+						}
+					}
+					set_variable = { name = waiting_to_elope value = scope:owner years = 20 }
+				}
+				scope:owner = {
+					set_variable = { name = waiting_to_elope value = scope:target years = 20 }
+				}
+			}
+			else = {
+				custom_tooltip = court_outcome_elope_promise_tt
+				# set up the "waiting to elope" story on both parties
+				hidden_effect = {
+					scope:owner = {
+						set_variable = { name = waiting_to_elope value = scope:target years = 20 }
+						create_story = { type = lmf_waiting_to_elope_story_cycle }
+					}
+					# the target gets a time limit of the number of years they'll wait for an elopement
+					scope:target = {
+						set_variable = { name = waiting_to_elope value = scope:owner years = 20 }
+						create_story = {
+							type = lmf_waiting_to_elope_story_cycle
+							save_scope_as = story
+						}
+						scope:story = {
+							# a player has just 3 years to get it underway
+							if = {
+								limit = { scope:owner = { is_ai = no } }
+								set_variable = { name = elope_promised value = 3 }
+							}
+							# but the AI has 10
+							else = {
+								set_variable = { name = elope_promised value = 10 }
+							}
+						}
+					}
+				}
+			}
+		}
+		# SUCCESS: KISS
+		else_if = {
+			limit = { scope:court_outcome = flag:success_kiss }
+			custom_tooltip = court_outcome.kiss.tt
+			reverse_add_opinion = {
+				target = scope:target
+				modifier = romance_scheme_courtship_opinion #Blocks courtship
+			}
+		}
+		# FAILURE: SOFT
+		else_if = {
+			limit = { scope:court_outcome = flag:failure_soft }
+			#Shared effect with Seduce because failure in one scheme should block the other
+			scope:target = { seduction_cooldown_for_character_effect = { CHARACTER = scope:owner } }
+		}
+		# FAILURE: HARD
+		else_if = {
+			limit = { scope:court_outcome = flag:failure_hard }
+			#Shared effect with Seduce because failure in one scheme should block the other
+			scope:target = { seduction_block_character_effect = { CHARACTER = scope:owner } }
+		}
+		
+		# Tradition bonuses
+		if = {
+			limit = {
+				OR = {
+					scope:court_outcome = flag:success_soulmate
+					scope:court_outcome = flag:success_marriage
+					scope:court_outcome = flag:success_elope
+					scope:court_outcome = flag:success_kiss
+				}
+				culture = {
+					has_cultural_parameter = romance_scheme_bonuses
+				}
+				exists = dynasty
+			}
+			dynasty = {
+				add_dynasty_prestige = minor_dynasty_prestige_gain
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					scope:court_outcome = flag:failure_soft
+					scope:court_outcome = flag:failure_hard
+				}
+				culture = {
+					has_cultural_parameter = romance_scheme_bonuses
+				}
+			}
+			add_stress = medium_stress_impact_gain
+		}
+	}
+
+	scope:scheme ?= { end_scheme = yes }
+}
+

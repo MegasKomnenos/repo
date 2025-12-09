@@ -1,0 +1,18 @@
+﻿l_russian:
+ TITLE_NAME:1 "$NAME|U$"
+ TITLE_TIERED_NAME:0 "$TIER|U$ $NAME$"
+ TITLE_CLAN_TIERED_NAME:0 "$NAME$ $TIER|U$"
+ TITLE_CLAN_TIERED_WITH_UNDERLYING_NAME:0 "$NAME$ $TIER|U$ #F ($TIER|U$ $BASE_NAME$) #!"
+ TITLE_TIER_AS_NAME:0 "$TIER|U$"
+
+# Error log cleaning
+ b_mahut:0 "Ма'хут"
+ b_wara:0 "Вара"
+ b_leylan:0 "Каэр Лейлан"
+ c_cambray:0 "Камбрейские Холмы"
+ 
+### RU EDIT
+ b_amol: "Амол"
+ c_amol: "Амол"
+ b_amaya: "Амайя"
+ 

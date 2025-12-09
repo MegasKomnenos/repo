@@ -1,0 +1,14 @@
+﻿lmfmod_compatibility = {
+	group = "lmfmod_error_suppression"
+
+	is_available_on_create = {
+		always = no
+	}
+
+	lmfmod_compatibility_doctrine = {
+		parameters = {
+			homosexuality_celebrated = no
+		}
+	}
+}
+
