@@ -1,0 +1,15 @@
+ttd_on_send_marriage_effect = {}
+
+ttd_on_accept_marriage_effect = {
+	scope:actor ?= { remove_marriage_introduction_variables = yes }
+	scope:recipient ?= { remove_marriage_introduction_variables = yes }
+	scope:secondary_actor ?= { remove_marriage_introduction_variables = yes }
+	scope:secondary_recipient ?= { remove_marriage_introduction_variables = yes }
+}
+
+ttd_marriage_proposal_clean_up_effect = {
+	scope:actor ?= { remove_marriage_introduction_variables = yes }
+	scope:recipient ?= { remove_marriage_introduction_variables = yes }
+	scope:secondary_actor ?= { remove_marriage_introduction_variables = yes }
+	scope:secondary_recipient ?= { remove_marriage_introduction_variables = yes }
+}
