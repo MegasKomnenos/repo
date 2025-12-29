@@ -1,0 +1,634 @@
+﻿# standard costs
+@maa_buy_cost = 150
+@maa_low_maintenance_cost = 1.0
+@maa_high_maintenance_cost = 5.0
+@cultural_maa_extra_ai_score = 60 # Equivalent to having 6 extra regiments beyond what the code scoring would indicate (see NEGATIVE_SCORE_PER_EXISTING_REGIMENT)
+
+# Must be synced between files with the values located at "# Provisions Costs #".
+@provisions_cost_infantry_cheap = 3
+@provisions_cost_infantry_moderate = 7
+@provisions_cost_infantry_expensive = 12
+@provisions_cost_infantry_bankrupting = 15
+
+@provisions_cost_cavalry_cheap = 7
+@provisions_cost_cavalry_moderate = 15
+@provisions_cost_cavalry_expensive = 21
+@provisions_cost_cavalry_bankrupting = 30
+
+@provisions_cost_special_cheap = 6
+@provisions_cost_special_moderate = 12
+@provisions_cost_special_expensive = 18
+@provisions_cost_special_bankrupting = 24
+
+warrior_druids = {
+	# Matt note: this Holy Order exclusive MaA can change.
+	# It currently should excel at screening protection.
+	# I don't want to change the stack size, it should probably be lower.
+	
+	type = skirmishers
+	
+	can_recruit = { always = no }
+	
+	damage = 10
+	toughness = 12
+	pursuit = 4
+	screen = 24
+	
+	terrain_bonus = {
+		forest = { damage = 12 screen = 24 }
+		taiga = { damage = 12 screen = 24 }
+		deep_forest = { damage = 12 screen = 24 }
+		hills = { damage = 6 screen = 12 }
+		mountains = { damage = 6 screen = 12 }
+	}
+	
+	winter_bonus = {
+		normal_winter = { pursuit = 8 }
+	}
+	
+	counters = {
+		archers = 1
+		monster = 2
+	}
+	
+	buy_cost = { gold = 90 }
+	low_maintenance_cost = { gold = 0.4 }
+	high_maintenance_cost = { gold = 1.2 }
+	provision_cost = @provisions_cost_special_moderate
+
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = dunlending_axe_hunters
+}
+
+dunlending_huscarl = {
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_dunlending_warriors }
+			AND = {
+				is_human = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_dunlending_warriors }
+			}
+		}
+	}
+	type = heavy_infantry
+	buy_cost = { gold = 100 }
+	low_maintenance_cost = { gold = 0.4 }
+	high_maintenance_cost = { gold = 1.2 }
+	provision_cost = @provisions_cost_infantry_expensive
+	
+	stack = 100
+	damage = 40
+	toughness = 20
+	pursuit = 0
+	screen = 24
+
+	counters = {
+		archers = 1
+		pikemen = 1
+	}
+
+	terrain_bonus = {
+		hills = { damage = 5 toughness = 10 screen = 6 }
+		forest = { damage = 10 screen = 6 }
+		taiga = { damage = 10 screen = 6 }
+	}
+
+	winter_bonus = {
+		normal_winter = { toughness = 5 screen = 5 }
+		harsh_winter = { toughness = 5 screen = 5 }
+	}
+
+	allowed_in_hired_troops = yes
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = dunlending_huscarls
+}
+
+dunlending_outriders = {
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_dunlending_warriors }
+			AND = {
+				is_human = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_dunlending_warriors }
+			}
+		}
+	}
+	type = light_cavalry
+	buy_cost = { gold = 88 }
+	low_maintenance_cost = { gold = 0.39 }
+	high_maintenance_cost = { gold = 1.17 }
+	provision_cost = @provisions_cost_cavalry_moderate
+	
+	stack = 100
+	damage = 24
+	toughness = 15
+	pursuit = 40
+	screen = 10
+
+	counters = {
+		archers = 1
+		skirmishers = 1
+		archer_cavalry = 0.5
+	}
+
+	terrain_bonus = {
+		plains = { damage = 10 }
+		hills = { damage = 10 toughness = 5 screen = 10 }
+		mountains = { damage = 10 toughness = 5 screen = 10 }
+		wetlands = { damage = -15 toughness = -10 pursuit = -20 screen = -20 }
+	}
+
+	winter_bonus = {
+		harsh_winter = { damage = -5 toughness = -2 }
+	}
+
+	allowed_in_hired_troops = no
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = dunlending_outriders
+}
+
+dunlending_axe_hunters = {
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_dunlending_warriors }
+			AND = {
+				is_human = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_dunlending_warriors }
+			}
+		}
+	}
+	type = skirmishers
+	
+	damage = 12
+	toughness = 18
+	pursuit = 0
+	screen = 16
+	
+	terrain_bonus = {
+		plains = { damage = 8 }
+		hills = { damage = 8 screen = 4 }
+		mountains = { damage = 8 toughness = 2 screen = 4 }
+		forest = { toughness = 8 screen = 4 }
+		taiga = { toughness = 8 screen = 4 }
+	}
+
+	counters = {
+		light_cavalry = 2
+		heavy_infantry = 1
+	}
+
+	winter_bonus = {
+		normal_winter = { toughness = 5 }
+		harsh_winter = { toughness = 5 }
+	}
+
+	buy_cost = { gold = 45 }
+	low_maintenance_cost = { gold = 0.15 }
+	high_maintenance_cost = { gold = 0.45 }
+	provision_cost = @provisions_cost_infantry_moderate
+	
+	allowed_in_hired_troops = no
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = dunlending_axe_hunters
+}
+
+### GWATHURIM WARRIORS ###
+clan_swordsmen = { 
+	can_recruit = { 
+		OR = {
+			AND = {
+				is_human = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_cultural_parameter = unlock_maa_clan_swordsmen }
+			}
+			culture = { has_cultural_parameter = unlock_maa_clan_swordsmen 
+			}
+		} 
+	}
+	type = heavy_infantry
+	damage = 55
+	toughness = 15
+	pursuit = 10
+	screen = 0
+	terrain_bonus = {
+		hills = { toughness = 5 pursuit = 5 screen = 10 }
+		mountains = { toughness = 10 pursuit = 10 screen = 20 }
+		forest = { toughness = 5 pursuit = 5 screen = 10 }
+		red_desert = { toughness = 5 pursuit = 5 screen = 10 }
+	}
+	counters = {
+		pikemen = 1
+	}
+	winter_bonus = {
+		normal_winter = { toughness = 5 screen = 5 }
+		harsh_winter = { toughness = 5 screen = 5 }
+	}
+	buy_cost = { gold = 100 }
+	low_maintenance_cost = { gold = 0.4 }
+	high_maintenance_cost = { gold = 1.2 }
+	provision_cost = @provisions_cost_infantry_cheap
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	allowed_in_hired_troops = no
+	icon = dunlending_huscarls
+}
+
+dunlending_longbowmen = {
+	can_recruit = { 
+		OR = {
+			AND = {
+				is_human = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_cultural_parameter = unlock_maa_dunlending_longbowmen }
+			}
+			culture = { has_cultural_parameter = unlock_maa_dunlending_longbowmen 
+			}
+		} 
+	}
+	type = archers
+	buy_cost = { gold = 70 }
+	low_maintenance_cost = { gold = 0.24 }
+	high_maintenance_cost = { gold = 0.72 }
+	provision_cost = @provisions_cost_infantry_moderate
+	
+	stack = 100
+	damage = 45
+	toughness = 10
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		heavy_cavalry = 1
+	}
+
+	terrain_bonus = {
+		hills = { damage = 12 toughness = 4 }
+		mountains = { damage = 12 toughness = 4 }
+		forest = { damage = 6 toughness = 2 }
+		taiga = { damage = 6 toughness = 2 }
+	}
+
+	winter_bonus = {
+		normal_winter = { damage = 3 toughness = 3 }
+		harsh_winter = { damage = 3 toughness = 3 }
+	}
+
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	allowed_in_hired_troops = no
+	icon = dunlending_longbowmen
+}
+
+clan_axemen = { 
+	can_recruit = { 
+		OR = {
+			AND = {
+				is_human = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_cultural_parameter = unlock_maa_clan_axemen }
+			}
+			culture = { has_cultural_parameter = unlock_maa_clan_axemen }
+		} 
+	}
+	type = skirmishers
+	damage = 17
+	toughness = 13
+	pursuit = 0
+	screen = 20
+
+	terrain_bonus = {
+		hills = { damage = 6 toughness = 4 screen = 10 }
+		mountains = { damage = 10 toughness = 8 screen = 15 }
+		forest = { damage = 3 toughness = 2 screen = 5 }
+		taiga = { damage = 3 toughness = 2 screen = 5 }
+	}
+	counters = {
+		heavy_infantry = 1
+	}
+	winter_bonus = {
+		normal_winter = { toughness = 5 }
+		harsh_winter = { toughness = 5 }
+	}
+	buy_cost = { gold = 48 }
+	low_maintenance_cost = { gold = 0.17 }
+	high_maintenance_cost = { gold = 0.51 }
+	provision_cost = @provisions_cost_infantry_cheap
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	allowed_in_hired_troops = no
+	icon = dunlending_axe_hunters
+}
+
+# Saruman Dunlending Ally MaA
+isengard_dunlending_huntsmen = {
+	type = skirmishers
+	
+	can_recruit = { 
+		has_character_flag = saruman_dunlending_auxilliaries
+	}
+
+	damage = 12
+	toughness = 18
+	pursuit = 10
+	screen = 16
+	
+	terrain_bonus = {
+		plains = { damage = -2 toughness = -2 screen = -10 }
+		farmlands = { damage = -2 toughness = -2 screen = -10 }
+		forest = { damage = 4 toughness = 8 screen = 4 }
+		hills = { damage = 4 toughness = 8 screen = 4 }
+		taiga = { damage = 4 toughness = 8 screen = 4 }
+		deep_forest = { damage = 4 toughness = 8 screen = 4 }
+	}
+
+	counters = {
+		heavy_infantry = 1
+	}
+
+	winter_bonus = {
+		normal_winter = { damage = 3 toughness = 3 pursuit = 4 screen = 4 }
+		harsh_winter = { damage = 3 toughness = 3 pursuit = 4 screen = 4 }
+	}
+
+	buy_cost = { gold = 45 }
+	low_maintenance_cost = { gold = 0.15 }
+	high_maintenance_cost = { gold = 0.45 }
+	provision_cost = @provisions_cost_infantry_cheap
+	
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = isengard_dunlending_huntsmen
+}
+
+isengard_dunlending_axemen = {
+	type = heavy_infantry
+
+	can_recruit = { 
+		has_character_flag = saruman_dunlending_auxilliaries
+	}	
+
+	damage = 40
+	toughness = 25
+	pursuit = 0
+	screen = 0
+	
+	terrain_bonus = {
+		forest = { damage = 6 toughness = 7 screen = 2 }
+		hills = { damage = 6 toughness = 7 screen = 2 }
+		taiga = { damage = 6 toughness = 7 screen = 2 }
+		deep_forest = { damage = 6 toughness = 7 screen = 2 }
+	}
+
+	counters = {
+		pikemen = 1
+	}
+
+	winter_bonus = {
+		normal_winter = { damage = 3 toughness = 3 pursuit = 4 screen = 4 }
+		harsh_winter = { damage = 3 toughness = 3 pursuit = 4 screen = 4 }
+	}
+	
+	buy_cost = { gold = 110 }
+	low_maintenance_cost = { gold = 0.45 }
+	high_maintenance_cost = { gold = 1.35 }
+	provision_cost = @provisions_cost_infantry_moderate
+	
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = isengard_dunlending_axemen
+}
+
+isengard_dunlending_horsemen = {
+	type = light_cavalry
+
+	can_recruit = { 
+		has_character_flag = saruman_dunlending_auxilliaries
+	}	
+
+	damage = 24
+	toughness = 16
+	pursuit = 40
+	screen = 20
+	
+	terrain_bonus = {
+		hills = { damage = 10 }
+		forest = { damage = 10 }
+		mountains = { damage = -10 pursuit = -30 }
+		desert_mountains = { damage = -10 pursuit = -30 }
+		wetlands = { damage = -10 pursuit = -20 screen = -15 }
+	}
+	
+	counters = {
+		archers = 1
+	}
+
+	buy_cost = { gold = 90 }
+	low_maintenance_cost = { gold = 0.35 }
+	high_maintenance_cost = { gold = 1.05 }
+	provision_cost = @provisions_cost_cavalry_moderate
+
+	stack = 100
+	ai_quality = { value = @cultural_maa_extra_ai_score }
+	icon = dunlending_outriders
+}
+
+ ### HILLMEN ###
+
+hillmen_heavy_infantry = {
+	type = heavy_infantry
+	buy_cost = { gold = 135 }
+	low_maintenance_cost = { gold = 0.5 }
+	high_maintenance_cost = { gold = 1.4 }
+	provision_cost = @provisions_cost_cavalry_moderate
+	can_recruit = { culture = { has_innovation = innovation_hillmen_warfare } }
+	
+	stack = 50
+	damage = 100
+	toughness = 15
+	pursuit = 30
+	screen = 00
+
+	counters = {
+		skirmishers = 1
+		pikemen = 1
+	}
+
+	terrain_bonus = {
+		plains = { damage = 8 }
+		hills = { damage = 8 screen = 4 }
+		mountains = { damage = 8 toughness = 2 screen = 4 }
+		forest = { toughness = 8 screen = 4 }
+		taiga = { toughness = 8 screen = 4 }
+		arctic = { damage = 10 toughness = 10 screen = 12 }
+	}
+
+	winter_bonus = {
+		normal_winter = { toughness = 5 screen = 5 }
+		harsh_winter = { toughness = 5 screen = 5 }
+	}
+
+	allowed_in_hired_troops = yes
+	ai_quality = { value = 150 }
+	icon = hillmen_heavy_infantry
+}
+
+hillmen_light_cavalry = {
+	type = light_cavalry
+	buy_cost = { gold = 88 }
+	low_maintenance_cost = { gold = 0.39 }
+	high_maintenance_cost = { gold = 1.17 }
+	provision_cost = @provisions_cost_cavalry_moderate
+	can_recruit = { culture = { has_innovation = innovation_hillmen_warfare } }
+	
+	stack = 100
+	damage = 24
+	toughness = 15
+	pursuit = 40
+	screen = 10
+
+	counters = {
+		archers = 1
+		skirmishers = 1
+	}
+
+	terrain_bonus = {
+		hills = { damage = 10 toughness = 10 screen = 12 }
+		arctic = { damage = 10 toughness = 10 screen = 12 }
+		forest = { damage = 18 screen = 12 }
+		taiga = { damage = 18 screen = 8 }
+	}
+
+	#winter_bonus = {
+		#harsh_winter = { damage = -5 toughness = -2 }
+	#}
+
+	allowed_in_hired_troops = no
+	ai_quality = { value = 150 }
+	icon = hillmen_light_cavalry
+}
+
+hillmen_skirmishers = {
+	type = skirmishers
+	can_recruit = { culture = { has_innovation = innovation_hillmen_warfare } }
+	
+	stack = 125
+	damage = 10
+	toughness = 10
+	pursuit = 16
+	screen = 00
+	
+	terrain_bonus = {
+		plains = { damage = 8 }
+		hills = { damage = 8 screen = 4 }
+		mountains = { damage = 8 toughness = 2 screen = 4 }
+		forest = { toughness = 8 screen = 4 }
+		taiga = { toughness = 8 screen = 4 }
+		arctic = { damage = 10 toughness = 10 screen = 12 }
+	}
+
+	counters = {
+		light_cavalry = 2
+		heavy_infantry = 1
+	}
+
+	winter_bonus = {
+		normal_winter = { toughness = 5 }
+		harsh_winter = { toughness = 5 }
+	}
+
+	buy_cost = { gold = 40 }
+	low_maintenance_cost = { gold = 0.12 }
+	high_maintenance_cost = { gold = 0.40 }
+	provision_cost = @provisions_cost_infantry_cheap
+	
+	allowed_in_hired_troops = no
+	ai_quality = { value = 150 }
+	icon = hillmen_skirmishers
+}
+
+hillmen_heavy_infantry_unlock = {
+	can_recruit = { culture = { has_innovation = innovation_advanced_hillmen_warfare } }
+	type = heavy_infantry
+	buy_cost = { gold = 100 }
+	low_maintenance_cost = { gold = 0.4 }
+	high_maintenance_cost = { gold = 1.2 }
+	provision_cost = @provisions_cost_infantry_moderate
+	
+	stack = 100
+	damage = 40
+	toughness = 20
+	pursuit = 5
+	screen = 5
+
+	counters = {
+		#archers = 1
+		pikemen = 1
+	}
+
+	terrain_bonus = {
+		hills = { damage = 5 toughness = 10 screen = 6 }
+		forest = { damage = 10 screen = 6 }
+		taiga = { damage = 10 screen = 6 }
+		arctic = { damage = 10 toughness = 10 screen = 12 }
+	}
+
+	winter_bonus = {
+		normal_winter = { toughness = 5 screen = 5 }
+		harsh_winter = { toughness = 5 screen = 5 }
+	}
+
+	allowed_in_hired_troops = yes
+	ai_quality = { value = 150 }
+	icon = hillmen_heavy_infantry_unlock
+}
+
+ hillmen_pikemen = {
+	type = pikemen
+	can_recruit = { culture = { has_innovation = innovation_hillmen_warfare } }
+	
+	damage = 20
+	toughness = 16
+	pursuit = 10
+	screen = 0
+
+	terrain_bonus = {		
+		floodplains = { damage = 6 toughness = 6 pursuit = 10 }
+		plains = { damage = 6 toughness = 6 pursuit = 5 }
+		farmlands = { damage = 6 toughness = 6 pursuit = 5 }
+		hills = { damage = 3 toughness = 3 screen = 5 }
+		forest = { damage = 3 toughness = 3 screen = 5 }
+	}
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 2
+		monster = 1
+	}
+
+	winter_bonus = {
+		normal_winter = { damage = 4 toughness = 5 }
+		harsh_winter = { damage = 4 toughness = 5 }
+	}
+
+	buy_cost = { gold = 55 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+	provision_cost = @provisions_cost_infantry_cheap
+	
+	allowed_in_hired_troops = no
+	
+	stack = 100
+	ai_quality = { value = 150 }
+	icon = hillmen_pikemen
+}

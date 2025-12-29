@@ -1,0 +1,324 @@
+﻿# An artifact has changed ownership
+# root = the artifact
+# scope:owner = the person who now holds the artifact
+# scope:old_owner = the person who used to hold the artifact
+on_artifact_changed_owner = {
+	events = {
+		artifact.0011
+		artifact.0101
+	}
+
+	effect = {
+		save_scope_as = artifact
+
+		if = {
+			limit = {
+				scope:owner = { is_ai = no }
+				realms_achievements_enabled = yes
+			}
+			if = { # Stone-talkies | Achievement
+				limit = {
+					NOT = { exists = global_var:lotr_achievement_68 }
+					scope:artifact = {
+						OR = {
+							has_variable = palantir_elostirion
+							has_variable = palantir
+						}
+					}
+					scope:owner = {
+						any_character_artifact = {
+							has_variable = palantir
+							count >= 3
+						}
+						any_character_artifact = {
+							has_variable = palantir_elostirion # the Elostirion stone doesn't have the Palantir variable as it's unusable
+						}
+					}
+				}
+				set_global_variable = lotr_achievement_68
+			}
+			if = { # That’s going in the book! | Achievement
+				limit = {
+					NOT = { exists = global_var:lotr_achievement_13 }
+					scope:artifact = { has_variable = book_of_grudges }
+					scope:owner = {
+						any_character_artifact = {
+							has_variable = book_of_grudges
+							count >= 5
+						}
+					}
+				}
+				set_global_variable = lotr_achievement_13
+			}
+			if = { # I still have 8 toes left | Achievement
+				limit = {
+					NOT = { exists = global_var:lotr_achievement_58 }
+					NOR = {
+						scope:owner = { cannot_be_killed = yes }
+						scope:owner = { is_elf = yes }
+					}
+					NOT = { scope:owner = { is_sauron = yes } }
+					scope:artifact = { has_variable = ring_of_mortals }
+					scope:owner = {
+						any_character_artifact = {
+							has_variable = ring_of_mortals
+							count >= 8
+						}
+					}
+				}
+				set_global_variable = lotr_achievement_58
+			}
+			if = { # Lord of the Rings | Achievement
+				limit = {
+					NOT = { exists = global_var:lotr_achievement_07 }
+					scope:owner = { is_sauron = yes }
+					OR = {
+						scope:artifact = { has_variable = ring_of_dwarves }
+						scope:artifact = { has_variable = ring_of_mortals }
+					}
+					scope:owner = {
+						any_character_artifact = {
+							has_variable = ring_of_mortals
+							NOT = { has_variable = ring_of_dwarves }
+							count >= 8
+						}
+						any_character_artifact = {
+							has_variable = ring_of_dwarves
+							count >= 3
+						}
+					}
+				}
+				set_global_variable = lotr_achievement_07
+			}
+		}
+
+		grant_banner_house_claim_effect = yes
+		every_artifact_claimant = { #This on_action is not triggered on succession for the ones getting the claim, so we force it here
+			trigger_event = {
+				on_action = on_artifact_claim_gained
+			}
+		}
+		if = {
+			limit = { 
+				has_variable = ring_of_mortals
+				sauron_is_alive = yes
+			}
+			scope:owner = { 
+				trigger_event = lotr_artifact.0100 # Ring modifier switch event
+				
+				if = { 
+					limit = { 
+						cannot_be_killed = no
+						NOT = { is_elf = yes }
+						NOT = { is_dwarf = yes }
+					}
+					trigger_event = { 
+						on_action = nazgul_personality # Ring madness for Human and Orc
+						days = { 180 225 }
+					}
+				}
+			}
+			scope:old_owner = {
+				if = {
+					limit = {
+						cannot_be_killed = no
+						NOT = { is_elf = yes }
+						NOT = { has_character_flag = doesnt_care_about_their_ring }
+					}
+					trigger_event = { 
+						id = nazgul.0300 #My PRECIOUSSSSSS!
+						days = 5
+					}
+				}
+			}
+			
+			if = {
+				limit = { has_variable = corrupted_ring }
+				scope:owner = {
+					if = { 
+						limit = { is_dwarf = yes }
+						trigger_event = { 
+							id = lotr_artifact.0021 # Gold madness for Dwarves
+							years = 5
+						}
+					}
+				}
+			}
+			
+			if = {
+				limit = {
+					has_variable = ring_of_men
+				}
+				if = {
+					limit = {
+						scope:owner = { 
+							cannot_be_killed = no 
+							NOT = { is_elf = yes }
+						}
+					}
+					scope:old_owner = {
+						if = {
+							limit = { is_nazgul = yes }
+							save_scope_as = avenging_nazgul
+							set_variable = {
+								name = failures
+								value = 0
+							}
+						}
+					}
+					scope:owner = { #The Nazgûl starts his manhunt
+						trigger_event = {
+							id = nazgul.0001
+							days = { 180 225 }
+						}
+					}
+				}
+			}
+		}
+		
+		if = {
+			limit = {
+				has_variable = morgul_blade
+			}
+			scope:owner = { #It smokes !
+				trigger_event = {
+					id = lotr_artifact.0001
+					days = 1 
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = elven
+			}
+			scope:owner = { #It burns !
+				trigger_event = {
+					id = lotr_artifact.0002
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = thorins_tomb
+				scope:owner = { NOT = { has_character_modifier = plundered_thorins_tomb_modifier } }
+			}
+			scope:owner = { #This belongs in a tomb !
+				trigger_event = {
+					id = lotr_artifact.0031
+					days = 1 
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = heirloom_of_title
+				scope:owner = var:heirloom_of_title.holder
+			}
+			scope:owner = {
+				trigger_event = {
+					id = lotr_artifact.0010
+					days = 2
+				}
+			}
+		}
+	}
+}
+
+# An artifact has changed ownership due to succession
+# This is called just before the artifact changes hands.
+# If you destroy it or change its owner, it won't change hands
+# on_artifact_changed_owner will be called as normal when it changes hands
+# root = the artifact
+# scope:owner = the person who now holds the artifact
+# scope:old_owner = the person who used to hold the artifact
+# scope:old_primary = the heir's primary before this succession happened
+on_artifact_succession = {
+	events = {
+		artifact.0031
+	}
+}
+
+# An artifact has reached 0 durability due to decay
+# root = the artifact
+# scope:owner = the person who owns the artifact
+on_artifact_broken_through_decay = {
+	events = {
+		artifact.1000
+	}
+}
+
+# An artifact has reached 0 durability due to an effect ( ex. damage )
+# root = the artifact
+# scope:owner = the person who owns the artifact
+on_artifact_broken_through_effect = {
+	events = {
+		artifact.0021
+	}
+}
+
+# Character gained a claim on an artifact
+# root = character
+# scope:owner = current artifact owner
+# scope:artifact = claimed artifact
+on_artifact_claim_gained = {
+	effect = {
+		send_interface_message = {
+			type = msg_artifact_claim_gained
+			title = artifact_claim_gained_notification
+			right_icon = scope:artifact
+			left_icon = scope:owner
+			
+			show_as_tooltip = {
+				add_personal_artifact_claim = scope:artifact
+			}
+		}
+	}
+}
+
+# Character lost a claim on an artifact
+# root = character
+# scope:owner = current artifact owner
+# scope:artifact = artifact
+on_artifact_claim_lost = {
+	effect = {
+		if = {
+			limit = {
+				NOT = { scope:owner = root }
+			}
+			send_interface_message = {
+				type = msg_artifact_claim_lost
+				title = artifact_claim_lost_notification
+				right_icon = scope:artifact
+				left_icon = scope:owner
+				
+				show_as_tooltip = {
+					remove_personal_artifact_claim = scope:artifact
+				}
+			}
+		}
+	}
+}
+
+# Fired when an artifact reaches durability <= ARTIFACT_LOW_DURABILITY defıned in 00_defines.txt
+# root = the artifact owner
+on_artifact_durability_low = {
+	random_events = {
+		chance_to_happen = 50
+		1000 = 0
+		50 = artifact.3000
+		50 = artifact.3010
+		50 = artifact.3020
+		50 = artifact.3030
+		50 = artifact.3040
+	}
+}
+
+# Fired when an artifact with hıgh quality reaches durability <= ARTIFACT_VERY_LOW_DURABILITY defıned in 00_defines.txt
+# root = the artifact
+# scope:owner = the person who owns the artifact
+on_artifact_durability_very_low = {
+	events = {
+		artifact.3050
+	}
+}

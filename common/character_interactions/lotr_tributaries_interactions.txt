@@ -1,0 +1,525 @@
+﻿#Tributaries Character Interactions
+
+#Ruler guarantees the independence of another
+offer_protection_interaction = {
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	use_diplomatic_range = yes
+	icon = send_poem_interaction
+
+	desc = offer_protection_interaction_desc
+
+	#Protector must be at least a Duke protecting a lower tier independent ruler. Neither should already be tributaries or at war or in existing liege/vassal relationship.
+
+	is_shown = {
+		scope:actor = { #Protector
+			NOT = { has_culture = culture:wastelands }
+			is_tributary = no
+			faith_is_good = yes
+			highest_held_title_tier >= tier_duchy
+			NOT = { this = scope:recipient }
+			is_wastelands = no
+			is_landed = yes
+			is_landless_adventurer = no
+			NOT = { government_has_flag = government_is_tribal }
+		}
+		scope:recipient = { #Protectee
+			is_tributary = no
+			highest_held_title_tier >= tier_county
+			NOT = { has_culture = culture:wastelands }
+			NOR = {
+				any_liege_or_above = {
+					this = scope:actor
+				}
+                any_vassal_or_below = {
+                    this = scope:actor
+                }
+			}
+			highest_held_title_tier >= tier_county
+			is_wastelands = no
+			is_landless_adventurer = no
+			NOR = {
+				government_has_flag = government_is_mercenary
+				government_has_flag = government_is_holy_order
+			}
+		}
+	}
+
+	is_valid = {
+		scope:actor = { #Protector
+			is_at_war = no
+			is_independent_ruler = yes
+			highest_held_title_tier > scope:recipient.highest_held_title_tier
+		}
+		scope:recipient = { #Protectee
+			is_at_war = no
+			is_independent_ruler = yes
+			highest_held_title_tier > tier_barony
+		}
+	}
+
+	on_accept = {
+		scope:recipient = {
+			start_tributary = {
+				contract_group = tributary_protectorate
+				suzerain = scope:actor
+			}
+			tributary_contract_set_obligation_level = { type = suzerain_war_participation_guarantee level = 1 }
+		}
+	}
+
+	on_decline = {
+	}
+
+	#Protectorate
+	# send_option = {
+	# 	is_shown = {
+	# 		always = yes
+	# 	}
+	# 	flag = protectorate_trib
+	# 	localization = protectorate_trib
+	# }
+
+	ai_accept = {
+		base = -100
+
+		# Title Tier - more likely to accept much higher tiers
+		modifier = {
+			scope:actor = {
+				tier_difference = {
+					target = scope:recipient
+					value >= 1
+				}
+			}
+			add = {
+				if = {
+					limit = {
+						scope:actor = {
+							tier_difference = {
+								target = scope:recipient
+								value = 1
+							}
+						}
+					}
+					add = 30
+				}
+				if = {
+					limit = {
+						scope:actor = {
+							tier_difference = {
+								target = scope:recipient
+								value = 2
+							}
+						}
+					}
+					add = 60
+				}
+				if = {
+					limit = {
+						scope:actor = {
+							tier_difference = {
+								target = scope:recipient
+								value = 3
+							}
+						}
+					}
+					add = 90
+				}
+				if = {
+					limit = {
+						scope:actor = {
+							tier_difference = {
+								target = scope:recipient
+								value = 4
+							}
+						}
+					}
+					add = 120
+				}
+			}
+			desc = RANK_DIFFERENCE_REASON
+		}
+
+		# Opinion - more likely to accept if Recipient likes the Actor
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.5
+			desc = AI_OPINION_REASON
+		}
+
+		# Relationships - more or less likely to accept
+		modifier = { #Friend modifier
+			desc = offer_vassalization_interaction_aibehavior_friend_tt
+			trigger = {
+				scope:recipient = {
+					has_relation_friend = scope:actor
+					NOT = { has_relation_best_friend = scope:actor }
+				}
+			}
+			add = 15
+		}
+		modifier = { #Best Friend modifier
+			desc = offer_vassalization_interaction_aibehavior_best_friend_tt
+			trigger = {
+				scope:recipient = {
+					has_relation_best_friend = scope:actor
+				}
+			}
+			add = 30
+		}
+		modifier = { #Rivalry modifier
+			desc = offer_vassalization_interaction_aibehavior_rival_tt
+			trigger = {
+				scope:recipient = {
+					has_relation_rival = scope:actor
+					NOT = { has_relation_nemesis = scope:actor }
+				}
+			}
+			add = -50
+		}
+		modifier = { #Nemesis modifier
+			desc = offer_vassalization_interaction_aibehavior_nemesis_tt
+			trigger = {
+				scope:recipient = {
+					has_relation_nemesis = scope:actor
+				}
+			}
+			add = -1000
+		}
+
+		# Dynasty - more likely to accept more prestigous family's protection
+		modifier = { # Low Dynasty Level
+			add = -5
+			desc = AI_DYNASTY_PRESTIGE_REASON
+			scope:actor = { has_dynasty = yes }
+			NOT = { scope:actor.dynasty = scope:recipient.dynasty }
+			scope:actor.dynasty = { dynasty_prestige_level = 0 }
+		}
+		modifier = { # High Dynasty Level
+			desc = AI_DYNASTY_PRESTIGE_REASON
+			scope:actor = { has_dynasty = yes }
+			NOT = { scope:actor.dynasty = scope:recipient.dynasty }
+			scope:actor.dynasty = { dynasty_prestige_level >= 2 }
+			add = {
+				value = 10
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 3 }
+					}
+					add = 5
+				}
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 4 }
+					}
+					add = 5
+				}
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 5 }
+					}
+					add = 5
+				}
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 6 }
+					}
+					add = 5
+				}
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 7 }
+					}
+					add = 5
+				}
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 8 }
+					}
+					add = 5
+				}
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 9 }
+					}
+					add = 5
+				}
+				if = {
+					limit = {
+						scope:actor.dynasty = { dynasty_prestige_level >= 10 }
+					}
+					add = 5
+				}
+			}
+		}
+
+		# Faith Hostility - less likely to accept more hostile faiths
+		modifier = { #Faith compatibility
+			scope:recipient.faith = {
+				faith_hostility_level = {
+					target = scope:actor.faith
+					value > faith_fully_accepted_level
+				}
+			}
+			add = {
+				value = -20
+				if = {
+					limit = {
+						scope:recipient.faith = {
+							faith_hostility_level = {
+								target = scope:actor.faith
+								value >= faith_astray_level
+							}
+						}
+					}
+					subtract = 20
+				}
+				if = {
+					limit = {
+						scope:recipient.faith = {
+							faith_hostility_level = {
+								target = scope:actor.faith
+								value >= faith_hostile_level
+							}
+						}
+					}
+					subtract = 40
+				}
+				if = {
+					limit = {
+						scope:recipient.faith = {
+							faith_hostility_level = {
+								target = scope:actor.faith
+								value >= faith_evil_level
+							}
+						}
+					}
+					subtract = 60
+				}
+			}
+			desc = MARRY_DIFFERENT_FAITH_REASON
+		}
+
+		# Dread - more likely to accept if scared of actor
+		modifier = {
+			add = intimidated_external_reason_value
+			scope:recipient = {
+				NOT = { target_is_liege_or_above = scope:actor }
+				has_dread_level_towards = {
+					target = scope:actor
+					level = 1
+				}
+			}
+			desc = INTIMIDATED_REASON
+		}
+		modifier = {
+			add = cowed_external_reason_value
+			scope:recipient = {
+				NOT = { target_is_liege_or_above = scope:actor }
+				has_dread_level_towards = {
+					target = scope:actor
+					level = 2
+				}
+			}
+			desc = COWED_REASON
+		}
+
+		# Military Strength - more likely to accept if stronger militarily
+		modifier = {
+	  	  	add = {
+				value = 1
+					subtract = {
+					value = scope:recipient.max_military_strength
+					divide = { value = scope:actor.max_military_strength min = 1 }
+					}
+				multiply = 10
+	  		}
+			desc = offer_vassalization_interaction_aibehavior_power_tt
+		}
+
+		# Claims - less likely to accept if has claims on actor, more likely if actor has claims on recipient
+		modifier = {
+			scope:recipient = {
+				NOT = { government_has_flag = government_is_clan }
+				any_claim = {
+					holder = scope:actor
+				}
+			}
+			add = {
+				value = -200
+				if = {
+					limit = {
+						NOT = {
+							scope:recipient.house = scope:actor.house
+						}
+					}
+					multiply = 2
+				}
+				if = {
+					limit = {
+						NOT = {
+							scope:recipient.dynasty = scope:actor.dynasty
+						}
+					}
+					multiply = 2
+				}
+				if = {
+					limit = {
+						scope:recipient.dynasty = scope:actor.dynasty
+						OR = {
+							has_trait = bastard
+							has_trait = legitimized_bastard
+						}
+					}
+					multiply = 1.5
+				}
+				if = { # Primary heir will probably inherit the lands after the rulers death
+					limit = {
+						scope:recipient = { is_primary_heir_of = scope:actor }
+					}
+					divide = 4
+				}
+			}
+			desc = IS_CLAIMANT_TO_ACTORS_TITLES
+		}
+		modifier = {
+			scope:actor = {
+				any_claim = {
+					holder = scope:recipient
+				}
+			}
+			add = 25
+			desc = IS_CLAIMANT_TO_RECIPIENT_TITLES
+		}
+
+		# Recent war - less likely to accept if recently at war
+		modifier = {
+			scope:recipient = {
+				has_opinion_modifier = {
+					target = scope:actor
+					modifier = declared_war
+				}
+			}
+			add = -100
+			desc = DECLARED_WAR_REASON
+		}
+
+		# Negative Traits - less likely to accept with these
+		modifier = {
+			scope:recipient = {
+				has_trait = arrogant
+			}
+			add = -20
+			desc = BLACKMAIL_INTERACTION_ARROGANT_ACCEPTANCE
+		}
+
+		# Positive Traits - more likely to accept with these
+		modifier = {
+			scope:recipient = {
+				has_trait = humble
+			}
+			add = 20
+			desc = TAKE_THE_VOWS_HUMBLE
+		}
+
+		# True Ruler Perk Boost
+		modifier = {
+			desc = offer_vassalization_true_ruler_perk_tt
+			trigger = {
+				scope:actor = { has_perk = true_ruler_perk }
+			}
+			add = true_ruler_value
+		}
+
+		# If de jure liege, likely to accept
+		modifier = { # Is the Rightful Liege of recipient
+			desc = offer_vassalization_interaction_aibehavior_rightfulliegetitleholder_tt
+			trigger = {
+				scope:actor = { is_rightful_liege_of = scope:recipient }
+			}
+			add = 25
+		}
+
+		# Distance Penalties - distant realms are less likely to accept
+		modifier = { #Distant Realm
+			desc = offer_vassalization_interaction_aibehavior_distantrealm_tt
+			trigger = {
+				scope:actor = {
+					character_is_realm_neighbor = scope:recipient
+					NOT = {
+						character_is_land_realm_neighbor = scope:recipient
+					}
+				}
+			}
+			add = -100
+		}
+		modifier = { #Remote Realm
+			desc = offer_vassalization_interaction_aibehavior_remoterealm_tt
+			trigger = {
+				scope:actor = {
+					NOT = {
+						character_is_realm_neighbor = scope:recipient
+					}
+				}
+				scope:recipient.capital_province = { squared_distance = { target = scope:actor.capital_province value >= 200000 } }
+			}
+			add = -500
+		}
+	}
+
+	ai_potential = {
+		is_adult = yes
+		is_independent_ruler = yes
+		highest_held_title_tier > tier_county
+	}
+
+	ai_targets = {
+		ai_recipients = neighboring_rulers
+	}
+	ai_target_quick_trigger = {
+		adult = yes
+	}
+	ai_frequency = 48
+
+	ai_will_do = {
+		base = 100
+
+		modifier = { #Duke AI will not offer protection for those in their own de jure Duchy
+			trigger = {
+				scope:actor = {
+					highest_held_title_tier = tier_duchy
+				}
+				scope:actor.capital_county.duchy = scope:recipient.capital_county.duchy
+			}
+			add = -1000
+		}
+		modifier = { #Kingdom AI will not offer protection for those in their own de jure Kingdom
+			trigger = {
+				scope:actor = {
+					highest_held_title_tier = tier_kingdom
+				}
+				scope:actor.capital_county.kingdom = scope:recipient.capital_county.kingdom
+			}
+			add = -1000
+		}
+		modifier = { #Empire AI will not offer protection for those in their own de jure Empire
+			trigger = {
+				scope:actor = {
+					highest_held_title_tier = tier_empire
+				}
+				scope:actor.capital_county.empire = scope:recipient.capital_county.empire
+			}
+			add = -1000
+		}
+		modifier = { #AI Elves will not seek to protect others
+			scope:actor = {
+				is_elf = yes
+			}
+			add = -1000
+		}
+
+	}
+
+	send_options_exclusive = yes
+}

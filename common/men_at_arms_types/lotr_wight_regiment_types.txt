@@ -1,0 +1,203 @@
+﻿# standard costs
+@maa_buy_cost = 150
+@maa_low_maintenance_cost = 1.0
+@maa_high_maintenance_cost = 5.0
+@cultural_maa_extra_ai_score = 60 # Equivalent to having 6 extra regiments beyond what the code scoring would indicate (see NEGATIVE_SCORE_PER_EXISTING_REGIMENT)
+
+# Must be synced between files with the values located at "# Provisions Costs #".
+@provisions_cost_infantry_cheap = 3
+@provisions_cost_infantry_moderate = 7
+@provisions_cost_infantry_expensive = 12
+@provisions_cost_infantry_bankrupting = 15
+
+@provisions_cost_cavalry_cheap = 7
+@provisions_cost_cavalry_moderate = 15
+@provisions_cost_cavalry_expensive = 21
+@provisions_cost_cavalry_bankrupting = 30
+
+@provisions_cost_special_cheap = 6
+@provisions_cost_special_moderate = 12
+@provisions_cost_special_expensive = 18
+@provisions_cost_special_bankrupting = 24
+
+unburied_wights = {
+	can_recruit = {
+		culture = { has_cultural_pillar = heritage_undead }
+	}	
+	type = heavy_infantry
+	buy_cost = { gold = 90 piety = 180 }
+	low_maintenance_cost = { gold = 0.58 piety = 0.17 }
+	high_maintenance_cost = { gold = 1.74 piety = 0.51 }
+	provision_cost = 0
+	
+	stack = 10
+	damage = 140
+	toughness = 1000
+	pursuit = 0
+	screen = 0
+	
+	terrain_bonus = {
+	}
+	
+	counters = {
+		skirmishers = 1
+		pikemen = 1
+	}
+
+	allowed_in_hired_troops = no
+	ai_quality = { value = 20 }
+	icon = unburied_wights
+}
+
+blighted_trappers = {
+	can_recruit = {
+		culture = { has_cultural_pillar = heritage_undead }
+		has_title = title:c_amon_lanc
+	}	
+	type = archers
+
+	damage = 30
+	toughness = 14
+	pursuit = 10
+	screen = 10
+
+	terrain_bonus = {		
+		forest = { damage = 20 pursuit = 30 }
+		taiga = { damage = 20 pursuit = 30 }
+		deep_forest = { damage = 20 pursuit = 30 }
+		plains = { toughness = -3 }
+		farmlands = { toughness = -3 }
+	}
+
+	counters = {
+		skirmishers = 1
+	}
+
+	winter_bonus = {
+	}
+	
+	buy_cost = { gold = 66 }
+	low_maintenance_cost = { gold = 0.22 }
+	high_maintenance_cost = { gold = 0.66 }
+	provision_cost = 0
+
+
+	allowed_in_hired_troops = no
+	stack = 100
+	ai_quality = { value = 30 }
+	icon = blighted_trappers
+}
+
+giant_spiders = {
+# #juke note:
+#⠀⠀⠀⠀⠀⠀         	⣠⣶⣦⡀⢀⣴⣶⣄⠀
+#⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⡇
+#⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⡿⠁
+#⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⠟⠁⠀
+#⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠟⠁⠀⠀⠀
+#⠀⠀⠀⠀⢀⣠⣤⣤⣄⡀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⡀⡚⢿⣿⣿⣿⡿⣣⣶⣿⣿⣿⣿⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣇
+#⠀⢰⠇⣿⣷⣬⣛⠿⢱⣿⣿⣿⣿⢟⣭⣶⣶⣾⣿⣷⣦⠀⠀⠀⣀⣴⣿⣿
+#⠀⢸⡇⣿⣿⣿⣿⣿⣶⣶⣮⣭⡅⣾⣿⣿⡟⢿⢿⡝⢿⢰⣿⣿⣿⡿⠛⣿
+#⠀⣨⠅⢿⣿⡅⣊⡉⢙⣛⣛⣻⡅⣇⠈⠋⠀⠀⠀⠁⠀⡀⠈⠉⠉⠉⠀  ⣿
+#⠰⡏⣾⡜⣿⣧⢻⡇⠙⠛⣛⢩⣤⠻⠦⠴⠿⠷⠴⠷⠒⠁⠀⠀⠀⠀⠀⡏
+#   ⠁⠈⢿⠘⣿⡆⢇⠀⠀⠀⠋⠸⠃⢸⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠁
+#⠀⠀⠀⠈⠀⠘⢿⡄⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠃
+#⠀⠀⠀⠀⠀⠀⠈⠳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃
+#
+can_recruit = {
+		OR = {
+			AND = {
+				culture = { has_cultural_pillar = heritage_undead }
+				has_title = title:c_amon_lanc
+			}
+			AND = {
+				faith = faith:orc_spider_cult
+				title:c_shalamagar.holder = {
+					faith = faith:orc_spider_cult
+				}
+			}
+			has_character_flag = khorahil_has_orcs
+		}
+
+		
+	}	
+	type = monster
+	buy_cost = { gold = 300 }
+	low_maintenance_cost = { gold = 0.7 }
+	high_maintenance_cost = { gold = 2.1 }
+	provision_cost = 0
+	
+	stack = 5
+	damage = 900
+	toughness = 300
+	pursuit = 0
+	screen = 0
+	
+	terrain_bonus = {
+		deep_forest = { damage = 200 toughness = 700 pursuit = 500 screen = 500 }
+		forest = { damage = 200 toughness = 700 pursuit = 500 screen = 500 }
+		taiga = { damage = 200 toughness = 700 pursuit = 500 screen = 500 }
+		jungle = { damage = 200 toughness = 700 pursuit = 500 screen = 500 }
+		mountains = { damage = 100 toughness = 350 pursuit = 250 screen = 250 }
+	}
+	
+	counters = {
+		skirmishers = 1
+		heavy_infantry= 1
+		light_cavalry = 1
+	}
+	
+	allowed_in_hired_troops = no
+	ai_quality = { value = culture_ai_weight_giant_spiders }
+	icon = giant_spiders
+}
+
+risen_carrion = {
+	can_recruit = {
+		OR = {
+			culture = { has_cultural_parameter = unlock_maa_risen_carrion }
+			# any_directly_owned_province = { has_building_or_higher = "wonder_zekhetz_palace_complex_01" }
+		}
+	}
+	type = skirmishers
+	buy_cost = {
+		gold = 50
+		piety = 25
+	}
+	low_maintenance_cost = {
+		gold = 0.08
+		piety = 0.02
+	}
+	high_maintenance_cost = {
+		gold = 0.24
+		piety = 0.06
+	}
+	provision_cost = 0
+	
+	stack = 200
+	damage = 20
+	toughness = 2
+	pursuit = 5
+	screen = 0
+	
+	terrain_bonus = {
+		desert = { damage = 5 toughness = 1 }
+		desert_mountains = { damage = 5 toughness = 1 }
+		dune_sea = { damage = 5 toughness = 1 }
+		saltflats = { damage = 5 toughness = 1 }
+		red_desert = { damage = 5 toughness = 1 }
+	}
+
+	winter_bonus = {
+		normal_winter = { toughness = -1 }
+		harsh_winter = { damage = -10 toughness = -1 }
+	}
+	
+	counters = {
+		heavy_infantry = 1
+	}
+
+	allowed_in_hired_troops = no
+	icon = risen_carrion
+}

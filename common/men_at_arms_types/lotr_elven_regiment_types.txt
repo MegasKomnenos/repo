@@ -1,0 +1,2771 @@
+﻿# standard costs
+#@maa_buy_cost = 150
+#@maa_low_maintenance_cost = 1.0
+#@maa_high_maintenance_cost = 5.0
+@cultural_maa_extra_ai_score = 200 # Equivalent to having 20 extra regiments beyond what the code scoring would indicate (see NEGATIVE_SCORE_PER_EXISTING_REGIMENT) Naugrim Note: this gives a good balance where the elven AI won't ignore their cultural uniques, but will also still build generics.
+
+# Must be synced between files with the values located at "# Provisions Costs #".
+@provisions_cost_infantry_cheap = 3
+@provisions_cost_infantry_moderate = 7
+@provisions_cost_infantry_expensive = 12
+@provisions_cost_infantry_bankrupting = 15
+
+@provisions_cost_cavalry_cheap = 7
+@provisions_cost_cavalry_moderate = 15
+@provisions_cost_cavalry_expensive = 21
+@provisions_cost_cavalry_bankrupting = 30
+
+@provisions_cost_special_cheap = 6
+@provisions_cost_special_moderate = 12
+@provisions_cost_special_expensive = 18
+@provisions_cost_special_bankrupting = 24
+
+
+#High Elven Generic set
+
+#High Elven Heavy Infantry
+high_elven_heavy_infantry = {
+	type = heavy_infantry
+
+	buy_cost = { gold = 400 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_calaquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_calaquendi_warfare }
+			}
+		}
+	}
+
+	stack = 25
+	damage = 335
+	toughness = 230
+	pursuit = 10
+	screen = 25
+
+	counters = {
+		pikemen = 1
+		monster = 1
+	}
+
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+
+	ai_quality = {
+		value = culture_ai_weight_heavy_infantry
+		add = counter_synergy_ai_weight_heavy_infantry
+	}
+	icon = high_elven_heavy_infantry
+	allowed_in_hired_troops = no
+}
+
+#High Elven Archer
+high_elven_archers = {
+	type = archers
+
+	buy_cost = { gold = 270 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_calaquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_calaquendi_warfare }
+			}
+		}
+	}
+	stack = 25
+	damage = 290
+	toughness = 116
+	pursuit = 30
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		light_cavalry = 1
+		heavy_cavalry = 1
+	}
+
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+
+	ai_quality = { 
+		value = culture_ai_weight_archers
+		add = counter_synergy_ai_weight_archers
+	}
+	icon = high_elven_archers
+	allowed_in_hired_troops = no
+}
+
+#High Elven Heavy Cavalry
+high_elven_heavy_cavalry = {
+	type = heavy_cavalry
+
+	buy_cost = { gold = 455 }
+	low_maintenance_cost = { gold = 0.25 }
+	high_maintenance_cost = { gold = 0.75 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_calaquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_calaquendi_warfare }
+			}
+		}
+	}
+
+	stack = 15
+	damage = 645
+	toughness = 226
+	pursuit = 50
+	screen = 50
+
+	counters = {
+		skirmishers = 1
+		archers = 1
+	}
+
+	terrain_bonus = {
+		halls = { damage = -320 toughness = -20 pursuit = -20 }
+	}
+
+	winter_bonus = {
+	}
+
+	ai_quality = { value = culture_ai_weight_heavy_cavalry }
+	icon = high_elven_heavy_cavalry
+	allowed_in_hired_troops = no
+}
+
+# High elven Spearmen
+high_elven_pikemen = {
+ 	type = pikemen
+
+ 	buy_cost = { gold = 365 }
+ 	low_maintenance_cost = { gold = 0.15 }
+ 	high_maintenance_cost = { gold = 0.45 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_calaquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_calaquendi_warfare }
+			}
+		}
+	}
+
+ 	stack = 25
+ 	damage = 255
+ 	toughness = 280
+ 	pursuit = 0
+ 	screen = 50
+
+ 	counters = {
+ 		monster = 1
+ 		light_cavalry = 1
+ 		heavy_cavalry = 1
+		elephant_cavalry = 1
+		camel_cavalry = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+	ai_quality = {
+		value = culture_ai_weight_pikemen
+		add = counter_synergy_ai_weight_pikemen
+	}
+ 	icon = high_elven_pikemen
+ 	allowed_in_hired_troops = no
+ }
+
+# High elven skirmishers
+high_elven_skirmishers = {
+ 	type = skirmishers
+
+ 	buy_cost = { gold = 150 }
+ 	low_maintenance_cost = { gold = 0.1 }
+ 	high_maintenance_cost = { gold = 0.3 }
+
+	provision_cost = @provisions_cost_infantry_cheap
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_calaquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_calaquendi_warfare }
+			}
+		}
+	}
+
+ 	stack = 30
+ 	damage = 95
+ 	toughness = 152
+ 	pursuit = 40
+ 	screen = 20
+
+ 	counters = {
+ 		archers = 1
+ 		archer_cavalry = 1
+		heavy_infantry = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+ 	ai_quality = { value = culture_ai_weight_skirmishers }
+ 	icon = high_elven_skirmishers
+ 	allowed_in_hired_troops = no
+ }
+
+# High elven Light cavalry
+high_elven_light_cavalry = {
+	type = light_cavalry
+
+	buy_cost = { gold = 300 }
+	low_maintenance_cost = { gold = 0.15 }
+	high_maintenance_cost = { gold = 0.45 }
+
+	provision_cost = @provisions_cost_cavalry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_calaquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_calaquendi_warfare }
+			}
+		}
+	}
+
+	stack = 20
+	damage = 205
+	toughness = 140
+	pursuit = 80
+	screen = 40
+
+	counters = {
+		heavy_infantry = 1
+		monster = 1
+		archers = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = culture_ai_weight_light_cavalry
+		add = counter_synergy_ai_weight_light_cavalry
+	}
+	icon = high_elven_light_cavalry
+	allowed_in_hired_troops = no
+}
+
+#Grey Elven Generic Set
+
+#Grey Elven Spearmen
+grey_elven_pikemen = {
+	type = pikemen
+
+	buy_cost = { gold = 295 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_lomiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lomiquendi_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 115
+	toughness = 125
+	pursuit = 0
+	screen = 40
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		elephant_cavalry = 1
+		camel_cavalry = 1
+	}
+
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+
+	ai_quality = {
+		value = culture_ai_weight_pikemen
+		add = counter_synergy_ai_weight_pikemen
+	}
+	icon = grey_elven_pikemen
+	allowed_in_hired_troops = no
+}
+
+#Grey Elven Archers
+grey_elven_archers = {
+	type = archers
+
+	buy_cost = { gold = 225 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_lomiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lomiquendi_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 135
+	toughness = 54
+	pursuit = 30
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		monster = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = culture_ai_weight_archers
+		add = counter_synergy_ai_weight_archers
+	}
+	icon = grey_elven_archers
+	allowed_in_hired_troops = no
+}
+
+#Grey Elven Heavy Cavalry
+grey_elven_heavy_cavalry = {
+	type = heavy_cavalry
+
+	buy_cost = { gold = 400 }
+	low_maintenance_cost = { gold = 0.25 }
+	high_maintenance_cost = { gold = 0.75 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_lomiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lomiquendi_warfare }
+			}
+		}
+	}
+
+	stack = 25
+	damage = 340
+	toughness = 120
+	pursuit = 40
+	screen = 40
+
+	counters = {
+		skirmishers = 1
+		archers = 1
+	}
+	
+	terrain_bonus = {
+		halls = { damage = -170 toughness = -20 pursuit = -20 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { value = culture_ai_weight_heavy_cavalry }
+	icon = grey_elven_heavy_cavalry
+	allowed_in_hired_troops = no
+}
+
+# Grey elven heavy infantry
+grey_elven_heavy_infantry = {
+ 	type = heavy_infantry
+
+ 	buy_cost = { gold = 315 }
+ 	low_maintenance_cost = { gold = 0.2 }
+ 	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_lomiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lomiquendi_warfare }
+			}
+		}
+	}
+
+ 	stack = 50
+ 	damage = 150
+ 	toughness = 104
+ 	pursuit = 0
+ 	screen = 20
+
+ 	counters = {
+		pikemen = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+	ai_quality = {
+		value = culture_ai_weight_heavy_infantry
+		add = counter_synergy_ai_weight_heavy_infantry
+	}
+ 	icon = grey_elven_heavy_infantry
+ 	allowed_in_hired_troops = no
+ }
+
+# Grey elven skirmishers
+grey_elven_skirmishers = {
+ 	type = skirmishers
+
+ 	buy_cost = { gold = 125 }
+ 	low_maintenance_cost = { gold = 0.15 }
+ 	high_maintenance_cost = { gold = 0.45 }
+
+	provision_cost = @provisions_cost_infantry_cheap
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_lomiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lomiquendi_warfare }
+			}
+		}
+	}
+
+ 	stack = 60
+ 	damage = 44
+ 	toughness = 70
+ 	pursuit = 30
+ 	screen = 15
+
+ 	counters = {
+ 		archers = 1
+		heavy_infantry = 1
+		archer_cavalry = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+ 	ai_quality = { value = culture_ai_weight_skirmishers }
+ 	icon = grey_elven_skirmishers
+ 	allowed_in_hired_troops = no
+ }
+
+# Grey elven light cavalry
+grey_elven_light_cavalry = {
+	type = light_cavalry
+
+	buy_cost = { gold = 260 }
+	low_maintenance_cost = { gold = 0.15 }
+	high_maintenance_cost = { gold = 0.45 }
+
+	provision_cost = @provisions_cost_cavalry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_lomiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lomiquendi_warfare }
+			}
+		}
+	}
+
+	stack = 40
+	damage = 90
+	toughness = 62
+	pursuit = 60
+	screen = 30
+
+	counters = {
+		archers = 1
+		heavy_infantry = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = culture_ai_weight_light_cavalry
+		add = counter_synergy_ai_weight_light_cavalry
+	}
+	icon = grey_elven_light_cavalry
+	allowed_in_hired_troops = no
+}
+
+#Avarin Generic Set
+
+#Avarin skirmishers
+avarin_skirmishers = {
+	type = skirmishers
+
+	buy_cost = { gold = 100 }
+	low_maintenance_cost = { gold = 0.1 }
+	high_maintenance_cost = { gold = 0.3 }
+
+	provision_cost = @provisions_cost_infantry_cheap
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_avarin_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_avarin_warfare }
+			}
+		}
+	}
+
+	stack = 80
+	damage = 28
+	toughness = 45
+	pursuit = 20
+	screen = 10
+
+	counters = { 
+		heavy_infantry = 1
+		archers = 1
+		archer_cavalry = 1
+	}
+
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+
+	ai_quality = { value = culture_ai_weight_skirmishers }
+	icon = green_elven_skirmishers
+	allowed_in_hired_troops = no
+}
+
+#Avarin Light Cavalry
+avarin_light_cavalry = {
+	type = light_cavalry
+
+	buy_cost = { gold = 175 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_cavalry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_avarin_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_avarin_warfare }
+			}
+		}
+	}
+
+	stack = 60
+	damage = 55
+	toughness = 38
+	pursuit = 40
+	screen = 20
+
+	counters = {
+		archers = 1
+		monster = 1
+	}
+
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+
+	ai_quality = { 
+		value = culture_ai_weight_light_cavalry
+		add = counter_synergy_ai_weight_light_cavalry
+	}
+	icon = green_elven_light_cavalry
+	allowed_in_hired_troops = no
+}
+
+#Avarin Archers
+avarin_archers = {
+	type = archers
+
+	buy_cost = { gold = 130 }
+	low_maintenance_cost = { gold = 0.1 }
+	high_maintenance_cost = { gold = 0.3 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_avarin_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_avarin_warfare }
+			}
+		}
+	}
+
+	stack = 80
+	damage = 75
+	toughness = 30
+	pursuit = 30
+	screen = 10
+
+	counters = {
+		skirmishers = 1
+		archer_cavalry = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = culture_ai_weight_archers
+		add = counter_synergy_ai_weight_archers
+	}
+	icon = green_elven_archers
+	allowed_in_hired_troops = no
+}
+# Avarin Pikemen
+avarin_pikemen = {
+ 	type = pikemen
+
+ 	buy_cost = { gold = 170 }
+ 	low_maintenance_cost = { gold = 0.15 }
+ 	high_maintenance_cost = { gold = 0.45 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_avarin_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_avarin_warfare }
+			}
+		}
+	}
+
+ 	stack = 80
+ 	damage = 64
+ 	toughness = 70
+ 	pursuit = 0
+ 	screen = 30
+
+ 	counters = {
+ 		light_cavalry = 1
+ 		heavy_cavalry = 1
+		elephant_cavalry = 1
+		camel_cavalry = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+ 	ai_quality = {
+		value = culture_ai_weight_pikemen
+		add = counter_synergy_ai_weight_pikemen
+	}
+ 	icon = green_elven_pikemen
+ 	allowed_in_hired_troops = no
+ }
+
+# Avarin Swordsmen
+avarin_heavy_infantry = {
+ 	type = heavy_infantry
+
+ 	buy_cost = { gold = 180 }
+ 	low_maintenance_cost = { gold = 0.2 }
+ 	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_avarin_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_avarin_warfare }
+			}
+		}
+	}
+
+ 	stack = 80
+ 	damage = 80
+ 	toughness = 55
+ 	pursuit = 5
+ 	screen = 15
+
+ 	counters = {
+ 		pikemen = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+	ai_quality = {
+		value = culture_ai_weight_heavy_infantry
+		add = counter_synergy_ai_weight_heavy_infantry
+	}
+ 	icon = green_elven_heavy_infantry
+ 	allowed_in_hired_troops = no
+ }
+
+ # Avarin Heavy Cavalry
+avarin_heavy_cavalry = {
+	type = heavy_cavalry
+
+	buy_cost = { gold = 200 }
+	low_maintenance_cost = { gold = 0.25 }
+	high_maintenance_cost = { gold = 0.75 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_avarin_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_avarin_warfare }
+			}
+		}
+	}
+
+	stack = 40
+	damage = 188
+	toughness = 66
+	pursuit = 30
+	screen = 30
+
+	counters = {
+		monster = 1
+		heavy_infantry = 1
+	}
+
+	terrain_bonus = {
+		halls = { damage = -94 toughness = -20 pursuit = -20 }
+	}
+
+	winter_bonus = {
+	}
+
+	ai_quality = { value = culture_ai_weight_heavy_cavalry }
+	icon = green_elven_heavy_cavalry
+	allowed_in_hired_troops = no
+ }
+
+### Noldor ###
+## - The armies of the Noldor are few in number in the dwindling days of the Third Age, but in quality are unparalleled
+# Noldor Swordsman (Heavy Infantry)
+ noldor_swordsmen = {
+ 	type = heavy_infantry
+
+ 	buy_cost = { gold = 425 }
+ 	low_maintenance_cost = { gold = 0.25 }
+ 	high_maintenance_cost = { gold = 0.75 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_noldor_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_noldor_warfare }
+			}
+		}
+	}
+
+	stack = 25
+ 	damage = 375
+ 	toughness = 205
+ 	pursuit = 10
+ 	screen = 30
+
+ 	counters = {
+ 		pikemen = 1
+ 		monster = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+ 	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+ 	icon = noldor_heavy_infantry
+ 	allowed_in_hired_troops = no
+ }
+
+# Noldor Glaivesman (Pikeman)
+# noldor_glaivesmen = {
+# 	can_recruit = { noldor_trigger = yes }
+# 	type = pikemen
+
+# 	buy_cost = { gold = 350 }
+# 	low_maintenance_cost = { gold = 0.1 }
+# 	high_maintenance_cost = { gold = 0.3 }
+
+# 	stack = 20
+# 	damage = 125
+# 	toughness = 160
+# 	pursuit = 0
+# 	screen = 40
+
+# 	counters = {
+# 		monster = 1
+# 		light_cavalry = 1
+# 		heavy_cavalry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = 500 }
+# 	icon = noldor_glaivesmen
+# 	allowed_in_hired_troops = no
+# }
+
+# Noldor Cavalry (Heavy Cavalry)
+noldor_cavalry = {
+	type = heavy_cavalry
+
+	buy_cost = { gold = 515 }
+	low_maintenance_cost = { gold = 0.3 }
+	high_maintenance_cost = { gold = 0.9 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_noldor_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_noldor_warfare }
+			}
+		}
+	}
+
+	stack = 15
+	damage = 725
+	toughness = 255
+	pursuit = 60
+	screen = 60
+
+	counters = {
+		skirmishers = 1
+		archers = 1
+	}
+	
+	terrain_bonus = {
+		halls = { damage = -360 toughness = -20 pursuit = -20 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = noldor_cavalry
+	allowed_in_hired_troops = no
+}
+
+# Noldor Archers (Archers)
+# noldor_archers = {
+#	can_recruit = { noldor_trigger = yes }
+#	type = archers
+
+#	buy_cost = { gold = 290 }
+#	low_maintenance_cost = { gold = 0.1 }
+#	high_maintenance_cost = { gold = 0.3 }
+
+#	stack = 20
+#	damage = 150
+#	toughness = 100
+#	pursuit = 30
+#	screen = 0
+
+#	counters = {
+#		skirmishers = 1
+#		light_cavalry = 1
+#		heavy_cavalry = 1
+#	}
+	
+#	terrain_bonus = {
+#	}
+
+#	winter_bonus = {
+#	}
+	
+#	ai_quality = { value = 500 }
+#	icon = bowmen
+#	allowed_in_hired_troops = no
+#}
+
+# Noldor Veterans (Veterans of the Last Alliance)
+noldor_veterans = {
+	can_recruit = { always = no } # Event Troops
+	type = heavy_infantry
+
+	buy_cost = { gold = 1000 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	stack = 10
+	damage = 950
+	toughness = 1050
+	pursuit = 20
+	screen = 80
+
+	counters = {
+		skirmishers = 1
+		pikemen = 1
+		archers = 1
+		monster = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 300
+	}
+	icon = heavy_infantry
+	allowed_in_hired_troops = no
+}
+
+# Song-Smiths (Minstrels and Bards bearing songs of power - siege)
+song_smiths = {
+	type = siege_weapon
+	fights_in_main_phase = no
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_calaquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_calaquendi_warfare }
+			}
+		}
+	}
+	
+	damage = 0
+	toughness = 10
+	
+	siege_tier = 5
+	siege_value = 0.8
+	
+	buy_cost = { gold = bombard_recruitment_cost }
+	low_maintenance_cost = { gold = bombard_low_maint_cost }
+	high_maintenance_cost = { gold = bombard_high_maint_cost }
+
+	provision_cost = @provisions_cost_special_moderate
+	
+	#ai_quality = { value = 100 }
+	stack = 10
+	allowed_in_hired_troops = no
+	icon = song_smiths
+}
+
+# Vanyar
+ vanyar_pikemen = {
+ 	type = pikemen
+
+ 	buy_cost = { gold = 375 }
+ 	low_maintenance_cost = { gold = 0.25 }
+ 	high_maintenance_cost = { gold = 0.75 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_vanyar_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_vanyar_warfare }
+			}
+		}
+	}
+
+	stack = 25
+ 	damage = 270
+ 	toughness = 310
+ 	pursuit = 0
+ 	screen = 60
+
+ 	counters = {
+ 		monster = 1
+ 		light_cavalry = 1
+ 		heavy_cavalry = 1
+		elephant_cavalry = 1
+		camel_cavalry = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+ 	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+ 	icon = high_elven_pikemen
+ 	allowed_in_hired_troops = no
+ }
+
+# Vanyar Spear Cavalry (Light Cavalry)
+vanyar_cavalry = {
+	type = light_cavalry
+
+	buy_cost = { gold = 280 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_vanyar_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_vanyar_warfare }
+			}
+		}
+	}
+
+	stack = 25
+	damage = 220
+	toughness = 145
+	pursuit = 110
+	screen = 40
+
+	counters = {
+		heavy_infantry = 1
+		monster = 1
+		archers = 1.5
+	}
+	
+	terrain_bonus = {
+		halls = { damage = -360 toughness = -20 pursuit = -20 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = high_elven_light_cavalry
+	allowed_in_hired_troops = no
+}
+
+# Teleri
+ teleri_light_infantry = {
+ 	type = skirmishers
+
+ 	buy_cost = { gold = 190 }
+ 	low_maintenance_cost = { gold = 0.2 }
+ 	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_teleri_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_teleri_warfare }
+			}
+		}
+	}
+
+	stack = 25
+ 	damage = 125
+ 	toughness = 235
+ 	pursuit = 55
+ 	screen = 25
+
+ 	counters = {
+ 		archers = 1
+ 		archer_cavalry = 1
+		heavy_infantry = 1.5
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+ 	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+ 	icon = high_elven_skirmishers
+ 	allowed_in_hired_troops = no
+ }
+
+# Teleri Archers
+teleri_archers = {
+	type = archers
+
+	buy_cost = { gold = 280 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_teleri_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_teleri_warfare }
+			}
+		}
+	}
+
+	stack = 25
+	damage = 365
+	toughness = 120
+	pursuit = 30
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		light_cavalry = 1.5
+		heavy_cavalry = 1.5
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = high_elven_archers
+	allowed_in_hired_troops = no
+}
+### Sindar ###
+# Sindar Nobility (Cavalry)
+# sindar_nobility = {
+# 	can_recruit = { sindar_trigger = yes }
+# 	type = heavy_cavalry
+
+# 	buy_cost = { gold = 275 }
+# 	low_maintenance_cost = { gold = 0.4 }
+# 	high_maintenance_cost = { gold = 1.2 }
+
+# 	stack = 20
+# 	damage = 175
+# 	toughness = 100
+# 	pursuit = 40
+# 	screen = 40
+
+# 	counters = {
+# 		skirmishers = 1
+# 		archers = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_heavy_cavalry }
+# 	icon = heavy_cavalry
+# 	allowed_in_hired_troops = no
+# }
+
+# Hîr-Hathol (Heavy Infantry)
+ hir_hathol = {
+ 	type = heavy_infantry
+
+ 	buy_cost = { gold = 350 }
+ 	low_maintenance_cost = { gold = 0.2 }
+ 	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_sindar_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_sindar_warfare }
+			}
+		}
+	}
+
+ 	stack = 50
+ 	damage = 164
+ 	toughness = 106
+ 	pursuit = 30
+ 	screen = 0
+
+ 	counters = {
+ 		pikemen = 1
+ 		monster = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+ 	icon = hir_hathol
+ 	allowed_in_hired_troops = no
+ }
+
+# Falathrim Haven-Guard (Pikemen) - Mithlond Spearmen
+falathrim_haven_guard = {
+	type = pikemen
+
+	buy_cost = { gold = 300 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_falathrim_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_falathrim_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 114
+	toughness = 135
+	pursuit = 0
+	screen = 50
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		elephant_cavalry = 1
+		camel_cavalry = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = falathrim_haven_guard
+	allowed_in_hired_troops = no
+}
+
+# Sindar Marchwardens (Archers) - in the style of Beleg Strongbow
+marchwardens = {
+	type = archers
+
+	buy_cost = { gold = 250 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_marchwardens_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_marchwardens_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 140
+	toughness = 65
+	pursuit = 0
+	screen = 30
+
+	counters = {
+		skirmishers = 1
+		monster = 1
+		light_cavalry = 1
+		heavy_cavalry = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = marchwardens
+	allowed_in_hired_troops = no
+}
+
+### Galadhrim ###
+# Galadhrim Warriors (Heavy Infantry)
+ galadhrim_warriors = {
+ 	type = heavy_infantry
+
+ 	buy_cost = { gold = 330 }
+ 	low_maintenance_cost = { gold = 0.25 }
+ 	high_maintenance_cost = { gold = 0.75 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_galadhrim_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_galadhrim_warfare }
+			}
+		}
+	}
+
+	stack = 50
+ 	damage = 160
+ 	toughness = 102
+ 	pursuit = 0
+ 	screen = 30
+
+ 	counters = {
+ 		pikemen = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+ 	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+ 	icon = galadhrim_warriors
+ 	allowed_in_hired_troops = no
+ }
+
+# Knights of Amroth (Cavalry)
+# knights_of_amroth = {
+#	can_recruit = { galadhrim_trigger = yes }
+#	type = heavy_cavalry
+
+#	buy_cost = { gold = 300 }
+#	low_maintenance_cost = { gold = 0.5 }
+#	high_maintenance_cost = { gold = 1.5 }
+
+#	stack = 25
+#	damage = 120
+#	toughness = 75
+#	pursuit = 20
+#	screen = 0
+
+#	counters = {
+#		skirmishers = 1
+#		archers = 1
+#	}
+	
+#	terrain_bonus = {
+#	}
+
+#	winter_bonus = {
+#	}
+	
+#	ai_quality = { value = culture_ai_weight_heavy_cavalry }
+#	icon = knights_of_amroth
+#	allowed_in_hired_troops = no
+#}
+
+# Galadhrim Wardens (Skirmishers)
+# galadhrim_wardens = {
+# 	can_recruit = { galadhrim_trigger = yes }
+# 	type = skirmishers
+
+# 	buy_cost = { gold = 130 }
+# 	low_maintenance_cost = { gold = 0.13 }
+# 	high_maintenance_cost = { gold = 0.39 }
+
+# 	stack = 60
+# 	damage = 21
+# 	toughness = 36
+# 	pursuit = 10
+# 	screen = 16
+
+# 	counters = {
+# 		skirmishers = 1
+# 		heavy_infantry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_skirmishers }
+# 	icon = galadhrim_wardens
+# 	allowed_in_hired_troops = no
+# }
+
+# Galadhrim Archers (Archers)
+galadhrim_archers = {
+	type = archers
+
+	buy_cost = { gold = 225 }
+	low_maintenance_cost = { gold = 0.3 }
+	high_maintenance_cost = { gold = 0.9 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_galadhrim_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_galadhrim_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 144
+	toughness = 40
+	pursuit = 30
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		monster = 1
+		light_cavalry = 1
+		heavy_cavalry = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		add = 60
+	}
+	icon = galadhrim_archers
+	allowed_in_hired_troops = no
+}
+
+# Galadhrim Sentinels (Pikemen)
+# galadhrim_sentinels = {
+# 	can_recruit = { galadhrim_trigger = yes }
+# 	type = pikemen
+
+# 	buy_cost = { gold = 190 }
+# 	low_maintenance_cost = { gold = 0.2 }
+# 	high_maintenance_cost = { gold = 0.6 }
+
+# 	stack = 40
+# 	damage = 50
+# 	toughness = 75
+# 	pursuit = 0
+# 	screen = 15
+
+# 	counters = {
+# 		pikemen = 1
+# 		light_cavalry = 1
+# 		heavy_cavalry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_pikemen }
+# 	icon = galadhrim_sentinels
+# 	allowed_in_hired_troops = no
+# }
+
+### Greenwood ###
+# Gilded Guard (Pikeman)
+gilded_guard = {
+	can_recruit = {
+		culture = { has_innovation = innovation_armored_lasgalendrim_warfare }
+	}
+	type = pikemen
+
+	buy_cost = { gold = 220 }
+	low_maintenance_cost = { gold = 0.3 }
+	high_maintenance_cost = { gold = 0.85 }
+	
+	provision_cost = @provisions_cost_infantry_moderate
+
+	stack = 50
+ 	damage = 125
+ 	toughness = 200
+ 	pursuit = 0
+ 	screen = 50
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		monster = 1
+		elephant_cavalry = 1
+		camel_cavalry = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { value = culture_ai_weight_pikemen }
+	icon = gilded_guard
+	allowed_in_hired_troops = no
+}
+
+# Greenwood Swordsmen (Heavy Infantry)
+# greenwood_swordsmen = {
+# 	can_recruit = { greenwood_trigger = yes }
+# 	type = heavy_infantry
+
+# 	buy_cost = { gold = 160 }
+# 	low_maintenance_cost = { gold = 0.25 }
+# 	high_maintenance_cost = { gold = 0.75 }
+
+# 	stack = 50
+# 	damage = 52
+# 	toughness = 35
+# 	pursuit = 0
+# 	screen = 10
+
+# 	counters = {
+# 		pikemen = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_heavy_infantry }
+# 	icon = greenwood_swordsmen
+# 	allowed_in_hired_troops = no
+# }
+
+# Greenwood Archers (Archers)
+greenwood_archers = {
+	can_recruit = {
+		culture = { has_innovation = innovation_armored_lasgalendrim_warfare }
+	}
+	type = archers
+
+	buy_cost = { gold = 180 }
+	low_maintenance_cost = { gold = 0.25 }
+	high_maintenance_cost = { gold = 0.7 }
+
+	stack = 50
+	damage = 150
+	toughness = 80
+	pursuit = 20
+	screen = 10
+
+	counters = {
+		archer_cavalry = 1
+		skirmishers = 1
+		archers = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { value = culture_ai_weight_archers }
+	icon = greenwood_archers
+	allowed_in_hired_troops = no
+}
+
+# Silvan Rangers (Skirmishers)
+silvan_rangers = {
+	can_recruit = { 
+		any_directly_owned_province = {
+			OR = {
+				has_building_or_higher = wonder_amon_lanc_03
+				has_building_or_higher = wonder_amarthrynd_03
+			}
+		}
+	}
+	
+	type = skirmishers
+
+	buy_cost = { gold = 110 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.5 }
+
+	stack = 60
+	damage = 50
+	toughness = 40
+	pursuit = 30
+	screen = 20
+
+	counters = {
+		skirmishers = 1
+		monster = 1 
+		pikemen = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { value = culture_ai_weight_skirmishers }
+
+	icon = silvan_rangers
+	allowed_in_hired_troops = no
+}
+
+# Royal Elk Riders (Elk Cavalry)
+royal_elk_riders = {
+	type = heavy_cavalry
+
+	buy_cost = { gold = 425 }
+	low_maintenance_cost = { gold = 0.25 }
+	high_maintenance_cost = { gold = 0.75 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_lasgalendrim_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lasgalendrim_warfare }
+			}
+		}
+	}
+
+	stack = 25
+	damage = 380
+	toughness = 104
+	pursuit = 30
+	screen = 30
+
+	counters = {
+		heavy_infantry = 1
+		archers = 1
+		light_cavalry = 1
+	}
+	
+	terrain_bonus = {
+		halls = { damage = -190 toughness = -20 pursuit = -20 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	#icon = heavy_cavalry
+	icon = royal_elk_riders
+	allowed_in_hired_troops = no
+}
+
+# Theladagnyr (Anti-monster)
+theladagnyr = {
+	type = heavy_infantry
+
+	buy_cost = { gold = 335 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_lasgalendrim_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_lasgalendrim_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 162
+	toughness = 104
+	pursuit = 25
+	screen = 0
+
+	counters = {
+		monster = 1
+		heavy_cavalry = 1
+		skirmishers = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = theladagnyr
+	allowed_in_hired_troops = no
+}
+
+
+### Penni ###
+# Nelyarin Pikemen (Pikemen)
+# nelyarin_pikemen = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_nelyarin_pikemen } }
+# 	type = pikemen
+
+# 	buy_cost = { gold = 160 }
+# 	low_maintenance_cost = { gold = 0.28 }
+# 	high_maintenance_cost = { gold = 0.84 }
+
+# 	stack = 60
+# 	damage = 30
+# 	toughness = 40
+# 	pursuit = 0
+# 	screen = 10
+
+# 	counters = {
+# 		light_cavalry = 1
+# 		heavy_cavalry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_pikemen }
+# 	icon = nelyarin_pikemen
+# 	allowed_in_hired_troops = no
+# }
+
+# Nelyarin Swordsmen (Heavy Infantry)
+# nelyarin_swordsmen = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_nelyarin_swordsmen } }
+# 	type = heavy_infantry
+
+# 	buy_cost = { gold = 150 }
+# 	low_maintenance_cost = { gold = 0.25 }
+# 	high_maintenance_cost = { gold = 0.75 }
+
+# 	stack = 60
+# 	damage = 32
+# 	toughness = 40
+# 	pursuit = 0
+# 	screen = 15
+
+# 	counters = {
+# 		pikemen = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_heavy_infantry }
+# 	icon = nelyarin_swordsmen
+# 	allowed_in_hired_troops = no
+# }
+
+# Nelyarin Bowmen (Archers)
+# nelyarin_archers = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_nelyarin_archers } }
+# 	type = archers
+
+# 	buy_cost = { gold = 155 }
+# 	low_maintenance_cost = { gold = 0.3 }
+# 	high_maintenance_cost = { gold = 0.9 }
+
+# 	stack = 80
+# 	damage = 44
+# 	toughness = 15
+# 	pursuit = 30
+# 	screen = 0
+
+# 	counters = {
+# 		skirmishers = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_archers }
+# 	icon = nelyarin_archers
+# 	allowed_in_hired_troops = no
+# }
+
+# Neldoreth's Borderwardens (Border Guard Mounted Bowmen)
+neldoreth_borderwardens = {
+	type = archer_cavalry
+
+	buy_cost = { gold = 260 }
+	low_maintenance_cost = { gold = 0.35 }
+	high_maintenance_cost = { gold = 1.05 }
+
+	provision_cost = @provisions_cost_cavalry_expensive
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_spirits_pact }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_spirits_pact }
+			}
+		}
+	}
+
+	stack = 40
+	damage = 180
+	toughness = 80
+	pursuit = 40
+	screen = 100
+
+	counters = {
+		skirmishers = 1
+		monster = 1
+		heavy_infantry = 1
+	}
+	
+	terrain_bonus = {
+		jungle = { damage = -80 pursuit = -20 }
+		mountains = { damage = -120 pursuit = -30 }
+		desert_mountains = { damage = -120 pursuit = -30 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = neldoreth_borderwardens
+	allowed_in_hired_troops = no
+}
+
+# Nuïnevari (Forest Spirits)
+nuinevari = { # Unlocked via Innovation
+	type = monster
+
+	buy_cost = { gold = 200 piety = 200 }
+	low_maintenance_cost = { gold = 0.35 piety = 0.1 }
+	high_maintenance_cost = { gold = 1.05 piety = 0.3 }
+
+	provision_cost = @provisions_cost_special_expensive
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_spirits_pact }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_spirits_pact }
+			}
+		}
+	}
+
+	stack = 10
+	damage = 760
+	toughness = 440
+	pursuit = 30
+	screen = 30
+
+	counters = {
+		archers = 1
+		skirmishers = 1
+		pikemen = 1
+		heavy_infantry = 1
+	}
+	
+	terrain_bonus = {
+		dune_sea = {
+			damage = -300 toughness = -200 pursuit = -30 screen = -20
+		}
+		desert = {
+			damage = -200 toughness = -100 pursuit = -10 screen = -10
+		}
+		red_desert = {
+			damage = -200 toughness = -100 pursuit = -10 screen = -10
+		}
+		wetlands = {
+			damage = 100 toughness = 50 pursuit = 10 screen = 10
+		}
+		floodplains = {
+			damage = 100 toughness = 50 pursuit = 10 screen = 10
+		}
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		add = 200
+	}
+	icon = nuinevari
+	allowed_in_hired_troops = no
+}
+
+### Cuind ###
+# Tatyarin Harriers (Skirmishers)
+#tatyarin_harriers = {
+#	can_recruit = { culture = { has_cultural_parameter = unlock_maa_tatyarin_harriers } }
+#	type = skirmishers
+#
+#	buy_cost = { gold = 130 }
+#	low_maintenance_cost = { gold = 0.2 }
+#	high_maintenance_cost = { gold = 0.5 }
+#
+#	provision_cost = @provisions_cost_infantry_cheap
+#
+#	stack = 80
+#	damage = 40
+#	toughness = 50
+#	pursuit = 10
+#	screen = 15
+#
+#	counters = {
+#		heavy_infantry = 1
+#	}
+#	
+#	terrain_bonus = {
+#		jungle = { damage = 10 toughness = 10 pursuit = 20 }
+#		deep_forest = { damage = 10 toughness = 10 pursuit = 20 }
+#	}
+#
+#	winter_bonus = {
+#	}
+#	
+#	ai_quality = { value = 500 }
+#	icon = skirmishers
+#	allowed_in_hired_troops = no
+#}
+
+# Tatyarin Rangers (Archers)
+# tatyarin_rangers = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_tatyarin_rangers } }
+# 	type = archers
+
+# 	buy_cost = { gold = 180 }
+# 	low_maintenance_cost = { gold = 0.25 }
+# 	high_maintenance_cost = { gold = 0.75 }
+
+# 	stack = 80
+# 	damage = 50
+# 	toughness = 20
+# 	pursuit = 30
+# 	screen = 15
+
+# 	counters = {
+# 		skirmishers = 1
+# 		light_cavalry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 		jungle = { toughness = 15 pursuit = 20 }
+# 		deep_forest = { toughness = 15 pursuit = 20 }
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_archers }
+# 	allowed_in_hired_troops = no
+# }
+
+# Tatyarin Guardians (Heavy Infantry)
+# tatyarin_guardians = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_tatyarin_guardians } }
+# 	type = heavy_infantry
+
+# 	buy_cost = { gold = 200 }
+# 	low_maintenance_cost = { gold = 0.3 }
+# 	high_maintenance_cost = { gold = 0.8 }
+
+# 	stack = 50
+# 	damage = 40
+# 	toughness = 60
+# 	pursuit = 5
+# 	screen = 10
+
+# 	counters = {
+# 		pikemen = 1
+# 		heavy_cavalry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 		jungle = { damage = 20 toughness = 20 }
+# 		deep_forest = { damage = 20 toughness = 20 }
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_pikemen }
+# 	icon = heavy_infantry
+# 	allowed_in_hired_troops = no
+# }
+
+# Cuind Wanderers (Light Cavalry)
+cuind_wanderers = {
+	type = light_cavalry
+
+	buy_cost = { gold = 300 }
+	low_maintenance_cost = { gold = 0.4 }
+	high_maintenance_cost = { gold = 1 }
+
+	provision_cost = @provisions_cost_cavalry_moderate
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_cuind_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_cuind_warfare }
+			}
+		}
+	}
+
+	stack = 20
+	damage = 195
+	toughness = 132
+	pursuit = 100
+	screen = 20
+
+	counters = {
+		archers = 1
+		monster = 1
+	}
+	
+	terrain_bonus = {
+		jungle = { damage = 40 toughness 40 }
+		deep_forest = { damage = 40 toughness 40 }
+		forest = { damage = 20 toughness 20 }
+		mountains = { damage = -120 pursuit = -30 }
+		desert_mountains = { damage = -120 pursuit = -30 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = cuind_wanderers
+	allowed_in_hired_troops = no
+}
+
+#Cuind Skirmishers
+cuind_skirmishers = {
+	type = skirmishers
+
+	buy_cost = { gold = 115 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.5 }
+
+	provision_cost = @provisions_cost_infantry_cheap
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_cuind_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_cuind_warfare }
+			}
+		}
+	}
+
+	stack = 80
+	damage = 32
+	toughness = 52
+	pursuit = 30
+	screen = 10
+
+	counters = {
+		heavy_infantry = 1
+		light_cavalry = 1
+		skirmishers = 1
+	}
+	
+	terrain_bonus = {
+		jungle = { damage = 10 toughness = 10 pursuit = 20 }
+		deep_forest = { damage = 10 toughness = 10 pursuit = 20 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 300
+	}
+	icon = cuind_skirmishers
+	allowed_in_hired_troops = no
+}
+
+### Kinnlai
+#Annammōn-kin 'Mumak riders' (Elephant Cavalry)
+annammon_kin = {
+	type = elephant_cavalry
+
+	buy_cost = { gold = 280 }
+	low_maintenance_cost = { gold = 1 }
+	high_maintenance_cost = { gold = 3 }
+
+	provision_cost = @provisions_cost_cavalry_bankrupting
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_kinnlai_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_kinnlai_warfare }
+			}
+		}
+	}
+
+	stack = 5
+	damage = 1500
+	toughness = 750
+	pursuit = 0
+	screen = 0
+
+	counters = {
+		skirmishers = 1
+		heavy_infantry = 1
+		pikemen = 1
+	}
+	
+	terrain_bonus = {
+		halls = { damage = -4000 }
+
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		add = 300 #Mumak are iconic for Kinn-lai,incentivize them to buy
+	}
+	icon = war_elephants
+	allowed_in_hired_troops = no
+}
+
+
+#Kung-Fu-Elves
+kinnlai_skirmishers = {
+	type = skirmishers
+
+	buy_cost = { gold = 65 }
+	low_maintenance_cost = { gold = 0.2 }
+	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_kinnlai_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_kinnlai_warfare }
+			}
+		}
+	}
+
+	stack = 60
+	damage = 26
+	toughness = 80
+	pursuit = 20
+	screen = 0
+
+	counters = {
+		archers = 1
+		heavy_infantry = 1
+		skirmishers = 1
+	}
+
+	terrain_bonus = {
+
+	}
+
+	winter_bonus = {
+
+	}
+
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		add = 130
+	}
+	icon = green_elven_pikemen
+	allowed_in_hired_troops = no
+}
+
+### Sirrandrai
+# Sirrandrai Defenders (Skirmishers)
+# sirrandrai_defenders = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_sirrandrai_defenders } }
+# 	type = skirmishers
+
+# 	buy_cost = { gold = 130 }
+# 	low_maintenance_cost = { gold = 0.13 }
+# 	high_maintenance_cost = { gold = 0.39 }
+
+# 	stack = 80
+# 	damage = 16
+# 	toughness = 24
+# 	pursuit = 10
+# 	screen = 16
+
+# 	counters = {
+# 		heavy_infantry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_skirmishers }
+# 	icon = skirmishers
+# 	allowed_in_hired_troops = no
+# }
+
+# Sirrandrai Sentinels (Archers)
+# sirrandrai_sentinels = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_sirrandrai_sentinels } }
+# 	type = archers
+
+# 	buy_cost = { gold = 160 }
+# 	low_maintenance_cost = { gold = 0.3 }
+# 	high_maintenance_cost = { gold = 0.9 }
+
+# 	stack = 60
+# 	damage = 45
+# 	toughness = 25
+# 	pursuit = 30
+# 	screen = 0
+
+# 	counters = {
+# 		skirmishers = 1
+# 		light_cavalry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_archers }
+# 	icon = bowmen
+# 	allowed_in_hired_troops = no
+# }
+
+# Sirrandrai Veterans (Heavy Infantry)
+# sirrandrai_veterans = {
+# 	can_recruit = { culture = { has_cultural_parameter = unlock_maa_sirrandrai_veterans } }
+# 	type = heavy_infantry
+
+# 	buy_cost = { gold = 360 }
+# 	low_maintenance_cost = { gold = 0.1 }
+# 	high_maintenance_cost = { gold = 0.4 }
+
+# 	stack = 60
+# 	damage = 60
+# 	toughness = 80
+# 	pursuit = 10
+# 	screen = 30
+
+# 	counters = {
+# 		pikemen = 1
+# 		monster = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_heavy_infantry }
+# 	icon = heavy_infantry
+# 	allowed_in_hired_troops = no
+# }
+
+# Sirrandrai Riders (Light Cavalry)
+sirrandrai_riders = {
+	type = light_cavalry
+
+	buy_cost = { gold = 290 }
+	low_maintenance_cost = { gold = 0.1 }
+	high_maintenance_cost = { gold = 0.3 }
+
+	provision_cost = @provisions_cost_cavalry_moderate
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_sirrandrai_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_sirrandrai_warfare }
+			}
+		}
+	}
+
+	stack = 40
+	damage = 100
+	toughness = 70
+	pursuit = 80
+	screen = 40
+
+	counters = {
+		archers = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = knights_of_amroth
+	allowed_in_hired_troops = no
+}
+
+# Wardens of Sirgala (Spearmen)
+wardens_of_sirgala = {
+	type = pikemen
+
+	buy_cost = { gold = 320 }
+	low_maintenance_cost = { gold = 0.3 }
+	high_maintenance_cost = { gold = 0.9 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_sirrandrai_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_sirrandrai_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 128
+	toughness = 138
+	pursuit = 0
+	screen = 40
+
+	counters = {
+		light_cavalry = 1
+		heavy_cavalry = 1
+		elephant_cavalry = 1
+		camel_cavalry = 1
+	}
+	
+	terrain_bonus = {
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		add = 400
+	}
+	icon = gilded_guard
+	allowed_in_hired_troops = no
+}
+
+### Laiquendi
+# Laiquendi Ambushers
+# laiquendi_ambushers = {
+#	can_recruit = { laiquendi_trigger = yes }
+#	type = archers
+
+#	buy_cost = { gold = 200 }
+#	low_maintenance_cost = { gold = 0.3 }
+#	high_maintenance_cost = { gold = 0.9 }
+
+#	stack = 60
+#	damage = 60
+#	toughness = 20
+#	pursuit = 30
+#	screen = 0
+
+#	counters = {
+#		skirmishers = 1
+#	}
+	
+#	terrain_bonus = {
+#		deep_forest = { damage = 30 toughness 10 }
+#		forest = { damage = 30 toughness 10 }
+#		hills = { damage = 20 toughness = 10 }
+#	}
+
+#	winter_bonus = {
+#	}
+	
+#	ai_quality = { value = culture_ai_weight_archers }
+#	icon = bowmen
+#	allowed_in_hired_troops = no
+#}
+
+# Laiquendi Spearmen
+# laiquendi_spearmen = {
+# 	can_recruit = { laiquendi_trigger = yes }
+# 	type = pikemen
+	
+# 	buy_cost = { gold = 260 }
+# 	low_maintenance_cost = { gold = 0.4 }
+# 	high_maintenance_cost = { gold = 1.2 }
+
+# 	stack = 60
+# 	damage = 60
+# 	toughness = 80
+# 	pursuit = 0
+# 	screen = 20
+
+# 	counters = {
+# 		light_cavalry = 1
+# 		heavy_cavalry = 1
+# 	}
+	
+# 	terrain_bonus = {
+# 		deep_forest = { damage = 20 toughness 20 }
+# 		forest = { damage = 20 toughness 20 }
+# 		hills = { damage = 10 toughness = 10 }
+# 	}
+
+# 	winter_bonus = {
+# 	}
+	
+# 	ai_quality = { value = culture_ai_weight_pikemen }
+# 	icon = pikemen
+# 	allowed_in_hired_troops = no
+# }
+
+# Laiquendi Scouts
+ laiquendi_scouts = {
+ 	type = skirmishers
+
+ 	buy_cost = { gold = 100 }
+ 	low_maintenance_cost = { gold = 0.2 }
+ 	high_maintenance_cost = { gold = 0.6 }
+
+	provision_cost = @provisions_cost_infantry_cheap
+
+	can_recruit = { 
+		OR = {
+			culture = { has_innovation = innovation_laiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_laiquendi_warfare }
+			}
+		}
+	}
+
+ 	stack = 60
+ 	damage = 45
+ 	toughness = 36
+ 	pursuit = 20
+ 	screen = 20
+
+ 	counters = {
+ 		heavy_infantry = 1
+ 		pikemen = 1
+ 	}
+	
+ 	terrain_bonus = {
+ 		deep_forest = { damage = 20 toughness 20 }
+ 		forest = { damage = 20 toughness 20 }
+ 		hills = { damage = 10 toughness = 10 }
+ 	}
+
+ 	winter_bonus = {
+ 	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+ 	icon = greenwood_archers
+ 	allowed_in_hired_troops = no
+ }
+
+# Rangers of Ossiriand
+ossiriand_rangers = {
+	type = archers
+
+	buy_cost = { gold = 240 }
+	low_maintenance_cost = { gold = 0.5 }
+	high_maintenance_cost = { gold = 1.5 }
+
+	provision_cost = @provisions_cost_infantry_moderate
+
+	can_recruit = {
+		OR = {
+			culture = { has_innovation = innovation_laiquendi_warfare }
+			AND = {
+				is_elf = yes
+				is_landless_adventurer = yes
+				has_perk = planned_cultivation_perk
+				location.culture ?= { has_innovation = innovation_laiquendi_warfare }
+			}
+		}
+	}
+
+	stack = 50
+	damage = 145
+	toughness = 62
+	pursuit = 30
+	screen = 0
+
+	counters = {
+		heavy_cavalry = 1
+		heavy_infantry = 1
+	}
+	
+	terrain_bonus = {
+		deep_forest = { damage = 40 toughness 20 }
+		forest = { damage = 40 toughness 20 }
+		hills = { damage = 30 toughness = 20 }
+	}
+
+	winter_bonus = {
+	}
+	
+	ai_quality = { 
+		value = @cultural_maa_extra_ai_score 
+		#add = 400
+	}
+	icon = ossiriand_rangers
+	allowed_in_hired_troops = no
+}

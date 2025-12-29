@@ -1,5 +1,0 @@
-﻿#EK edit: fixed vanilla typo
-
-l_russian:
- hold_court.8260.desc.intro:1 "[vassal_faction_target.GetFullName] подходит ко мне с кислым выражением лица и нетерпеливо излагает свое прошение. \n\n«[ROOT.Char.GetTitleAsNameNoTooltip], [Select_CString(vassal_faction_leader.IsFemale, 'моя', 'мой' )] [vassal_faction_target.Custom2('RelationToMeShort', SCOPE.sC('vassal_faction_leader'))] [vassal_faction_leader.GetTitledFirstName] хочет лишить меня законного места"
- 

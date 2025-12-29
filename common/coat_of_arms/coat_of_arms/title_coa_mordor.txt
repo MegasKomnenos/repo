@@ -1,0 +1,685 @@
+﻿
+### Mordor ###
+
+k_dark_lord = { # The Dark Lord Sauron
+	pattern = "pattern_solid.dds"
+    color1 = "black"
+    color2 = "black"
+    colored_emblem = {
+		texture = "ce_cc_mordor_eye_07.dds"
+		color1 = "mordor_red"
+	}
+}
+
+e_mordor = { # The Dark Lord Sauron
+	pattern = "pattern_solid.dds"
+    color1 = "black"
+    color2 = "black"
+    colored_emblem = {
+		texture = "ce_mordor_eye_01.dds"
+		color1 = "mordor_red"
+	}
+}
+
+k_gorgoroth = {
+	pattern = "pattern_solid.dds"
+	color1 = "black"
+	color2 = "mordor_red"
+	colored_emblem = {
+		texture = "ce_mordor_01.dds"
+		color1 = "grey"
+		instance = { position = { 0.5 0.6 }  scale = { 0.75 0.75 } }
+	}
+	colored_emblem = {
+		texture = "ce_mordor_eye_04.dds"
+		color1 = "mordor_red"
+		instance = { position = { 0.5 0.15 }  scale = { 0.6 0.6 } }
+	}
+}
+
+d_barad_dur = {
+	pattern = "pattern_checkers_diagonal_01.dds"
+	color1 = "mordor_red"
+	color2 = rgb { 120 5 5 }
+	colored_emblem = {
+		texture = "ce_bend_embattled.dds"
+		color1 = "pitch_black"
+		instance = { scale = {  1 1 } }
+		instance = { scale = { -1 1 } }
+	}
+	colored_emblem = {
+		texture = "ce_mordor_eye_01.dds"
+		color1 = "grey"
+		instance = { scale = { 0.8 0.8 } }
+	}
+}
+
+c_barad_dur = {
+	pattern = "pattern_solid.dds"
+	color1 = "pitch_black"
+	color2 = "pitch_black"
+	colored_emblem = {
+		texture = "ce_circle_mask.dds"
+		color1 = "grey"
+		instance = { scale = { 0.65 0.65 } }
+	}
+	colored_emblem = {
+		texture = "ce_frame_circle_borre_single.dds"
+		color1 = "roman_gold"
+		color2 = "light_gold"
+	}
+	colored_emblem = {
+		texture = "ce_tengwar_ando.dds"
+		color1 = "flame_red"
+		instance = { position = { 0.08 0.5 } scale = { 0.4 0.4 } }
+	}
+	colored_emblem = {
+		texture = "ce_tengwar_ore.dds"
+		color1 = "flame_red"
+		instance = { position = { 0.92 0.5 } scale = { 0.4 0.4 } }
+	}
+	colored_emblem = {
+		texture = "ce_barad_dur_01a.dds"
+		color1 = "flame_red"
+		instance = { scale = { 0.65 0.65 } }
+	}
+}
+b_barad_dur = {
+	pattern = "pattern_solid.dds"
+	color1 = "pitch_black"
+	color2 = "pitch_black"
+	colored_emblem = {
+		texture = "ce_circle_mask.dds"
+		color1 = "grey"
+		instance = { scale = { 0.65 0.65 } }
+	}
+	colored_emblem = {
+		texture = "ce_frame_circle_borre_double_knots_03.dds"
+		color1 = "pitch_black"
+		color2 = "flame_red"
+	}
+	colored_emblem = {
+		texture = "ce_frame_circle_borre_single.dds"
+		color1 = "roman_gold"
+		color2 = "light_gold"
+	}
+	colored_emblem = {
+		texture = "ce_barad_dur_01a.dds"
+		color1 = "flame_red"
+		instance = { scale = { 0.65 0.65 } }
+	}
+}
+c_orodruin = {
+	pattern = "pattern_solid.dds"
+	color1 = "flame_orange"
+	color2 = "flame_red"
+	colored_emblem = {
+		texture = "ce_pattern_square_00.dds"
+		color1 = "pitch_black"
+		instance = { scale = { 1.5 1.5 } }
+	}
+	colored_emblem = {
+		texture = "ce_frame_circle_borre_single.dds"
+		color1 = "roman_gold"
+		color2 = "light_gold"
+	}
+	colored_emblem = {
+		texture = "ce_mordor_eye_05.dds"
+		color1 = "flame_red"
+		instance = { scale = { 0.6 0.6 } }
+	}
+}
+c_baugatsor_i_sauron = {
+	pattern = "pattern_solid.dds"
+	color1 = "pitch_black"
+	color2 = "light_gold"
+	colored_emblem = {
+		texture = "ce_frame_circle_borre_double_knots_03.dds"
+		color1 = "bone_white"
+		color2 = "light_gold"
+	}
+	colored_emblem = {
+		texture = "ce_sword_simple.dds"
+		color1 = "grey"
+		color2 = "white"
+		instance = { scale = { 1 -1 } }
+	}
+}
+c_mordath = {
+	pattern = "pattern_solid.dds"
+	color1 = "pitch_black"
+	color2 = "rust_brown"
+	colored_emblem = {
+		texture = "ce_frame_circle_borre_double_knots_02.dds"
+		color1 = "rust_brown"
+		color2 = "pitch_black"
+	}
+	colored_emblem = {
+		texture = "ce_mordor_numenorean_02.dds"
+		color1 = "grey"
+		instance = { scale = { 0.7 0.7 } }
+	}
+}
+
+d_perth_ulmyn = {
+	pattern = "pattern_viking_05.dds"
+	color1 = "dark_rust"
+	color2 = "grey"
+	color3 = "pitch_black"
+	colored_emblem = {
+		texture = "ce_chains_no_border.dds"
+		color1 = "pitch_black"
+		color2 = "pitch_black"
+		instance = { rotation =  135 position { 0.05 0.05 } }
+		instance = { rotation = -135 position { 0.95 0.05 } }
+		instance = { rotation =   45 position { 0.05 0.95 } }
+		instance = { rotation =  -45 position { 0.95 0.95 } }
+	}
+	colored_emblem = {
+		texture = "ce_uruk_machine.dds"
+		color1 = "offwhite"
+	}
+}
+
+d_gaer_durlith = {
+	pattern = "pattern_viking_05.dds"
+	color1 = "beige"
+	color2 = "mordor_red"
+	color3 = "pitch_black"
+	colored_emblem = {
+		texture = "ce_circle.dds"
+		color1 = "flame_red"
+	}
+	colored_emblem = {
+		texture = "ce_uruk_dark.dds"
+		color1 = "pitch_black"
+	}
+}
+
+d_rhunen_ered_lithui = {
+	pattern = "pattern_viking_01.dds"
+	color1 = "pitch_black"
+	color2 = "flame_red"
+	color3 = "pitch_black"
+	colored_emblem = {
+		texture = "ce_uruk_mystic.dds"
+		color1 = "bone_white"
+	}
+}
+
+d_udun = {
+	pattern="pattern_solid.dds"
+	color1=rgb { 132 89 89 }
+	color2=yellow
+	color3=blue
+	colored_emblem={
+		color1=black
+		texture="ce_mordor_eye_03.dds"
+		instance={
+			position={ 0.500000 0.270000 }
+			scale={ 0.620000 0.620000 }
+		}
+	}
+	colored_emblem={
+		color1=black
+		texture="ce_black_gate_garrison_01.dds"
+		instance={
+			depth=4.010000
+		}
+	}
+	colored_emblem={
+		color1=rgb { 132 91 85 }
+		texture="ce_block_01.dds"
+		instance={
+			position={ 0.500000 0.240000 }
+			scale={ 0.510000 0.890000 }
+			depth=3.010000
+		}
+	}
+	colored_emblem={
+		color1=rgb { 135 92 86 }
+		texture="ce_block_01.dds"
+		instance={
+			position={ 0.500000 0.720000 }
+			scale={ 0.270000 0.570000 }
+			depth=2.010000
+			rotation=90
+		}
+	}
+	colored_emblem={
+		color1=black
+		texture="ce_cc_gurzyul_06.dds"
+		instance={
+			position={ 0.500000 0.660000 }
+			scale={ 0.750000 0.670000 }
+			depth=1.010000
+		}
+	}
+}
+
+c_morannon = {
+	pattern="pattern_solid.dds"
+	color1=rgb { 132 89 89 }
+	color2=yellow
+	color3=blue
+	colored_emblem={
+		color1=black
+		texture="ce_mordor_eye_03.dds"
+		instance={
+			position={ 0.500000 0.270000 }
+			scale={ 0.620000 0.620000 }
+		}
+	}
+	colored_emblem={
+		color1=black
+		texture="ce_black_gate_garrison_01.dds"
+		instance={
+			depth=4.010000
+		}
+	}
+	colored_emblem={
+		color1=rgb { 132 91 85 }
+		texture="ce_block_01.dds"
+		instance={
+			position={ 0.500000 0.240000 }
+			scale={ 0.510000 0.890000 }
+			depth=3.010000
+		}
+	}
+	colored_emblem={
+		color1=rgb { 135 92 86 }
+		texture="ce_block_01.dds"
+		instance={
+			position={ 0.500000 0.720000 }
+			scale={ 0.270000 0.570000 }
+			depth=2.010000
+			rotation=90
+		}
+	}
+	colored_emblem={
+		color1=black
+		texture="ce_cc_gurzyul_06.dds"
+		instance={
+			position={ 0.500000 0.660000 }
+			scale={ 0.750000 0.670000 }
+			depth=1.010000
+		}
+	}
+}
+
+c_durthang = {
+	pattern="pattern_solid.dds"
+	color1=rgb { 115 12 12 }
+	color2=pitch_black
+	color3=white
+	color4=yellow
+	colored_emblem={
+		color1=rgb { 22 9 6 }
+		color2=bone_white
+		color3=red
+		texture="ce_uruk_morannon.dds"
+		instance={
+			position={ 0.500000 0.490000 }
+			scale={ 0.650000 0.650000 }
+		}
+	}
+	colored_emblem={
+		color1=rgb { 126 90 77 }
+		texture="ce_texture_uruk_1.dds"
+		instance={
+			depth=2.010000
+		}
+	}
+	colored_emblem={
+		color1=rgb { 46 4 0 }
+		color2=rgb { 31 22 20 }
+		color3=black
+		texture="ce_pattern_uruk_3.dds"
+		instance={
+			depth=1.010000
+		}
+	}
+}
+
+k_nurn = {
+	pattern = "pattern_solid.dds"
+	color1 = { 4 4 4 }
+	color2 = "roman_red"
+	colored_emblem = {
+		texture = "cc_k_nurn.dds"
+		color1 = "roman_red"
+	}
+}
+k_nurn_cryyc = {
+	pattern = "pattern_solid.dds"
+	color1 = { 4 4 4 }
+	color2 = { 88 76 66 }
+	colored_emblem = {
+		texture = "cc_k_nurn.dds"
+		color1 = { 88 76 66 }
+	}
+}
+
+d_nurn = {
+	pattern = "pattern_solid.dds"
+	color1 = "mordor_red"
+	color2 = "black"
+	colored_emblem = {
+		texture = "ce_mordor_eye_04.dds"
+		color1 = "black"
+		instance = { position = { 0.5 0.45 } }
+	}
+}
+
+c_thaurband = {
+	pattern = "pattern_bend_01.dds"
+	color1 = "black"
+	color2 = "mordor_red"
+	colored_emblem = {
+		texture = "ce_mordor_eye_04.dds"
+		color1 = "red_nougat"
+		instance = { scale = { 0.75 0.75 } position = { 0.5 0.45 } }
+	}
+}
+
+d_maegond = {
+	pattern = "pattern_bend_02.dds"
+	color1 = "red_nougat"
+	color2 = "offwhite"
+	colored_emblem = {
+		texture = "ce_mordor_eye_06.dds"
+		color1 = "black"
+	}
+}
+
+d_glamhoth = {
+	pattern = "pattern_chevron_01.dds"
+	color1 = "pitch_black"
+	color2 = "necromancer_green"
+	colored_emblem = {
+		texture = "ce_mordor_eye_03.dds"
+		color1 = "bone_white"
+		instance = { scale = { 0.7 0.7 } position = { 0.5 0.65 } }
+	}
+}
+
+d_lithlad = {
+	pattern = "pattern_chevron_01.dds"
+	color1 = "blue"
+	color2 = "roman_red"
+	colored_emblem = {
+		texture = "ce_sun_harad.dds"
+		color1 = "roman_gold"
+	}
+}
+
+
+
+d_ephel_duath = {
+	pattern = "pattern_horizontal_split_02.dds"
+	color1 = "bone_white"
+	color2 = "black"
+	colored_emblem = {
+		texture = "ce_mordor_01.dds"
+		color1 = "dark_rust"
+		instance = { scale = { 0.7 0.7 } position = { 0.5 0.65 } }
+	}
+}
+c_cirith_ungol = {
+	pattern = "pattern_solid.dds"
+	color1 = "black"
+	color2 = "black"
+	colored_emblem = {
+		texture = "ce_mordor_01.dds"
+		color1 = "bone_white"
+	}
+}
+
+d_ghurzun = {
+	pattern = "pattern_solid.dds"
+	color1 = "roman_gold"
+	color2 = "black"
+	colored_emblem = {
+		texture = "ce_uruk_sword_01.dds"
+		color1 = "black"
+		instance = { scale = { 0.8 0.8 } rotation = 90 position = { 0.5 0.2 } }
+		instance = { scale = { 0.8 0.8 } rotation = 90 position = { 0.5 0.5 } }
+		instance = { scale = { 0.8 0.8 } rotation = 90 position = { 0.5 0.8 } }
+	}
+}
+
+d_caran = {
+	pattern = "pattern_shield_01.dds"
+	color1 = "mordor_red"
+	color2 = "black"
+	colored_emblem = {
+		texture = "ce_uruk_spear_03.dds"
+		color1 = "offwhite"
+		instance = { scale = { 1.0 -0.75 } }
+	}
+}
+
+d_nargil = {
+	pattern = "pattern_bend_02.dds"
+	color1 = "rust_brown"
+	color2 = "black"
+	colored_emblem = {
+		texture = "ce_uruk_spear_01.dds"
+		color1 = "grey"
+	}
+}
+
+
+### The Orcs ###
+e_orc_horde = {
+	pattern = "pattern_solid.dds"
+    color1 = { 24 24 24 }
+    color2 = { 24 24 24 }
+	colored_emblem = {
+		texture = "ce_great_orc_horde.dds"
+		color1 = { 144 144 144 }
+		color2 = { 64 64 64 }
+	}
+}
+
+#Daen Nurn#
+k_free_nurn = {
+	pattern="pattern__solid_designer.dds"
+	color1=rgb { 17 58 21 }
+	color2=white
+	color3=black
+	colored_emblem={
+		color1=yellow_light
+		texture="ce_tamgha_regular_circle_frame.dds"
+		instance={
+			scale={ 0.790000 0.790000 }
+			depth=4.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=yellow
+		texture="ce_edain_border_02.dds"
+		instance={
+			rotation=270
+		}
+
+		instance={
+			depth=1.010000
+			rotation=180
+		}
+
+		instance={
+			depth=2.010000
+			rotation=90
+		}
+
+		instance={
+			depth=3.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=yellow_light
+		texture="ce_triskel_02.dds"
+		instance={
+			depth=5.010000
+			rotation=45
+		}
+
+	}
+
+}
+
+### Dunedain Mordor ###
+e_mordor_dunedain = { #By Helecavantar from the Discord
+	pattern="pattern_solid.dds"
+	color1=rgb { 58 7 0 }
+	color2=yellow
+	color3=red
+	colored_emblem={
+		color1=rgb { 251 251 250 }
+		color2=rgb { 253 252 252 }
+		texture="ce_gondor_04.dds"
+		instance={
+			position={ 0.500000 0.505000 }
+			scale={ 0.615000 0.615000 }
+			depth=8.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 255 255 255 }
+		color2=rgb { 255 255 255 }
+		texture="ce_cc_mountains_03.dds"
+		instance={
+			position={ 0.655000 0.600000 }
+			scale={ 0.715000 1.000000 }
+			depth=2.010000
+		}
+
+		instance={
+			position={ 0.345000 0.600000 }
+			scale={ 0.730000 1.000000 }
+			depth=3.010000
+		}
+
+		instance={
+			position={ 0.765000 0.635000 }
+			scale={ 0.725000 1.000000 }
+			depth=4.010000
+		}
+
+		instance={
+			position={ 0.235000 0.635000 }
+			scale={ 0.725000 1.000000 }
+			depth=5.010000
+		}
+
+		instance={
+			position={ 0.500000 0.530000 }
+			scale={ 0.690000 1.000000 }
+			depth=6.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 254 254 253 }
+		texture="ce_cc_edain_stars_02.dds"
+		instance={
+			position={ 0.500000 0.345000 }
+			scale={ 0.695000 0.695000 }
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 0 0 0 }
+		color2=rgb { 252 251 250 }
+		texture="ce_cc_mountains_01.dds"
+		instance={
+			position={ 0.500000 0.550000 }
+			depth=1.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 58 7 0 }
+		texture="ce_block_02.dds"
+		instance={
+			position={ 0.500000 0.695000 }
+			scale={ 0.170000 0.100000 }
+			depth=7.010000
+		}
+
+	}
+
+}
+
+
+d_ephel_duath_dunedain = { #By Helecavantar from the Discord
+	pattern="pattern_solid.dds"
+	color1=black
+	color2=yellow
+	color3=green
+	colored_emblem={
+		color1=rgb { 251 250 250 }
+		texture="ce_cc_edain_stars_04.dds"
+		instance={
+			scale={ 0.660000 0.660000 }
+			depth=2.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 3 3 3 }
+		color2=white
+		texture="ce_cc_mountains_diag_01.dds"
+		instance={
+			scale={ 0.940000 1.000000 }
+			depth=3.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 253 251 250 }
+		color2=rgb { 59 55 51 }
+		color3=rgb { 73 73 73 }
+		texture="ce_edain_frame_multi_color.dds"
+		instance={
+			scale={ 0.940000 0.940000 }
+			depth=4.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 253 252 252 }
+		texture="ce_cc_edain_stars_14.dds"
+		instance={
+			position={ 0.500000 0.420000 }
+			scale={ 0.510000 0.510000 }
+			depth=1.010000
+		}
+
+	}
+
+	colored_emblem={
+		color1=rgb { 253 252 251 }
+		texture="ce_cc_arnor_04.dds"
+		instance={
+			position={ 0.500000 0.330000 }
+			scale={ 0.140000 0.140000 }
+		}
+
+	}
+
+}
+

@@ -1,0 +1,2412 @@
+﻿namespace = dwarven
+
+### Dwarven Events ###
+#			dwarven.0100-0101 	Widow events
+#			dwarven.0205-031	Mirrormere events
+#			dwarven.1000		Dwarven intro event
+#			dwarven.5000-5103	Dwarven Reincarnation Events
+#			dwarven.6001-6002	Durin's Folk Unifier events
+#			dwarven.6200-6203   Unite the Blue Mountains decision events
+#			dwarven.9000-9002	Dwarven Shaving Events
+#			dwarven.9000		I shave someone
+#			dwarven.9001		I am shaved
+#			dwarven.9002		Bearded again !
+# 			dwarven.9500		Dwarven Marriage Choice
+# 			dwarven.9600		Random Dwarven events adapted from RICE Pamir
+# 			dwarven.9700  		Dwarven Enter/Leave Realm Events
+# 			dwarven.9800-9801  	Dwarven Titular Kingdom Title management
+
+###################################
+### Dwarven Widow Events ###
+###################################
+
+# Merged with numenoreanblood.1000
+# dwarven.0100 = { #Check for dead character
+# 	content_source = realms_dlc
+# 	type = character_event
+# 	hidden = yes
+
+# 	immediate = {
+# 		save_scope_as = dead_character
+# 		every_spouse = {
+# 			limit = {
+# 				NOT = { this = root }
+# 				is_dwarf = yes
+# 				any_child = { count > 0 }
+# 			}
+# 			trigger_event = {
+# 				id = dwarven.0101
+# 				days = 1
+# 			}
+# 		}
+# 	}
+
+# }
+
+dwarven.0101 = { #Widow event for widow
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.0101.t
+	desc = {
+		desc = dwarven.0101.desc.intro
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_game_rule = no_dwarven_remarriage
+				}
+				desc = dwarven.0101.desc.no.dwarven.remarriage
+			}
+			triggered_desc = {
+				trigger = {
+					has_game_rule = dwarven_remarriage_allowed
+				}
+				desc = dwarven.0101.desc.dwarven.remarriage.allowed
+			}
+		}
+	}
+	theme = unfriendly
+	left_portrait = {
+		character = root
+		animation = grief
+	}
+	right_portrait = {
+		character = scope:dead_character
+		animation = dead
+	}
+	option = { # Become a widow
+		name = dwarven.0101.a
+		add_trait = widowed
+		stress_impact = {
+			lustful = major_stress_impact_gain
+			lifestyle_reveler = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				any_child = { count > 0 }
+				add = 100
+			}
+			modifier = {
+				has_trait = lustful
+				add = -60
+			}
+			modifier = {
+				has_trait = chaste
+				add = 60
+			}
+			modifier = {
+				has_trait = content
+				add = 20
+			}
+		}
+	}
+	option = { # I will find another
+		name = dwarven.0101.b
+		trigger = {
+			has_game_rule = dwarven_remarriage_allowed
+		}
+		add_piety_level = -1
+		add_character_modifier = refused_widowhood_modifier
+		stress_impact = {
+			chaste = major_stress_impact_gain
+			content = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				any_child = { count = 0 }
+				add = 100
+			}
+			modifier = {
+				has_trait = lustful
+				add = 60
+			}
+			modifier = {
+				has_trait = chaste
+				add = -60
+			}
+			modifier = {
+				has_trait = content
+				add = -20
+			}
+		}
+	}
+}
+
+###################################
+### Dwarven Introduction Events ###
+###################################
+
+dwarven.0205 = { # Arrive at Mirrormere
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.0205.t
+	theme = death
+	desc = dwarven.0205.desc.2
+
+	orphan = yes
+
+	theme = martial_strategy_focus
+
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	left_portrait = {
+		character = scope:companion_1
+		animation = personality_honorable
+		trigger = { exists = scope:companion_1 }
+	}
+
+	lower_left_portrait = {
+		character = scope:companion_2
+		animation = personality_honorable
+		trigger = { exists = scope:companion_2 }
+	}
+
+	cooldown = { years = 10 }
+
+	option = {
+		name = dwarven.0205.a
+		death = { death_reason = death_battle }
+		destroy_title = title:d_balins_expedition
+	}
+
+	option = {
+		name = dwarven.0205.b
+
+		trigger = {
+			exists = scope:companion_2
+			exists = scope:companion_1
+		}
+
+		random_list = {
+			85 = {
+				scope:companion_1 = { death = { death_reason = death_battle } }
+				scope:companion_2 = { death = { death_reason = death_battle } }
+				increase_wounds_effect = { REASON = fight }
+			}
+			15 = {
+				death = { death_reason = death_battle }
+				destroy_title = title:d_balins_expedition
+				scope:companion_1 = {
+					increase_wounds_effect = { REASON = fight }
+				}
+				scope:companion_2 = {
+					increase_wounds_effect = { REASON = fight }
+				}
+			}
+		}
+	}
+
+	after = { trigger_event = { id = dwarven.0210 days = 5 } }
+}
+
+dwarven.0210 = { # Arrive at Mirrormere
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.0210.t
+	theme = death
+	desc = dwarven.0210.desc
+
+	theme = martial_strategy_focus
+
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	cooldown = { years = 10 }
+
+	immediate = {
+		random_county_in_region = {
+			region = middleearth_mountains_misty_balrog_struggle_region
+			limit = {
+				holder = {
+					is_orc = yes
+					is_ai = yes
+					is_independent_ruler = yes
+					NOT = { has_truce = root }
+				}
+			}
+			holder = { save_scope_as = first_ruler }
+		}
+
+		random_county_in_region = {
+			region = middleearth_mountains_misty_balrog_struggle_region
+			limit = {
+				holder = {
+					is_orc = yes
+					is_ai = yes
+					is_independent_ruler = yes
+					NOT = { has_truce = root }
+					NOT = { this = scope:first_ruler }
+				}
+			}
+			holder = { save_scope_as = second_ruler }
+		}
+
+		random_county_in_region = {
+			region = middleearth_mountains_misty_balrog_struggle_region
+			limit = {
+				holder = {
+					is_orc = yes
+					is_ai = yes
+					is_independent_ruler = yes
+					NOT = { has_truce = root }
+					NOR = {
+						this = scope:first_ruler
+						this = scope:second_ruler
+					}
+				}
+			}
+			holder = { save_scope_as = third_ruler }
+		}
+	}
+
+	option = {
+		name = dwarven.0210.a
+		remove_variable = cannot_cancel_travel
+		scope:first_ruler = {
+			start_war = {
+				casus_belli = county_conquest_cb
+				target = root
+				target_title = title:c_chamber_of_mazarbul
+			}
+		}
+
+		scope:second_ruler = {
+			start_war = {
+				casus_belli = county_conquest_cb
+				target = root
+				target_title = title:c_chamber_of_mazarbul
+			}
+		}
+		scope:third_ruler = {
+			start_war = {
+				casus_belli = county_conquest_cb
+				target = root
+				target_title = title:c_chamber_of_mazarbul
+			}
+		}
+	}
+}
+
+dwarven.0331 = {
+	hidden = yes
+
+	immediate = {
+		current_travel_plan.travel_plan_owner ?= { on_end_travel_title_change_effect = yes }
+		scope:selected_county.county = { generate_coa = yes }
+	}
+}
+
+##############################################
+# dwarven.1000 Introduction to Dwarves event #
+##############################################
+
+dwarven.1000 = { #Introduction to Dwarven characters
+	title = dwarven.1000.t
+	desc = dwarven.1000.desc
+	content_source = realms_dlc
+	theme = dwarven
+
+	immediate = { play_music_cue = lotr_cue_dwarves }
+
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = { is_dwarf = yes }
+
+	option = { # All right, I get it
+		name = dwarven.1000.a
+	}
+}
+
+####################################################
+###  Dwarven Fathers Reincarnation System by Juke ##
+####################################################
+
+dwarven.5000 = { # Game Start Reincarnation System Setup Event
+	hidden = yes
+	scope = none
+
+	immediate = {
+		### Save the clans to a list and set up scopes
+		dynasty:dynasty_durin	= { # Durin - Longbeards
+			add_to_list = dorfdad_dynasties
+			set_variable = { name = dorfdad value = character:lineofdurinI }
+		}
+		dynasty:dynasty_uri		= { # Uri - Firebeards
+			add_to_list = dorfdad_dynasties
+			set_variable = { name = dorfdad value = character:lineofuriI }
+		}
+		dynasty:dynasty_dwalin	= { # Dwalin - Broadbeams
+			add_to_list = dorfdad_dynasties
+			set_variable = { name = dorfdad value = character:lineofdwalinI }
+		}
+		dynasty:dynasty_sindri	= { # Sindri - Ironfists
+			add_to_list = dorfdad_dynasties
+			set_variable = { name = dorfdad value = character:lineofsindriI }
+		}
+		dynasty:dynasty_thulin	= { # Thulin - Stiffbeards
+			add_to_list = dorfdad_dynasties
+			set_variable = { name = dorfdad value = character:lineofthulinI }
+		}
+		dynasty:dynasty_thrar	= { # Thrar - Blacklocks
+			add_to_list = dorfdad_dynasties
+			set_variable = { name = dorfdad value = character:lineofthrarI }
+		}
+		dynasty:dynasty_bavor	= { # Bavor - Stonefoots
+			add_to_list = dorfdad_dynasties
+			set_variable = { name = dorfdad value = character:lineofbavorI }
+		}
+
+		### Set up Dynasty Variables
+		every_in_list = {
+			list = dorfdad_dynasties
+			if = { # Generation 4
+				limit = { current_year >= 3900 }
+				set_variable = {
+					name = dorfdad_incarnations
+					value = 4
+				}
+			}
+			if = { # Generation 5
+				limit = { current_year >= 4900 }
+				change_variable = {
+					name = dorfdad_incarnations
+					add = 1
+				}
+			}
+			if = { # Generation 6
+				limit = { current_year >= 5900 }
+				change_variable = {
+					name = dorfdad_incarnations
+					add = 1
+				}
+			}
+		}
+
+		debug_log = "Dorfdad Reincarnation System set up!"
+
+		# Make Uri VI into a proper reincarnate
+#		if = {
+#			limit = {
+#				character:lineofuriVI ?= {
+#					is_alive = yes
+#				}
+#			}
+			# Create the Story
+#			character:lineofuriVI = {
+#				create_story = story_dorfdad_reincarnation
+#				dynasty = {
+#					set_variable = {
+#						name = dorfdad_incarnations
+#						value = 6
+#					}
+#				}
+#				add_character_flag = scripted_appearance_uri
+#				add_character_flag = no_headgear
+#
+#	        	# Get the Name
+#	        	change_first_name = _Uri
+#	        	# Get the trait
+#	        	add_trait = dwarf_father
+#			}
+#		}
+	}
+}
+
+scripted_trigger dwarven.5001_direct_male_line = {
+	NOT = {
+		any_sibling = {
+			is_alive = yes
+			is_female = no
+			age >= prev.age
+			dynasty = ROOT.dynasty
+			NOR = {
+				has_trait = bastard
+				has_trait = bastard_founder
+
+			}
+			trigger_if = {
+				limit = {
+					exists = father
+				}
+				father = prev.father
+			}
+			trigger_if = {
+				limit = {
+					exists = scope:father
+					exists = scope:real_father
+				}
+				scope:father = scope:real_father
+			}
+		}
+	}
+}
+
+dwarven.5001 = { # On childbirth: Random chance to be a reincarnation
+	type = character_event
+	hidden = yes
+	trigger = {
+		# Basic Stuff
+		trigger_if = {
+			limit = {
+				exists = scope:father
+				exists = scope:real_father
+			}
+			scope:father = scope:real_father
+		}
+		NOR = {
+			has_trait = bastard
+			has_trait = bastard_founder
+		}
+		is_female = no
+		is_lowborn = no
+		is_dwarf = yes
+		# Must be in royal dynasty, must have reincarnated less than seven times
+		dynasty = {
+			#is_in_list = dorfdad_dynasties
+			OR = {
+				this = dynasty:dynasty_durin
+				this = dynasty:dynasty_uri
+				this = dynasty:dynasty_dwalin
+				this = dynasty:dynasty_sindri
+				this = dynasty:dynasty_thulin
+				this = dynasty:dynasty_thrar
+				this = dynasty:dynasty_bavor
+			}
+			exists = var:dorfdad
+			exists = var:dorfdad_incarnations
+			var:dorfdad_incarnations < 7
+		}
+		# Must be of the same dwarven clan as dorfdad
+		dynasty.var:dorfdad.culture = { has_same_culture_heritage = root.culture }
+		# No current reincarnation
+		NOT = {
+			dynasty = {
+				any_dynasty_member = {
+					is_alive = yes
+					OR = {
+						has_trait = dwarf_father
+						any_owned_story = {
+							story_type = story_dorfdad_reincarnation
+						}
+					}
+				}
+			}
+		}
+		# No other reincarnations exist
+		# NOT = { dynasty.var:current_reincarnation ?= { is_alive = yes } }
+		NOT = {
+			dynasty = {
+				any_dynasty_member = {
+					any_owned_story = {
+						story_type = story_dorfdad_reincarnation
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = { # See if they could be a reincarnation
+			limit = {
+				# Dad must be able to inherit
+				NOR = {
+					father = {
+						house = root.house
+						has_trait = disinherited
+					}
+					father.father = {
+						house = root.house
+						has_trait = disinherited
+					}
+					father.father.father = {
+						house = root.house
+						has_trait = disinherited
+					}
+				}
+				# 100 Year Cooldown after the death of the last guy
+				trigger_if = {
+					limit = {
+						dynasty = { exists = var:dorfdad_cooldown_year }
+					}
+					dynasty = { current_year >= var:dorfdad_cooldown_year }
+				}
+				# Must be direct male-line descendant and oldest child
+				dwarven.5001_direct_male_line = yes
+				father = {
+					is_alive = yes
+					house = root.house
+					OR = {
+						is_dynast = yes
+						AND = {
+							dwarven.5001_direct_male_line = yes
+							father = {
+								is_alive = yes
+								house = root.house
+								OR = {
+									is_dynast = yes
+									AND = {
+										dwarven.5001_direct_male_line = yes
+										father = {
+											is_alive = yes
+											house = root.house
+											OR = {
+												is_dynast = yes
+												AND = {
+													dwarven.5001_direct_male_line = yes
+													father = {
+														is_alive = yes
+														house = root.house
+														is_dynast = yes
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				# # Parent, grandparent or great grandparent must be a king or higher
+				any_ancestor = {
+					house = root.house
+					is_landed = yes
+					highest_held_title_tier >= tier_kingdom
+				}
+			}
+			debug_log = "Testing for dorfdad reincarnation!"
+			random = {
+				chance = {
+					value = 10
+					if = { # Some characters historically sire incarnates
+						limit = {
+							father = {
+								is_alive = yes
+								house = root.house
+								has_character_flag = historically_conceived_dorfdad
+							}
+							has_game_rule = default_ai_behavior
+						}
+						add = 90
+					}
+					else_if = { # Some characters historically sire incarnates
+						limit = {
+							father = {
+								is_alive = yes
+								house = root.house
+								has_character_flag = historically_conceived_dorfdad
+							}
+							has_game_rule = weighted_ai_behavior
+						}
+						add = 65
+					}
+					else_if = { # Some characters historically sire incarnates
+						limit = {
+							father = {
+								is_alive = yes
+								house = root.house
+								has_character_flag = historically_conceived_dorfdad
+							}
+							NOR = {
+								has_game_rule = default_ai_behavior
+								has_game_rule = weighted_ai_behavior
+							}
+						}
+						add = 40
+					}
+					if = { # Player children get a higher chance, as a treat
+						limit = {
+							any_ancestor = {
+								is_alive = yes
+								house = root.house
+								is_ai = no
+							}
+						}
+						add = 5
+					}
+				}
+				# Create the Story
+				create_story = story_dorfdad_reincarnation
+				debug_log = "Found a possible Dorfdad Reincarnation!"
+			}
+		}
+		else = { # They still fulfill some requirements, chance to make them emulate their Dwarf father as a semi-red flag
+			random = {
+				chance = {
+					value = 5
+					if = { # Bad traits
+						limit = {
+							OR = {
+								has_trait = physique_bad
+								has_trait = beauty_bad
+								has_trait = intellect_bad
+							}
+						}
+						value = 0
+					}
+				}
+				trigger_event = {
+					id = dwarven.5002
+					years = { 5 10 }
+				}
+			}
+		}
+	}
+}
+
+dwarven.5002 = { # I seem to be reflection of my dwarven father
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.5002.t
+	desc = dwarven.5002.desc
+	theme = dwarven
+	override_background = {
+		reference = market_dwarven
+	}
+
+	trigger = {
+		is_dwarf = yes
+		dynasty.var:dorfdad = { exists = this }
+	}
+
+	left_portrait = {
+		character = root
+	}
+
+	right_portrait = {
+		character = scope:my_dorfdad
+	}
+
+	immediate = {
+		# Save first incarnation for event scopes
+		dynasty.var:dorfdad ?= { save_scope_as = my_dorfdad }
+		# Save self for event scopes
+		save_scope_as = new_dorfdad
+		# Add "reflection of" modifiers for life expectancy
+		if = {
+			limit = {
+				scope:my_dorfdad = character:lineofdurinI
+			}
+			add_character_modifier = reflection_of_durin
+		}
+		else_if = {
+			limit = {
+				scope:my_dorfdad = character:lineofuriI
+			}
+			add_character_modifier = reflection_of_uri
+		}
+		else_if = {
+			limit = {
+				scope:my_dorfdad = character:lineofdwalinI
+			}
+			add_character_modifier = reflection_of_dwalin
+		}
+		else_if = {
+			limit = {
+				scope:my_dorfdad = character:lineofsindriI
+			}
+			add_character_modifier = reflection_of_sindri
+		}
+		else_if = {
+			limit = {
+				scope:my_dorfdad = character:lineofthulinI
+			}
+			add_character_modifier = reflection_of_thulin
+		}
+		else_if = {
+			limit = {
+				scope:my_dorfdad = character:lineofthrarI
+			}
+			add_character_modifier = reflection_of_thrar
+		}
+		else_if = {
+			limit = {
+				scope:my_dorfdad = character:lineofbavorI
+			}
+			add_character_modifier = reflection_of_bavor
+		}
+		dorfdad_one_personality_trait_effect = yes
+		add_learning_skill = 1
+		add_piety = 300
+	}
+
+	option = {
+		name = dwarven.5002.durin
+		custom_tooltip = dwarven.5002.durin.tt
+		trigger = {
+			scope:my_dorfdad = character:lineofdurinI
+		}
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+	option = {
+		name = dwarven.5002.uri
+		custom_tooltip = dwarven.5002.uri.tt
+		trigger = {
+			scope:my_dorfdad = character:lineofuriI
+		}
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+	option = {
+		name = dwarven.5002.dwalin
+		custom_tooltip = dwarven.5002.dwalin.tt
+		trigger = {
+			scope:my_dorfdad = character:lineofdwalinI
+		}
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+	option = {
+		name = dwarven.5002.sindri
+		custom_tooltip = dwarven.5002.sindri.tt
+		trigger = {
+			scope:my_dorfdad = character:lineofsindriI
+		}
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+	option = {
+		name = dwarven.5002.thulin
+		custom_tooltip = dwarven.5002.thulin.tt
+		trigger = {
+			scope:my_dorfdad = character:lineofthulinI
+		}
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+	option = {
+		name = dwarven.5002.thrar
+		custom_tooltip = dwarven.5002.thrar.tt
+		trigger = {
+			scope:my_dorfdad = character:lineofthrarI
+		}
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+	option = {
+		name = dwarven.5002.bavor
+		custom_tooltip = dwarven.5002.bavor.tt
+		trigger = {
+			scope:my_dorfdad = character:lineofbavorI
+		}
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+	option = {
+		name = dwarven.5002.fallback
+		custom_tooltip = dwarven.5002.fallback.tt
+		trigger = { always = no }
+		fallback = yes
+		every_ruler = {
+			limit = {
+				is_landed = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5003 # Clan news
+		}
+	}
+}
+
+dwarven.5003 = { # Family informed of reflection of dwarven father
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.5003.t
+	desc = dwarven.5003.desc
+	theme = dwarven
+	override_background = {
+		reference = market_dwarven
+	}
+
+	trigger = {
+		is_dwarf = yes
+	}
+
+	left_portrait = {
+		character = root
+		animation = idle
+	}
+
+	right_portrait = {
+		character = scope:new_dorfdad
+	}
+
+	immediate = {
+		show_as_tooltip = {
+			scope:new_dorfdad = {
+				# Add "reflection of" modifiers for life expectancy
+				if = {
+					limit = {
+						scope:my_dorfdad = character:lineofdurinI
+					}
+					add_character_modifier = reflection_of_durin
+				}
+				else_if = {
+					limit = {
+						scope:my_dorfdad = character:lineofuriI
+					}
+					add_character_modifier = reflection_of_uri
+				}
+				else_if = {
+					limit = {
+						scope:my_dorfdad = character:lineofdwalinI
+					}
+					add_character_modifier = reflection_of_dwalin
+				}
+				else_if = {
+					limit = {
+						scope:my_dorfdad = character:lineofthrarI
+					}
+					add_character_modifier = reflection_of_thrar
+				}
+				else_if = {
+					limit = {
+						scope:my_dorfdad = character:lineofsindriI
+					}
+					add_character_modifier = reflection_of_sindri
+				}
+				else_if = {
+					limit = {
+						scope:my_dorfdad = character:lineofthulinI
+					}
+					add_character_modifier = reflection_of_thulin
+				}
+				else_if = {
+					limit = {
+						scope:my_dorfdad = character:lineofbavorI
+					}
+					add_character_modifier = reflection_of_bavor
+				}
+				custom_tooltip = dwarven.5003.tt
+				add_learning_skill = 1
+				add_piety = 300
+			}
+		}
+	}
+
+	option = {
+		name = dwarven.5003.a
+	}
+}
+
+dwarven.5103 = { # Delay event
+	hidden  = yes
+
+	immediate = {
+		trigger_event = {
+			id = dwarven.5100
+			years = 2
+		}
+	}
+}
+
+dwarven.5100 = { # Upon turning 18: Reincarnate realized who they are, is confirmed and renamed
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.5100.t
+	desc = dwarven.5100.desc
+	theme = dwarven
+	override_background = {
+		reference = market_dwarven
+	}
+
+	left_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+	right_portrait = {
+		character ?= scope:my_dorfdad
+		animation = dead
+	}
+
+	trigger = {
+		any_owned_story = {
+			story_type = story_dorfdad_reincarnation
+		}
+		#dynasty = { var:current_reincarnation ?= root }
+	#	NOT = {
+	#		dynasty = {
+	#			any_dynasty_member = {
+	#				limit = {
+	#					NOT = { this = ROOT }
+	#				}
+	#				any_owned_story = {
+	#					story_type = story_dorfdad_reincarnation
+	#				}
+	#			}
+	#		}
+	#	}
+
+		# Must still be of the correct dwarven clan
+		dynasty.var:dorfdad.culture = { has_same_culture_heritage = root.culture }
+		#scope:dorfdad.culture ?= { has_same_culture_heritage = root.culture }
+
+		# He or his direct ancestor must be dynasty head
+		OR = {
+			is_dynast = yes
+			any_ancestor = {
+				is_dynast = yes
+				is_alive = yes
+				is_dwarf = yes
+				house = root.house
+			}
+		}
+		## He or one of his direct ancestors must hold a kingdom
+		OR = {
+			AND = {
+				is_landed = yes
+				highest_held_title_tier >= tier_kingdom
+				is_dwarf = yes
+			}
+			any_ancestor = {
+				is_alive = yes
+				is_landed = yes
+				highest_held_title_tier >= tier_kingdom
+				is_dwarf = yes
+				house = root.house
+			}
+		}
+		is_dwarf = yes
+	}
+
+	immediate = {
+		# Change Name, education, etc
+		become_dorfdad_effect = yes
+		debug_log = "Confirmed a new Dorfdad Reincarnation!"
+	}
+	option = {
+		name = dwarven.5100.a
+		every_ruler = {
+			limit = {
+				is_ruler = yes
+				NOT = { this = root }
+				OR = {
+					dynasty = root.dynasty
+					culture = { has_same_culture_heritage = root.culture }
+				}
+			}
+			trigger_event = dwarven.5101 # Clan news
+		}
+
+		# Minor news for everyone else, major news for dwarves
+		if = {
+			limit = { # Minor News
+				has_game_rule = all_news
+			}
+			every_player = { #Global News Announcement
+				trigger_event = {
+					id = news_event.0025
+					days = 5
+				}
+			}
+		}
+		else_if = {
+			limit = { # Major News
+				NOT = { has_game_rule = no_news }
+			}
+			every_player = { #Global News Announcement
+				limit = { is_dwarf = yes }
+				trigger_event = {
+					id = news_event.0025
+					days = 5
+				}
+			}
+		}
+	}
+}
+
+dwarven.5101 = { # News of reincarnation reach close family / clan
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.5101.t
+	desc = {
+		desc = dwarven.5101.desc.intro
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:my_dorfdad = character:lineofdurinI
+				}
+				desc = dwarven.5101.desc.longbeard
+			}
+			triggered_desc = {
+				trigger = {
+					scope:my_dorfdad = character:lineofuriI
+				}
+				desc = dwarven.5101.desc.firebeard
+			}
+			triggered_desc = {
+				trigger = {
+					scope:my_dorfdad = character:lineofdwalinI
+				}
+				desc = dwarven.5101.desc.broadbeam
+			}
+			triggered_desc = {
+				trigger = {
+					scope:my_dorfdad = character:lineofthrarI
+				}
+				desc = dwarven.5101.desc.blacklock
+			}
+			triggered_desc = {
+				trigger = {
+					scope:my_dorfdad = character:lineofsindriI
+				}
+				desc = dwarven.5101.desc.ironfist
+			}
+			triggered_desc = {
+				trigger = {
+					scope:my_dorfdad = character:lineofthulinI
+				}
+				desc = dwarven.5101.desc.stiffbeard
+			}
+			triggered_desc = {
+				trigger = {
+					scope:my_dorfdad = character:lineofbavorI
+				}
+				desc = dwarven.5101.desc.stonefoot
+			}
+			desc = dwarven.5101.desc.fallback
+		}
+		desc = dwarven.5101.desc.outro
+	}
+	theme = dwarven
+	override_background = {
+		reference = throne_room_dwarf
+	}
+
+	trigger = {
+		is_dwarf = yes
+	}
+
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+
+	lower_center_portrait = {
+		character ?= scope:my_dorfdad
+	}
+
+	right_portrait = {
+		character = scope:new_dorfdad
+		animation = personality_honorable
+	}
+
+	immediate = {
+		show_as_tooltip = {
+			scope:new_dorfdad ?= { become_dorfdad_effect = yes }
+		}
+	}
+
+
+	option = {
+		name = {
+			trigger = {
+				scope:new_dorfdad = {
+					is_close_or_extended_family_of = root
+				}
+			}
+			text = dwarven.5101.a.close
+		}
+		name = dwarven.5101.a
+		if = {
+			limit = {
+				is_dwarf = yes
+				is_ruler = yes
+				scope:new_dorfdad.house = root.house
+				OR = {
+					is_parent_of = scope:new_dorfdad
+					is_grandparent_of = scope:new_dorfdad
+					is_great_grandparent_of = scope:new_dorfdad
+					is_dynast = yes
+				}
+			}
+			custom_tooltip = dwarven.5101.a.tt
+			set_designated_heir_unsafe = scope:new_dorfdad
+		}
+	}
+}
+
+dwarven.5102 = { # News of dwarf fathers death
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.5102.t
+	desc = dwarven.5102.desc
+	theme = dwarven
+	override_background = {
+		reference = durins_door
+	}
+
+	trigger = {
+		is_dwarf = yes
+	}
+
+	left_portrait = {
+		character = root
+		animation = sadness
+	}
+
+	lower_center_portrait = {
+		character ?= scope:my_dorfdad
+	}
+
+	right_portrait = {
+		character = scope:new_dorfdad
+		animation = dead
+	}
+
+	option = {
+		name = dwarven.5102.a
+	}
+}
+
+##########################
+### Unify Durin's Folk ###
+##########################
+
+# on_new_holder: New High King gets the trait.
+dwarven.6001 = {
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.6001.t
+	desc = dwarven.6001.desc.regular
+	theme = crown
+
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+
+	trigger = {
+		scope:title = title:e_durins_folk
+		NOT = { has_trait = durin_unify }
+		dynasty = dynasty:dynasty_durin
+		is_target_in_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_unify_durins_folk
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = { scope:previous_holder ?= { is_alive = yes has_trait = durin_unify } }
+			save_scope_as = new_holder
+			scope:previous_holder = { trigger_event = dwarven.6002 }
+		}
+	}
+
+	option = {
+		name = dwarven.6001.a
+		add_trait = durin_unify
+	}
+}
+
+# If old holder is still alive, he will lose the trait.
+dwarven.6002 = {
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.6002.t
+	desc = dwarven.6002.desc
+	theme = realm
+
+	left_portrait = {
+		character = root
+		animation = shame
+	}
+
+	immediate = {
+		#This insult cannot be born! That's going in the book...
+		play_music_cue = "mx_cue_prison"
+	}
+
+	trigger = {
+		is_alive = yes
+		has_trait = durin_unify
+	}
+
+	option = {
+		name = dwarven.6002.a
+		remove_trait = durin_unify
+		stress_impact = {
+			base = minor_stress_impact_gain
+		}
+	}
+}
+
+############################
+# Unite the Blue Mountains #
+###### ~ by Aerien ~ #######
+
+dwarven.6200 = { # Send my call for Unity!
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.6200.t
+	desc = dwarven.6200.desc
+	theme = dwarven
+	window = visit_settlement_window
+	override_background = { reference = throne_room_dwarf }
+
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	immediate = {
+		save_scope_as = blue_mountains_uniter
+		show_as_tooltip = {
+			get_title = title:e_blue_mountains
+			dynasty = { add_dynasty_prestige = 750 }
+		}
+	}
+
+	option = { # Send my offer to all western dwarves!
+		name = dwarven.6200.a
+		custom_tooltip = dwarven.6200.a.tt
+		title:e_blue_mountains = {
+			every_de_jure_county_holder = {
+            	limit = {
+					is_independent_ruler = yes
+					is_landed = yes
+					is_dwarf = yes
+					NOT = { THIS = scope:blue_mountains_uniter }
+					capital_county = { # If capital is in the Blue Mountains
+						title_province = { geographical_region = middleearth_mountains_blue }
+					}
+				}
+				trigger_event = {
+					id = dwarven.6201
+					days = 2
+				}
+			}
+		}
+	}
+}
+
+dwarven.6201 = { # Receive the call
+	type = letter_event
+	sender = scope:sender
+	opening = dwarven.6201.opening
+	desc = dwarven.6201.desc
+
+	trigger = {
+		NOT = { is_at_war_with = title:e_blue_mountains.holder }
+		NOT = { root = title:e_blue_mountains.holder }
+	}
+
+	on_trigger_fail = { #Trigger invitation again if it was blocked because the character was handling another invitation
+		trigger_event = {
+			id = dwarven.6201
+			days = 1
+		}
+	}
+
+	immediate = {
+		title:e_blue_mountains.holder = {
+			save_scope_as = sender
+		}
+		ROOT = {
+			save_scope_as = recipient
+		}
+	}
+
+	option = {
+		name = dwarven.6201.a # True Son of Mahal!
+		show_as_tooltip = {
+			create_title_and_vassal_change = {
+				type = swear_fealty
+				save_scope_as = change
+				add_claim_on_loss = no
+			}
+			change_liege = {
+				liege = scope:sender
+				change = scope:change
+			}
+			resolve_title_and_vassal_change = scope:change
+		}
+		hidden_effect = {
+			scope:sender = { trigger_event = dwarven.6202 }
+		}
+
+		ai_chance = { # AI will say yes
+			base = 100
+		}
+	}
+
+	option = {
+		name = dwarven.6201.b # I will remain independent
+		show_as_tooltip = {
+			if = {
+				limit = {
+					scope:recipient.primary_title.empire ?= title:e_blue_mountains
+				}
+				scope:sender = {
+					add_unpressed_claim = scope:recipient.primary_title
+				}
+			}
+			add_prestige = 150
+		}
+		hidden_effect = {
+			scope:sender = { trigger_event = dwarven.6203 }
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dwarven.6202 = { # Unification accepted
+	type = letter_event
+	opening = dwarven.6202.opening
+	desc = dwarven.6202.desc
+	sender = {
+		character = scope:recipient
+		animation = personality_compassionate
+	}
+
+	immediate = {
+		scope:recipient = {
+			create_title_and_vassal_change = {
+				type = swear_fealty
+				save_scope_as = change
+				add_claim_on_loss = no
+			}
+			change_liege = {
+				liege = scope:sender
+				change = scope:change
+			}
+			resolve_title_and_vassal_change = scope:change
+		}
+	}
+
+	option = { # Wise choice
+		name = dwarven.6202.a
+	}
+}
+
+dwarven.6203 = { # Unification refused
+	type = letter_event
+	opening = dwarven.6203.opening
+	desc = dwarven.6203.desc
+	sender = {
+		character = scope:recipient
+		animation = personality_bold
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				scope:recipient.primary_title.empire ?= title:e_blue_mountains
+			}
+			scope:sender = {
+				add_unpressed_claim = scope:recipient.primary_title
+			}
+		}
+		scope:recipient = { add_prestige = 75 }
+	}
+
+	option = { # How dare they!
+		name = dwarven.6203.a
+	}
+}
+
+##############################
+### Uldona Spine Events ######
+##############################
+#### (Nurunkizdin ###
+
+
+dwarven.6300 = { # Light the Deepest Darkness event
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.6300.t
+	desc = dwarven.6300.desc
+	theme = dwarven
+	override_background = { reference = throne_room_dwarf }
+
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	option = {
+		name = dwarven.6300.a
+	}
+}
+
+
+##############################
+### Dwarven Shaving Events ###
+##############################
+
+#I shave someone
+dwarven.9000 = { #by Brice Underhill
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9000.t
+	desc = {
+		desc = prison.1020.start.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					OR = {
+						ai_compassion < 0
+						has_relation_rival = scope:recipient
+					}
+				}
+				desc = dwarven.9000.cruel.desc
+			}
+			desc = prison.1020.compassionate.desc
+		}
+	}
+	theme = prison
+	left_portrait = {
+		character = scope:actor
+		animation = schadenfreude
+	}
+	right_portrait = {
+		character = scope:recipient
+		animation = fear
+	}
+
+	trigger = { scope:recipient = { is_imprisoned_by = scope:actor } }
+
+	on_trigger_fail = {
+		scope:recipient = {
+			if = {
+				limit = { has_character_flag = is_being_tortured }
+				remove_character_flag = is_being_tortured
+			}
+		}
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_prison"
+		hidden_effect = {
+			#For the text
+			save_court_physician_as_effect = { SCOPE_NAME = physician }
+			if = {
+				limit = { NOT = { exists = scope:physician } }
+				random_dummy_gender_physician_effect = yes
+				scope:dummy_physician_gender = { save_scope_as = physician }
+			}
+		}
+	}
+
+	option = {
+		name = {
+			trigger = {
+				OR = {
+					has_trait = sadistic
+					has_relation_rival = scope:recipient
+				}
+			}
+			text = prison.1020.a
+		}
+		name = {
+			trigger = {
+				NAND = {
+					OR = {
+						has_trait = sadistic
+						has_relation_rival = scope:recipient
+					}
+					scope:recipient = { is_lotr_adult = yes }
+				}
+			}
+			text = prison.1020.b
+		}
+		show_as_tooltip = { shave_recipient_effect = yes }
+		scope:recipient = {
+			trigger_event = dwarven.9001
+		}
+	}
+}
+
+#I am shaved
+dwarven.9001 = { #by Brice Underhill
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9000.t
+	desc = {
+		desc = prison.1021.start.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:actor = {
+						OR = {
+							ai_compassion < 0
+							has_relation_rival = scope:recipient
+						}
+					}
+				}
+				desc = dwarven.9001.cruel.desc
+			}
+			desc = dwarven.9001.compassionate.desc
+		}
+	}
+	theme = prison
+	left_portrait = {
+		character = root
+		animation = fear
+
+	}
+	right_portrait = {
+		character = scope:actor
+		animation = schadenfreude
+	}
+
+	trigger = { scope:recipient = { is_imprisoned_by = scope:actor } }
+
+	on_trigger_fail = {
+		scope:recipient = {
+			if = {
+				limit = { has_character_flag = is_being_tortured }
+				remove_character_flag = is_being_tortured
+			}
+		}
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_prison"
+	}
+
+	option = {
+		name = {
+			trigger = { is_lotr_adult = yes }
+			text = dwarven.9001.a
+		}
+		shave_recipient_effect = yes
+	}
+
+	after = {
+		add_character_flag = house_feud_shaving_flag
+		house_feud_torture_event_effect = yes
+
+		trigger_event = {
+			id = dwarven.9002
+			years = 5
+		}
+	}
+}
+
+dwarven.9002 = { # Bearded Again !
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9002.t
+	desc = dwarven.9002.desc
+	theme = dwarven
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	option = { #I can finally show my face again !
+		name = dwarven.9002.a
+		# custom_tooltip = dwarven.9002.att # There exists no loc key for this
+
+		remove_trait = beardless
+		add_stress = medium_stress_loss
+	}
+}
+
+################################
+### Dwarven Fertility Events ###
+################################
+
+scripted_trigger dwarven_9500_youngest_brother_all_brothers_celibate_trigger = {
+	is_male = yes
+	NOT = {
+		any_sibling = {
+			is_male = yes
+			age > nubile_age
+			NOT = { has_trait = cannot_marry }
+		}
+	}
+	NOT = {
+		any_sibling = {
+			is_male = yes
+			age < root.age
+		}
+	}
+
+}
+
+dwarven.9500 = {
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9500.t
+	desc = dwarven.9500.desc
+	theme = crown
+
+	right_portrait = {
+		character = root
+		animation = stress
+	}
+
+	trigger = {
+		is_dwarf = yes
+		is_married = no #Juke note: Should never be the case, adding as fallback
+	}
+
+	option = { # Do not gain dwarf_refuses_marriage modifier
+		name = dwarven.9500.a
+
+		add_stress = massive_stress_impact_gain
+
+		ai_chance = {
+			base = 72
+			modifier = {
+				is_male = yes
+				add = -16
+			}
+			modifier = {
+				OR = {
+					has_sexuality = homosexual
+					has_sexuality = asexual
+				}
+				factor = 0
+			}
+		}
+	}
+
+	option = { # Gain dwarf_refuses_marriage modifiers
+		name = dwarven.9500.b
+		trigger = {
+			OR = {
+				is_ai = no
+				AND = {
+					NOT = { has_trait = dwarf_father }
+					dwarven_9500_youngest_brother_all_brothers_celibate_trigger = no
+				}
+			}
+		}
+
+		add_trait = cannot_marry
+
+		if = {
+			limit = { is_betrothed = yes }
+			break_betrothal = root.betrothed
+		}
+
+		ai_chance = {
+			base = 27
+			modifier = {
+				is_male = yes
+				add = 17
+			}
+			modifier = {
+				OR = {
+					has_sexuality = homosexual
+					has_sexuality = asexual
+				}
+				add = 100
+			}
+		}
+	}
+}
+
+### Enter/Leave Realm Events
+
+dwarven.9700 = { # Enter Realm: Erebor
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9700.t
+	desc = {
+		triggered_desc = { # Evil faith
+			trigger = {
+				faith_is_evil = yes
+				NOT = { is_dwarf = yes }
+			}
+			desc = dwarven.9700.desc.evil
+		}
+		triggered_desc = { # Non-evil
+			trigger = {
+				faith_is_evil = no
+			}
+			desc = dwarven.9700.desc.good
+		}
+	}
+	theme = dwarven
+
+	trigger = {
+		game_start_date = 7033.1.1
+	}
+
+	cooldown = { days = 5 }
+
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	option = {
+		name = dwarven.9700.a
+		add_prestige = medium_prestige_gain
+	}
+
+	after = {
+		if = { #Managing Thorin's Tomb modifiers
+			limit = {
+				game_start_date >= 6974 # Thorin gotta be dead!
+				is_dwarf = yes
+			}
+			add_thorins_tomb_modifiers_effect = yes
+		}
+	}
+}
+dwarven.9701 = { # Leave Realm: Erebor
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9701.t
+	desc = dwarven.9701.desc
+	theme = realm
+	immediate = { play_music_cue = lotr_cue_dwarves }
+
+	cooldown = { days = 5 }
+
+	right_portrait = {
+		character = root
+		animation = shock
+	}
+
+	trigger = {
+		is_dwarf = yes
+		game_start_date = 7033.1.1
+	}
+
+	option = {
+		name = dwarven.9701.a
+		add_prestige = medium_prestige_loss
+	}
+
+}
+
+# Dwarven King Titles
+
+dwarven.9800 = { # Assign the Titles to be primary
+	hidden = yes
+	immediate = {
+		dynasty:dynasty_durin.dynast ?= {
+			if = {
+				limit = { has_title = title:k_durins_folk }
+				set_primary_title_to = title:k_durins_folk
+			}
+			else_if = {
+				limit = { has_title = title:e_durins_folk }
+				set_primary_title_to = title:e_durins_folk
+			}
+		}
+		dynasty:dynasty_dwalin.dynast ?= {
+			if = {
+				limit = { has_title = title:k_dwalins_folk }
+				set_primary_title_to = title:k_dwalins_folk
+			}
+			else_if = {
+				limit = { has_title = title:e_dwalins_folk }
+				set_primary_title_to = title:e_dwalins_folk
+			}
+		}
+		dynasty:dynasty_uri.dynast ?= {
+			if = {
+				limit = { has_title = title:k_uris_folk }
+				set_primary_title_to = title:k_uris_folk
+			}
+			else_if = {
+				limit = { has_title = title:e_uris_folk }
+				set_primary_title_to = title:e_uris_folk
+			}
+		}
+		dynasty:dynasty_thrar.dynast ?= {
+			if = {
+				limit = { has_title = title:k_thrars_folk }
+				set_primary_title_to = title:k_thrars_folk
+			}
+			else_if = {
+				limit = { has_title = title:e_thrars_folk }
+				set_primary_title_to = title:e_thrars_folk
+			}
+		}
+		dynasty:dynasty_sindri.dynast ?= {
+			if = {
+				limit = { has_title = title:k_sindris_folk }
+				set_primary_title_to = title:k_sindris_folk
+			}
+			else_if = {
+				limit = { has_title = title:e_sindris_folk }
+				set_primary_title_to = title:e_sindris_folk
+			}
+		}
+		dynasty:dynasty_thulin.dynast ?= {
+			if = {
+				limit = { has_title = title:k_thulins_folk }
+				set_primary_title_to = title:k_thulins_folk
+			}
+			else_if = {
+				limit = { has_title = title:e_thulins_folk }
+				set_primary_title_to = title:e_thulins_folk
+			}
+		}
+		dynasty:dynasty_bavor.dynast ?= {
+			if = {
+				limit = { has_title = title:k_bavors_folk }
+				set_primary_title_to = title:k_bavors_folk
+			}
+			else_if = {
+				limit = { has_title = title:e_bavors_folk }
+				set_primary_title_to = title:e_bavors_folk
+			}
+		}
+	}
+}
+dwarven.9801 = { # When they become an Emperor they will get the Emperor level title and have the history copied over while the kingdom title is destroyed
+	hidden = yes
+	trigger = {
+		OR = {
+			has_title = title:k_durins_folk
+			has_title = title:k_uris_folk
+			has_title = title:k_dwalins_folk
+			has_title = title:k_thrars_folk
+			has_title = title:k_sindris_folk
+			has_title = title:k_thulins_folk
+			has_title = title:k_bavors_folk
+		}
+	}
+	immediate = {
+		if = {
+			limit = { has_title = title:k_durins_folk }
+			get_title = title:e_durins_folk
+			title:e_durins_folk = { copy_title_history = title:k_durins_folk }
+			set_primary_title_to = title:e_durins_folk
+			destroy_title = title:k_durins_folk
+		}
+		else_if = {
+			limit = { has_title = title:k_uris_folk }
+			get_title = title:e_uris_folk
+			title:e_uris_folk = { copy_title_history = title:k_uris_folk }
+			set_primary_title_to = title:e_uris_folk
+			destroy_title = title:k_uris_folk
+		}
+		else_if = {
+			limit = { has_title = title:k_dwalins_folk }
+			get_title = title:e_dwalins_folk
+			title:e_dwalins_folk = { copy_title_history = title:k_dwalins_folk }
+			set_primary_title_to = title:e_dwalins_folk
+			destroy_title = title:k_dwalins_folk
+		}
+		else_if = {
+			limit = { has_title = title:k_sindris_folk }
+			get_title = title:e_sindris_folk
+			title:e_sindris_folk = { copy_title_history = title:k_sindris_folk }
+			set_primary_title_to = title:e_sindris_folk
+			destroy_title = title:k_sindris_folk
+		}
+		else_if = {
+			limit = { has_title = title:k_thulins_folk }
+			get_title = title:e_thulins_folk
+			title:e_thulins_folk = { copy_title_history = title:k_thulins_folk }
+			set_primary_title_to = title:e_thulins_folk
+			destroy_title = title:k_thulins_folk
+		}
+		else_if = {
+			limit = { has_title = title:k_thrars_folk }
+			get_title = title:e_thrars_folk
+			title:e_thrars_folk = { copy_title_history = title:k_thrars_folk }
+			set_primary_title_to = title:e_thrars_folk
+			destroy_title = title:k_thrars_folk
+		}
+		else_if = {
+			limit = { has_title = title:k_bavors_folk }
+			get_title = title:e_bavors_folk
+			title:e_bavors_folk = { copy_title_history = title:k_bavors_folk }
+			set_primary_title_to = title:e_bavors_folk
+			destroy_title = title:k_bavors_folk
+		}
+	}
+}
+dwarven.9802 = {
+	hidden = yes
+	trigger = {
+		any_held_title = {
+			count <= 1
+			tier = tier_empire
+		}
+		OR = {
+#			has_title = title:e_durins_folk
+			has_title = title:e_uris_folk
+			has_title = title:e_dwalins_folk
+			has_title = title:e_thrars_folk
+			has_title = title:e_sindris_folk
+			has_title = title:e_thulins_folk
+			has_title = title:e_bavors_folk
+		}
+	}
+	immediate = {
+		trigger_event = dwarven.9803
+	}
+}
+dwarven.9803 = { # If they lose their all their other empire titles they will lose their Titular Empire titles and will get their kingdom title back
+	hidden = yes
+	trigger = {
+		OR = {
+#			has_title = title:e_durins_folk
+			has_title = title:e_uris_folk
+			has_title = title:e_dwalins_folk
+			has_title = title:e_thrars_folk
+			has_title = title:e_sindris_folk
+			has_title = title:e_thulins_folk
+			has_title = title:e_bavors_folk
+		}
+	}
+	immediate = {
+#		if = {
+#			limit = { has_title = title:e_durins_folk }
+#			get_title = title:k_durins_folk
+#			title:k_durins_folk = { copy_title_history = title:e_durins_folk }
+#			destroy_title = title:e_durins_folk
+#			set_primary_title_to = title:k_durins_folk
+#		}
+		if = {
+			limit = { has_title = title:e_uris_folk }
+			get_title = title:k_uris_folk
+			title:k_uris_folk = { copy_title_history = title:e_uris_folk }
+			destroy_title = title:e_uris_folk
+			set_primary_title_to = title:k_uris_folk
+		}
+		else_if = {
+			limit = { has_title = title:e_dwalins_folk }
+			get_title = title:k_dwalins_folk
+			title:k_dwalins_folk = { copy_title_history = title:e_dwalins_folk }
+			destroy_title = title:e_dwalins_folk
+			set_primary_title_to = title:k_dwalins_folk
+		}
+		else_if = {
+			limit = { has_title = title:e_sindris_folk }
+			get_title = title:k_sindris_folk
+			title:k_sindris_folk = { copy_title_history = title:e_sindris_folk }
+			destroy_title = title:e_sindris_folk
+			set_primary_title_to = title:k_sindris_folk
+		}
+		else_if = {
+			limit = { has_title = title:e_thulins_folk }
+			get_title = title:k_thulins_folk
+			title:k_thulins_folk = { copy_title_history = title:e_thulins_folk }
+			destroy_title = title:e_thulins_folk
+			set_primary_title_to = title:k_thulins_folk
+		}
+		else_if = {
+			limit = { has_title = title:e_thrars_folk }
+			get_title = title:k_thrars_folk
+			title:k_thrars_folk = { copy_title_history = title:e_thrars_folk }
+			destroy_title = title:e_thrars_folk
+			set_primary_title_to = title:k_thrars_folk
+		}
+		else_if = {
+			limit = { has_title = title:e_bavors_folk }
+			get_title = title:k_bavors_folk
+			title:k_bavors_folk = { copy_title_history = title:e_bavors_folk }
+			destroy_title = title:e_bavors_folk
+			set_primary_title_to = title:k_bavors_folk
+		}
+	}
+}
+dwarven.9804 = { # If they lose their all their other kingdom titles they will lose their Titular Kingdom
+	hidden = yes
+	trigger = {
+		OR = {
+			has_title = title:k_durins_folk
+			has_title = title:k_uris_folk
+			has_title = title:k_dwalins_folk
+			has_title = title:k_thrars_folk
+			has_title = title:k_thulins_folk
+			has_title = title:k_bavors_folk
+			has_title = title:k_sindris_folk
+		}
+	}
+	immediate = {
+		if = {
+			limit = { has_title = title:k_durins_folk }
+			title:k_durins_dummy = { copy_title_history = title:k_durins_folk }
+			destroy_title = title:k_durins_folk
+			title:k_durins_folk = { copy_title_history = title:k_durins_dummy }
+		}
+		else_if = {
+			limit = { has_title = title:k_uris_folk }
+			title:k_durins_dummy = { copy_title_history = title:k_uris_folk }
+			destroy_title = title:k_uris_folk
+			title:k_uris_folk = { copy_title_history = title:k_durins_dummy }
+		}
+		else_if = {
+			limit = { has_title = title:k_dwalins_folk }
+			title:k_durins_dummy = { copy_title_history = title:k_dwalins_folk }
+			destroy_title = title:k_dwalins_folk
+			title:k_dwalins_folk = { copy_title_history = title:k_durins_dummy }
+		}
+		else_if = {
+			limit = { has_title = title:k_thrars_folk }
+			title:k_durins_dummy = { copy_title_history = title:k_thrars_folk }
+			destroy_title = title:k_thrars_folk
+			title:k_thrars_folk = { copy_title_history = title:k_durins_dummy }
+		}
+		else_if = {
+			limit = { has_title = title:k_thulins_folk }
+			title:k_durins_dummy = { copy_title_history = title:k_thulins_folk }
+			destroy_title = title:k_thulins_folk
+			title:k_thulins_folk = { copy_title_history = title:k_durins_dummy }
+		}
+		else_if = {
+			limit = { has_title = title:k_bavors_folk }
+			title:k_durins_dummy = { copy_title_history = title:k_bavors_folk }
+			destroy_title = title:k_bavors_folk
+			title:k_bavors_folk = { copy_title_history = title:k_durins_dummy }
+		}
+		else_if = {
+			limit = { has_title = title:k_sindris_folk }
+			title:k_durins_dummy = { copy_title_history = title:k_sindris_folk }
+			destroy_title = title:k_sindris_folk
+			title:k_sindris_folk = { copy_title_history = title:k_durins_dummy }
+		}
+	}
+}
+dwarven.9805 = { # Character decides to usurp
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9805.t
+	desc = dwarven.9805.desc
+	theme = crown
+
+	immediate = {
+		play_music_cue = lotr_cue_dwarves
+		dynasty.dynast = {
+			save_scope_as = king
+			primary_title = { save_scope_as = dynasty_title }
+		}
+		save_scope_as = claimant
+	}
+
+	right_portrait = {
+		character = root
+		animation = stress
+	}
+
+	left_portrait = {
+		character = scope:king
+		animation = personality_honorable
+	}
+
+	option = {
+		name = dwarven.9805.a
+		dynasty.dynast = {
+			trigger_event = {
+				id = dwarven.9806
+				days = 1
+			}
+		}
+	}
+	option = {
+		name = dwarven.9805.b
+		remove_decision_cooldown = decision_usurp_dynast
+	}
+}
+dwarven.9806 = { # Dynast is informed of demands
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9806.t
+	desc = dwarven.9806.desc
+	theme = crown
+	immediate = { play_music_cue = lotr_cue_dwarves }
+
+	right_portrait = {
+		character = root
+		animation = stress
+	}
+
+	left_portrait = {
+		character = scope:claimant
+		animation = personality_honorable
+	}
+
+	option = {
+		name = dwarven.9806.a
+		scope:claimant = {
+			trigger_event = {
+				id = dwarven.9807
+				days = 5
+			}
+		}
+		ai_chance = {
+ 			base = 50
+ 			modifier = {
+ 				add = 10
+ 				OR = {
+ 					has_trait = paranoid
+					has_trait = wrathful
+					has_trait = brave
+ 				}
+ 			}
+ 			modifier = {
+ 				add = -10
+ 				OR = {
+ 					has_trait = compassionate
+					has_trait = shy
+ 				}
+ 			}
+ 			modifier = {
+ 				add = 20
+ 				OR = {
+ 					dread >= 50
+ 					tyranny >= 50
+ 				}
+ 			}
+		}
+	}
+	option = {
+		name = dwarven.9806.b
+		scope:claimant = {
+			trigger_event = {
+				id = dwarven.9808
+				days = 5
+			}
+		}
+		ai_chance = {
+ 			base = 50
+ 			modifier = {
+ 				add = 10
+ 				OR = {
+ 					has_trait = compassionate
+					has_trait = shy
+ 				}
+ 			}
+ 			modifier = {
+ 				add = -10
+ 				OR = {
+ 					has_trait = paranoid
+					has_trait = wrathful
+					has_trait = brave
+ 				}
+ 			}
+		}
+	}
+}
+dwarven.9807 = { # Dynast refuses, war
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9807.t
+	desc = dwarven.9807.desc
+	theme = crown
+	immediate = { play_music_cue = lotr_cue_dwarves }
+
+	right_portrait = {
+		character = root
+		animation = aggressive_longaxe
+	}
+
+	left_portrait = {
+		character = scope:king
+		animation = disgust
+	}
+
+	option = {
+		name = dwarven.9807.a
+		start_war = {
+			casus_belli = usurp_dwarven_dynast_cb
+			target = dynasty.dynast
+		}
+	}
+}
+dwarven.9808 = { # Dynast accepts
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9808.t
+	desc = dwarven.9808.desc
+	theme = crown
+	immediate = { play_music_cue = lotr_cue_dwarves }
+
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	left_portrait = {
+		character = scope:king
+		animation = disgust
+	}
+
+	option = {
+		name = dwarven.9808.a
+		house = { set_house_head = root }
+
+		#Create the title and make it primary
+		create_title_and_vassal_change = {
+			type = usurped
+			save_scope_as = title_change
+			add_claim_on_loss = yes
+		}
+		scope:dynasty_title = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+		}
+		resolve_title_and_vassal_change = scope:title_change
+		set_primary_title_to = scope:dynasty_title
+	}
+}
+dwarven.9809 = { # Won War
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9809.t
+	desc = dwarven.9809.desc
+	theme = crown
+
+	immediate = {
+		play_music_cue = lotr_cue_dwarves
+		dynasty.dynast.primary_title = { save_scope_as = dynasty_title }
+		give_nickname = nick_the_usurper
+	}
+
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	left_portrait = {
+		character = scope:king
+		animation = disgust
+	}
+
+	option = {
+		name = dwarven.9808.a
+		house = { set_house_head = root }
+
+		#Create the title and make it primary
+		create_title_and_vassal_change = {
+			type = usurped
+			save_scope_as = title_change
+			add_claim_on_loss = yes
+		}
+		scope:dynasty_title = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+		}
+		resolve_title_and_vassal_change = scope:title_change
+		set_primary_title_to = scope:dynasty_title
+	}
+}
+dwarven.9810 = { # Former Dynast, War Lost
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9810.t
+	desc = dwarven.9810.desc
+	theme = crown
+
+	right_portrait = {
+		character = root
+		animation = disgust
+	}
+
+	left_portrait = {
+		character = scope:claimant
+		animation = personality_honorable
+	}
+
+	option = {
+		name = dwarven.9810.a
+	}
+}
+dwarven.9811 = { # Usurper, War Lost
+	content_source = realms_dlc
+	type = character_event
+	title = dwarven.9811.t
+	desc = dwarven.9811.desc
+	theme = crown
+
+	right_portrait = {
+		character = root
+		animation = disgust
+	}
+
+	left_portrait = {
+		character = scope:king
+		animation = personality_honorable
+	}
+
+	option = {
+		name = dwarven.9811.a
+	}
+}

@@ -1,0 +1,423 @@
+﻿namespace = hobbit
+
+### HOBBIT EVENTS
+# 0001			Forced government conversion
+# 0002-0010		Pipeweed Stress Loss
+# 0100          Integrate the westmarch event (after decision)
+# 0300			Event to swap out Bilbo's modifiers
+
+
+hobbit.0001 = { # Forced conversion to hobbit government type
+	hidden = yes
+	
+	trigger = {
+		is_hobbit = yes
+		NOT = { government_has_flag = government_is_hobbit }
+		is_landless_adventurer = no
+		NOT = { government_has_flag = government_is_administrative }
+	}
+
+	immediate = {
+		change_government = hobbit_government
+	}
+}
+
+scripted_effect pipeweed_decision_effect = {
+		add_stress = medium_stress_loss
+		add_character_modifier = {
+			modifier = stress_hashish_stupor # Blowing smoke-rings
+			years = 2
+		}
+}
+
+############################################
+### PIPEWEED STRESS LOSS DECISION EVENTS ###
+############################################
+# by Juke
+
+hobbit.0002 = { # Smoking Pipe: A Good Morning
+	type = character_event
+	title = hobbit.0002.t
+	desc = hobbit.0002.desc
+	#theme = mental_break
+	theme = stewardship_duty_focus
+	override_background = { reference = garden }
+	
+	left_portrait = {
+		character = root
+		animation = personality_content
+	}
+	
+	immediate = {
+		pipeweed_decision_effect = yes
+		hidden_effect = {
+			random_list = {
+				1 = { save_scope_value_as = { name = morning_type value = flag:morning_1 }}
+				1 = { save_scope_value_as = { name = morning_type value = flag:morning_2 }}
+				1 = { save_scope_value_as = { name = morning_type value = flag:morning_3 }}
+				1 = { save_scope_value_as = { name = morning_type value = flag:morning_4 }}
+			}
+		}
+		if = {
+			limit = { scope:morning_type = flag:morning_1 }
+			custom_tooltip = hobbit.0002.tt.gm1
+		}
+		else_if = {
+			limit = { scope:morning_type = flag:morning_2 }
+			custom_tooltip = hobbit.0002.tt.gm2
+		}
+		else_if = {
+			limit = { scope:morning_type = flag:morning_3 }
+			custom_tooltip = hobbit.0002.tt.gm3
+		}
+		else_if = {
+			limit = { scope:morning_type = flag:morning_4 }
+			custom_tooltip = hobbit.0002.tt.gm4
+		}
+	}
+
+	option = { # Good Morning!
+		name = hobbit.0002.a
+		trait = hashishiyah
+	}
+}
+
+hobbit.0003 = { # Smoking Pipe: The Munchies
+	type = character_event
+	title = hobbit.0003.t
+	desc = hobbit.0003.desc
+	#theme = mental_break
+	theme = stewardship_duty_focus
+	override_background = { reference = bp1_kitchen_western }
+	
+	left_portrait = {
+		character = root
+		animation = boredom
+	}
+	
+	right_portrait = {
+		character = scope:kitchen_savior
+		animation = disapproval
+	}
+	
+	immediate = {
+		pipeweed_decision_effect = yes
+		
+		primary_spouse ?= {
+			if = {
+				limit = {
+					is_at_same_location = root
+					basic_is_available_ai = yes
+				}
+				save_scope_as = kitchen_savior
+			}
+		}
+		
+		random_courtier = {
+			limit = { 
+				basic_is_available_ai = yes
+				is_lotr_adult = yes
+			}
+			save_scope_as = kitchen_savior
+		}
+	}
+
+	option = { # Char, help me!
+		name = hobbit.0003.a
+		trait = hashishiyah
+		scope:kitchen_savior = {
+			add_opinion = {
+				target = ROOT
+				modifier = disappointed_opinion
+				opinion = -20
+			}
+		}
+		target_weight_modifier_effect = {
+			VALUE = 3
+		}
+		add_character_modifier = {
+			modifier = lotr_munchies_sated_modifier
+			years = 1
+		}
+		stress_impact = {
+			gluttonous = minor_stress_impact_loss
+			comfort_eater = minor_stress_impact_loss
+			temperate = minor_stress_impact_gain
+		}
+	}
+
+	option = { # Guess I'll have to get up myself...
+		name = hobbit.0003.b
+		trait = hashishiyah
+		add_prestige = -50
+		target_weight_modifier_effect = {
+			VALUE = 3
+		}
+		add_character_modifier = {
+			modifier = lotr_munchies_sated_modifier
+			years = 1
+		}
+		stress_impact = {
+			lazy = minor_stress_impact_gain
+		}
+	}
+}
+
+### DECISION-BASED ###
+
+hobbit.0100 = { # Integrate the westmarch
+	type = character_event
+	content_source = realms_dlc
+	title = hobbit.0100.t
+	desc = hobbit.0100.desc
+	theme = realm
+	override_background = {
+		reference = hills_hobbit
+	}
+	
+	left_portrait = {
+		character = root
+		animation = dancing
+	}
+	
+	immediate = {
+		title:c_dunglan = {
+			set_de_jure_liege_title = title:d_shire
+			change_development_level = 2
+		}
+		dynasty = { add_dynasty_prestige = 300 }
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:integrate_westmarch_decision_shire
+		}
+	}
+	option = {
+		name = hobbit.0100.a
+	}
+}
+
+hobbit.0101 = { # Integrate Buckland
+	type = character_event
+	content_source = realms_dlc
+	title = hobbit.0101.t
+	desc = hobbit.0101.desc
+	theme = realm
+	override_background = {
+		reference = hills_hobbit
+	}
+	
+	left_portrait = {
+		character = root
+		animation = dancing
+	}
+
+	immediate = {
+		title:c_buckland = {
+			set_de_jure_liege_title = title:d_shire
+			change_development_level = 2
+		}
+		dynasty = { add_dynasty_prestige = 300 }
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:integrate_buckland_decision_shire
+		}
+	}
+
+	option = {
+		name = hobbit.0101.a
+	}
+}
+
+
+#### Flavour Events ####
+
+hobbit.200 = { # No Second Breakfast
+	type = character_event
+	content_source = realms_dlc
+	title = hobbit.200.t
+	desc = hobbit.200.desc
+	theme = stewardship_duty_focus
+	override_background = {
+		reference = study
+	}
+	
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+
+	trigger = {
+		NOT = { has_character_flag = event_hobbit_nosecondbreakfast }
+		is_hobbit = yes
+		is_lotr_adult = yes
+	}
+
+	option = { # Leave the book
+		name = hobbit.200.a
+		add_character_flag = {
+			flag = event_hobbit_nosecondbreakfast
+			
+		}
+		ai_chance = {
+			base = 42
+		}
+	}
+
+	option = { # No Second Breakfast?? HERESY!
+		name = hobbit.200.b
+		add_character_flag = {
+			flag = event_hobbit_nosecondbreakfast
+			
+		}
+		add_piety = 100
+		
+		ai_chance = {
+			base = 42
+			modifier = {
+				add = 50
+				OR = {
+					has_trait = wrathful
+					has_trait = zealous
+					has_trait = vengeful
+					has_trait = gluttonous
+				}
+			}
+			modifier = {
+				add = -50
+				OR = {
+					has_trait = calm
+					has_trait = forgiving
+					has_trait = temperate
+					has_trait = stubborn 
+				}
+			}
+		}
+		stress_impact = {
+			calm = medium_stress_impact_gain
+			
+		}
+	}
+	
+	option = { # Maybe I stand to lose some weight
+		name = hobbit.200.c
+		add_character_flag = {
+			flag = event_hobbit_nosecondbreakfast }
+		ai_chance = {
+			base = 15
+			modifier = {
+				add = 50
+				OR = {
+					has_trait = temperate
+				}
+			}
+			modifier = {
+				add = -50
+				OR = {
+					has_trait = gluttonous
+					has_trait = gregarious
+					has_trait = lazy
+				}
+			}
+		}
+		stress_impact = {
+			gluttonous = major_stress_impact_gain
+			lazy = major_stress_impact_gain
+			stubborn = minor_stress_impact_gain
+		}
+
+		random_list = {
+			25 = {
+				desc = hobbit.200.c.success.critical
+				add_stress = -35
+				add_character_modifier = {
+					modifier = hobbit_no_secondbreakfast_positive
+					years = 15
+				}
+			}
+			25 = {
+				desc = hobbit.200.c.success
+				add_stress = -35
+			}	
+			25 = {
+				desc = hobbit.200.c.failure
+				add_stress = 35
+			}
+			25 = {
+				desc = hobbit.200.c.failure.critical
+				add_trait = ill
+				add_stress = 35
+				add_character_modifier = {
+					modifier = hobbit_no_secondbreakfast_negative
+					years = 15
+				}
+
+			}
+			
+		}
+			
+		
+	}
+
+	option = { #Everyone must know of this!
+		name = hobbit.200.d
+		trigger = {
+			has_trait = eccentric
+		}
+		add_character_flag = {
+			flag = event_hobbit_nosecondbreakfast
+			
+		}
+		ai_chance = {
+			base = 15
+			modifier = {
+				add = 50
+				OR = {
+					has_trait = temperate
+					has_trait = eccentric
+					
+
+				}
+			}
+			modifier = {
+				add = -50
+				OR = {
+					has_trait = gluttonous
+					has_trait = lazy
+					has_trait = craven
+					
+				}
+			}
+		}
+
+		custom_tooltip = hobbit.200.d.tt
+
+		add_prestige = medium_prestige_loss
+		every_vassal = {
+		 limit = { is_hobbit = yes }
+			add_opinion = {
+				modifier = angry_opinion
+				opinion = -15
+				target = root
+			}
+		}
+		add_character_modifier = {
+					modifier = hobbit_laughingstock_modifier
+				}
+		stress_impact = {
+			gluttonous = major_stress_impact_gain
+			lazy = major_stress_impact_gain
+			stubborn = minor_stress_impact_gain
+		}
+		
+	}
+}
+
+hobbit.300 = {
+	scope = none
+	hidden = yes
+
+	immediate = {
+		remove_character_modifier = ringbearer_health_modifier
+		add_character_modifier = former_ringbearer_health_modifier
+	}
+}

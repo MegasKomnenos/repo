@@ -1,0 +1,141 @@
+﻿settle_wilderness_immediately_interaction = {
+	category = interaction_debug_realms
+	use_diplomatic_range = no
+	common_interaction = no
+	ignores_pending_interaction_block = yes
+	icon = realms_debug
+	is_shown = {
+		debug_only = yes
+		scope:recipient = scope:actor
+		scope:recipient = { is_landed = yes }
+		scope:actor = {
+			any_held_county = {
+				title_province = { has_holding_type = settlement_holding }
+			}
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			every_held_county = {
+				limit = { title_province = { has_holding_type = settlement_holding } title_province = { terrain = halls }}
+				title_province = { set_holding_type = dwarven_holding }
+				change_development_level = 3
+			}
+			if = {
+				limit = { 
+					OR = {
+						government_has_flag = government_is_feudal
+						government_has_flag = government_is_clan
+						government_has_flag = government_is_administrative
+					}
+				}
+				every_held_county = {
+					limit = { title_province = { has_holding_type = settlement_holding } }
+					title_province = { set_holding_type = castle_holding }
+					change_development_level = 3
+				}
+			} else_if = {
+				limit = { government_has_flag = government_is_tribal }
+				every_held_county = {
+					limit = { title_province = { has_holding_type = settlement_holding } }
+					title_province = { set_holding_type = tribal_holding }
+					change_development_level = 3
+				}
+			} else_if = {
+				limit = { government_has_flag = government_is_elven }
+				every_held_county = {
+					limit = { title_province = { has_holding_type = settlement_holding } }
+					title_province = { set_holding_type = elven_holding }
+					change_development_level = 3
+				}
+			} else_if = {
+				limit = { government_has_flag = government_is_hobbit }
+				every_held_county = {
+					limit = { title_province = { has_holding_type = settlement_holding } }
+					title_province = { set_holding_type = city_holding }
+					change_development_level = 3
+				}
+			}
+			
+			correct_wastelands_tracker = yes
+			remove_upkeep_modifier = yes
+			trigger_event = {
+				id = wastelands.0007
+				days = 1
+			}
+		}
+	}
+	
+	auto_accept = yes
+}
+
+make_tributary_immediately_interaction = {
+	category = interaction_debug_realms
+	use_diplomatic_range = no
+	common_interaction = yes
+	ignores_pending_interaction_block = yes
+	icon = realms_debug
+
+	is_shown = {
+		debug_only = yes
+		scope:recipient != scope:actor
+		scope:recipient = { is_landed = yes highest_held_title_tier > tier_barony }
+		scope:actor = { is_landed = yes highest_held_title_tier > tier_barony }
+	}
+	
+	can_send = {
+		always = yes
+	}
+
+	# Release vassal as tributary state
+	send_option = {		
+		flag = tributary_state
+		localization = tributary_state
+		starts_enabled = { always = yes	}
+	}
+
+	# Release vassal as protectorate
+	send_option = {		
+		flag = protectorate_state
+		localization = protectorate_state
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		if = {
+			limit = { scope:recipient = { is_tributary = yes } }
+			scope:recipient = { end_tributary = yes }
+		}
+
+		
+		# The options (in-game) show up really weird if "else if" is used, so using multiple "if" statements is better in this situation
+		if = { # Tributary state
+			limit = { scope:tributary_state = yes }
+			custom_tooltip = {
+				text = lotr_release_as_tributary_state_effect_tt
+				scope:recipient = {
+					start_tributary = {
+						contract_group = tributary_subjugated
+						suzerain = scope:actor
+					}
+				}
+			}
+		}
+		if = { # Protectorate state
+			limit = { scope:protectorate_state = yes }
+			custom_tooltip = {
+				text = lotr_release_as_protectorate_state_effect_tt
+				scope:recipient = {
+					start_tributary = {
+						contract_group = tributary_protectorate
+						suzerain = scope:actor
+					}
+				}
+			}
+		}
+	}
+	
+	auto_accept = yes
+}

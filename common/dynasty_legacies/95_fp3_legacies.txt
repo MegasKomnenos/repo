@@ -1,0 +1,17 @@
+﻿fp3_khvarenah_legacy_track = {
+	is_shown = {
+		has_dlc_feature = legacy_of_persia
+		dynasty = {
+			OR = {
+				dynast = {
+					culture = {
+						has_cultural_parameter = heritage_group_talathrim # LOTR
+					}
+				}
+				has_dynasty_perk = fp3_khvarenah_legacy_1
+			}
+		}
+	}
+}
+
+

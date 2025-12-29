@@ -1,3 +1,0 @@
-﻿### EK NOTE: Cleared out file, there is no El Cid
-
-namespace = fp2_struggle

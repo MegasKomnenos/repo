@@ -1,3 +1,0 @@
-﻿vivec_flame_accessory = {
-    entity = { node = bn_h_skull entity = "vivec_flame_entity" }
-}

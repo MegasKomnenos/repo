@@ -1,0 +1,574 @@
+﻿######################
+# SAILING
+######################
+standard_sailing_cooldown_time = 1825
+sailing_participants = 10
+
+mariner_rank_up_1_threshold = 5
+mariner_rank_up_2_threshold = 6
+mariner_rank_up_3_threshold = 8
+
+small_boat_hire_cost = 50
+medium_boat_hire_cost = 100
+large_boat_hire_cost = 200
+
+boat_hire_duration_years = 2
+
+small_boat_cost = {
+	value = 150
+}
+medium_boat_cost = {
+	value = 300
+}
+large_boat_cost = {
+	value = 600
+}
+sailing_food_and_supplies_cost = 100
+
+small_boat_repair_cost = {
+	value = 50
+}
+medium_boat_repair_cost = {
+	value = 100
+}
+large_boat_repair_cost = {
+	value = 200
+}
+
+meneltarma_skill_challenge = 18
+
+#hunt_secondary_outcome = 1
+
+sailing_event_delay_min = 25
+sailing_event_delay_max = 35
+
+standard_activity_cost = {
+	value = 50
+	multiply = {
+		value = root.primary_title.tier
+		subtract = 1
+		min = 1
+	}
+	if = {
+		limit = {
+			root.primary_title.tier > tier_duchy
+		}
+		add = 50
+	}
+	if = {
+		limit = {
+			root= {
+				exists = dynasty
+				dynasty = {
+					has_dynasty_perk = law_legacy_1
+				}
+			}
+		}
+		multiply = 0.7
+	}
+	if = {
+		limit = {
+			root= {
+				government_has_flag = government_is_tribal
+			}
+		}
+		multiply = 0.5
+	}
+}
+
+#######################
+##### SKINCHANGE ######
+#######################
+standard_skinchange_cooldown_time = 1825
+skinchange_prestige_cost = 150
+
+beorning_participants = 1
+
+########################################
+### Explore the Histories/Propaganda ###
+########################################
+
+explore_history_entourage_weight_value = {
+	value = 100
+	add = standard_travel_entourage_additions
+	if = {
+		limit = {
+			has_council_position = councillor_court_chaplain
+		}
+		add = 50
+	}
+	if = {
+		limit = {
+			has_court_position = antiquarian_court_position
+		}
+		add = 40
+	}
+	if = {
+		limit = {
+			is_primary_heir_of = scope:host
+		}
+		add = 40
+	}
+	if = {
+		limit = {
+			is_close_family_of = scope:host
+			learning > 10
+		}
+		add = 30
+	}
+	if = {
+		limit = {
+			has_court_position = royal_architect_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = high_almoner_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = court_poet_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = court_artificer_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = cave_hermit_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = bodyguard_court_position
+		}
+		add = 10
+	}
+}
+
+standard_explore_history_cooldown_time = {
+	value = 10
+}
+
+explore_history_activity_base_cost = {
+	value = 0
+	add = standard_activity_base_cost
+	if = {
+		limit = {
+			has_trait = scholar
+		}
+		multiply = 0.5
+	}
+}
+
+explore_history_activity_cost_discount_max = {
+	value = 0.5
+}
+explore_history_activity_cost_discount_max_value = {
+	value = explore_history_activity_cost_discount_max
+	subtract = 1
+}
+explore_history_activity_cost_discount_medium = {
+	value = 0.7
+}
+explore_history_activity_cost_discount_medium_value = {
+	value = explore_history_activity_cost_discount_medium
+	subtract = 1
+}
+explore_history_activity_cost_discount_min = {
+	value = 0.9
+}
+explore_history_activity_cost_discount_min_value = {
+	value = explore_history_activity_cost_discount_min
+	subtract = 1
+}
+
+####################
+### Wine Tasting ###
+####################
+lotr_visit_vineyard_cost_value = {
+	value = 50
+	multiply = {
+		value = root.primary_title.tier
+		subtract = 1
+		min = 1
+	}
+	if = {
+		limit = {
+			root.primary_title.tier > tier_duchy
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			root= {
+				exists = dynasty
+				dynasty = {
+					has_dynasty_perk = law_legacy_1
+				}
+			}
+		}
+		multiply = law_legacy_cost_reduction_mult
+	}
+	if = {
+		limit = {
+			root= {
+				government_has_flag = government_is_tribal
+			}
+		}
+		multiply = 0.5
+	}
+	# Make it a little easier for smaller realms
+	if = {
+		limit = {
+			root= {
+				sub_realm_size <= 5
+			}
+		}
+		multiply = 0.75
+	}
+	#if = {
+	#	limit = {
+	#		root.culture = {
+	#			has_cultural_tradition = tradition_dorwinion_vineyards
+	#		}
+	#	}
+	#	multiply = 0.75
+	#}
+	min = 25
+	max = 200
+}
+
+# Activity cost but 
+lotr_wine_tasting_cost_value = {
+	value = 100
+	multiply = {
+		value = root.primary_title.tier
+		subtract = 1
+		min = 1
+	}
+	if = {
+		limit = {
+			root.primary_title.tier > tier_duchy
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			root= {
+				exists = dynasty
+				dynasty = {
+					has_dynasty_perk = law_legacy_1
+				}
+			}
+		}
+		multiply = law_legacy_cost_reduction_mult
+	}
+	if = {
+		limit = {
+			root= {
+				government_has_flag = government_is_tribal
+			}
+		}
+		multiply = 0.5
+	}
+	# Make it a little easier for smaller realms
+	if = {
+		limit = {
+			root= {
+				sub_realm_size <= 5
+			}
+		}
+		multiply = 0.75
+	}
+	#if = {
+	#	limit = {
+	#		root.culture = {
+	#			has_cultural_tradition = tradition_dorwinion_vineyards
+	#		}
+	#	}
+	#	multiply = 0.75
+	#}
+	min = 50
+	max = 250
+}
+
+
+
+### Grand Wedding values
+gwedding_wait_time_before_start_months = {
+	if = {
+		limit = {
+			OR = {
+				is_elf = yes
+				this = character:lineisildur42
+			}
+		}
+		value = 6
+	}
+	else = {
+		value = 0
+	}
+}
+
+
+####################
+### YULE ACTIITY ###
+####################
+
+RICE_standard_festival_cooldown_time = {
+	value = 1825
+	if = {
+		limit = {
+			root.culture = {
+				has_cultural_parameter = more_frequent_feasts
+			}
+		}
+		multiply = 0.5
+	}
+}
+
+# Since the vanilla activity costs are unimmersively inflated at higher levels
+RICE_activity_cost = {
+	value = 25
+	multiply = {
+		value = root.primary_title.tier
+		subtract = 1
+		min = 1
+	}
+	if = {
+		limit = {
+			root.primary_title.tier > tier_duchy
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			root= {
+				exists = dynasty
+				dynasty = {
+					has_dynasty_perk = law_legacy_1
+				}
+			}
+		}
+		multiply = law_legacy_cost_reduction_mult
+	}
+	if = {
+		limit = {
+			root= {
+				government_has_flag = government_is_tribal
+			}
+		}
+		multiply = 0.5
+	}
+	# Make it a little easier for smaller realms
+	if = {
+		limit = {
+			root= {
+				sub_realm_size <= 5
+			}
+		}
+		multiply = 0.75
+	}
+	min = 25
+	max = 100
+}
+
+# Since the vanilla activity costs are unimmersively inflated at higher levels
+RICE_major_activity_cost = {
+	value = 100
+	multiply = {
+		value = root.primary_title.tier
+		subtract = 1
+		min = 1
+	}
+	if = {
+		limit = {
+			root.primary_title.tier > tier_duchy
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			root= {
+				exists = dynasty
+				dynasty = {
+					has_dynasty_perk = law_legacy_1
+				}
+			}
+		}
+		multiply = law_legacy_cost_reduction_mult
+	}
+	if = {
+		limit = {
+			root= {
+				government_has_flag = government_is_tribal
+			}
+		}
+		multiply = 0.5
+	}
+	# Make it a little easier for smaller realms
+	if = {
+		limit = {
+			root= {
+				sub_realm_size <= 5
+			}
+		}
+		multiply = 0.75
+	}
+	min = 50
+}
+RICE_standard_festival_cooldown_time = {
+	value = 1825
+	if = {
+		limit = {
+			root.culture = {
+				has_cultural_parameter = more_frequent_feasts
+			}
+		}
+		multiply = 0.5
+	}
+}
+lotr_yule_gift_gain_small_base = 50
+lotr_yule_gift_gain_medium_base = 100
+lotr_yule_gift_gain_large_base = 150
+
+lotr_yule_piety_loss = {
+	value = minor_piety_loss
+	max = -200
+}
+
+lotr_yule_piety_gain = {
+	value = minor_piety_gain
+	max = 200
+}
+
+lotr_yule_piety_double_gain = {
+	value = minor_piety_gain
+	multiply = 2
+	max = 400
+}
+
+###########################
+### ANCESTOR_VENERATION ###
+###########################
+
+ancestor_veneration_entourage_weight_value = {
+	value = 100
+	add = standard_travel_entourage_additions
+	if = {
+		limit = {
+			has_council_position = councillor_court_chaplain
+		}
+		add = 50
+	}
+	if = {
+		limit = {
+			has_court_position = antiquarian_court_position
+		}
+		add = 40
+	}
+	if = {
+		limit = {
+			is_primary_heir_of = scope:host
+		}
+		add = 40
+	}
+	if = {
+		limit = {
+			is_close_family_of = scope:host
+			learning > 10
+		}
+		add = 30
+	}
+	if = {
+		limit = {
+			has_court_position = royal_architect_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = high_almoner_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = court_poet_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = court_artificer_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = stone_singer_court_position
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_court_position = first_axe_court_position
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_court_position = bodyguard_court_position
+		}
+		add = 10
+	}
+}
+
+standard_ancestor_veneration_cooldown_time = {
+	value = 10
+}
+
+ancestor_veneration_activity_base_cost = {
+	value = 0
+	add = standard_activity_base_cost
+	if = {
+		limit = {
+			has_trait = scholar
+		}
+		multiply = 0.5
+	}
+}
+
+ancestor_veneration_activity_cost_discount_max = {
+	value = 0.5
+}
+ancestor_veneration_activity_cost_discount_max_value = {
+	value = ancestor_veneration_activity_cost_discount_max
+	subtract = 1
+}
+ancestor_veneration_activity_cost_discount_medium = {
+	value = 0.7
+}
+ancestor_veneration_activity_cost_discount_medium_value = {
+	value = ancestor_veneration_activity_cost_discount_medium
+	subtract = 1
+}
+ancestor_veneration_activity_cost_discount_min = {
+	value = 0.9
+}
+ancestor_veneration_activity_cost_discount_min_value = {
+	value = ancestor_veneration_activity_cost_discount_min
+	subtract = 1
+}
+ancestor_veneration_activity_cost_discount = { # for Khazâd legacy
+	value = 0.1
+}

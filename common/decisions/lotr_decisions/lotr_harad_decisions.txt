@@ -1,0 +1,1737 @@
+﻿### HARAD DECISIONS ###
+decision_unify_harad = {
+	title = decision_unify_harad
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	
+	ai_goal = yes
+	selection_tooltip = decision_unify_harad_tooltip
+	desc = decision_unify_harad_desc
+	
+	confirm_text = decision_unify_harad_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_northern_apysaic
+				has_cultural_pillar = heritage_middle_apysaic
+				has_cultural_pillar = heritage_southern_apysaic
+				this = culture:bellanarud
+				any_parent_culture_or_above = { this = culture:bellanarud }
+			}
+		}
+		OR = {
+			has_title = title:e_dune_sea
+			has_title = title:e_haradwaith
+			# has_title = title:e_nafarat 
+		}
+	}	
+	is_valid = {
+		AND = {
+			has_title = title:e_dune_sea
+			has_title = title:e_haradwaith
+			#OR = {
+				# has_title = title:e_nafarat
+			#	has_title = title:e_abrakhan
+			#}
+		}
+	}
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		is_available = yes
+		is_independent_ruler = yes
+	}
+	
+	effect = {
+		if = { # The Hard-rad Way | Achievement
+			limit = { 
+				NOT = { exists = global_var:lotr_achievement_01 }
+				is_ai = no
+				realms_achievements_enabled = yes
+				culture = {
+					OR = {
+						has_cultural_pillar = heritage_northern_apysaic
+						has_cultural_pillar = heritage_southern_apysaic
+						has_cultural_pillar = heritage_middle_apysaic
+						has_cultural_pillar = heritage_tulwangi
+					}
+				}
+			}
+			set_global_variable = lotr_achievement_01
+		}
+		#Create the title and make it primary
+		create_title_and_vassal_change = {
+			type = created
+			save_scope_as = title_change
+			add_claim_on_loss = yes
+		}
+		title:e_harad = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+		}
+		resolve_title_and_vassal_change = scope:title_change
+		set_primary_title_to = title:e_harad
+		destroy_title = title:e_dune_sea
+		destroy_title = title:e_haradwaith
+		title:k_harondor = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_haruzan  = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_chelkar   = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_pezarsan    = {
+			set_de_jure_liege_title = title:e_harad
+		}	
+		title:k_lurmsakun    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_narak    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_tedja    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_koanoz    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_qarsa    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_aukar    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_arysis    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+		title:k_darsalan    = {
+		 	set_de_jure_liege_title = title:e_harad
+		}
+		title:k_abrakhan    = {
+			set_de_jure_liege_title = title:e_harad
+		}
+
+		show_as_tooltip = {
+			add_prestige = 1500
+			add_character_modifier = unified_harad_modifier
+			if = {
+				limit = { prestige_level = 0 }
+				add_prestige_level = 5
+			}
+			else_if = {
+				limit = { prestige_level = 1 }
+				add_prestige_level = 4
+			}
+			else_if = {
+				limit = { prestige_level = 2 }
+				add_prestige_level = 3
+			}
+			else_if = {
+				limit = { prestige_level = 3 }
+				add_prestige_level = 2
+			}
+			else_if = {
+				limit = { prestige_level = 4 }
+				add_prestige_level = 1
+			}
+			dynasty = {
+				add_dynasty_prestige = 1000
+				add_dynasty_prestige_level = 2
+			}
+		}
+		save_scope_as = unifier
+		trigger_event = harad.1000
+		if = {
+			limit = { # Major News
+				NOT = { has_game_rule = no_news }
+			}
+			every_player = { #Global News Announcement
+				trigger_event = news_event.0015
+			}
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+}
+
+decision_chelkar_submission = {
+	title = decision_chelkar_submission
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	
+	ai_goal = yes
+	selection_tooltip = decision_chelkar_submission_tooltip
+	desc = decision_chelkar_submission_desc
+	
+	confirm_text = decision_chelkar_submission_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		current_year >= 7000 # Suladans ambitions
+		culture = { has_cultural_pillar = heritage_northern_apysaic }
+		has_title = title:k_haruzan	
+		title:k_chelkar = {
+			exists = holder
+			holder ?= {
+				NOT = { is_sauron = yes }
+				NOT = { this = ROOT }
+				top_liege = {
+					NOT = { is_sauron = yes }
+					NOT = { this = ROOT }
+				}
+			}
+		}
+		NOT = { has_title = title:k_chelkar }
+		is_target_in_global_variable_list = {
+			name = haruzan_expansion_routes
+			target = flag:haruzan_eastern_expansion
+		}
+		NOT = {
+			is_target_in_global_variable_list = { 
+				name = haruzan_expansion_routes
+				target = flag:chelkar_submission_demanded
+			}
+		}
+	}
+	is_valid = {
+		is_at_war = no
+		title:k_chelkar.holder = { is_at_war = no }
+		OR = {
+			custom_tooltip = {
+				text = "LOTR_CHELKAR_SUBMISSION_TRIGGER"
+				lotr_chelkar_submission_trigger = yes
+			}
+			dread >= 50
+		}
+	}
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		is_available = yes
+		is_independent_ruler = yes
+		NOR = {
+			has_truce = title:k_chelkar.holder
+		}
+	}
+	
+	effect = {
+		title:k_chelkar.holder = {
+			trigger_event = {
+				id = harad.0206
+				days = 30
+			}
+		}
+		custom_tooltip = send_chelkar_ultimatum
+		add_to_global_variable_list = {
+			name = haruzan_expansion_routes
+			target = flag:chelkar_submission_demanded
+		}
+		root = {
+			save_scope_as = haruzan_ruler
+		}
+	}
+	
+	
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+}
+
+decision_harnen_submission = {
+	title = decision_harnen_submission
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	
+	ai_goal = yes
+	selection_tooltip = decision_harnen_submission_tooltip
+	desc = decision_harnen_submission_desc
+	
+	confirm_text = decision_harnen_submission_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		current_year >= 7000 # Suladan's ambitions
+		culture = { has_cultural_pillar = heritage_northern_apysaic }
+		has_title = title:k_haruzan	
+		OR = {
+			title:d_forethir.holder ?= {
+				has_primary_title = title:d_forethir
+				culture = culture:umbarean
+				is_independent_ruler = yes
+			}
+			title:d_ramlond.holder ?= {
+				has_primary_title = title:d_ramlond
+				culture = culture:umbarean
+				is_independent_ruler = yes
+			}
+		}
+		is_target_in_global_variable_list = { # Did Haruzan choose westward expansion first or succesfully defeat Chelkar?
+			name = haruzan_expansion_routes
+			target = flag:haruzan_westward_expansion
+		}
+		NOT = {
+			is_target_in_global_variable_list = { # Once the ultimatum is sent, should not send again!
+				name = haruzan_expansion_routes
+				target = flag:harnen_submission_demanded
+			}
+		}
+	}
+	is_valid = {
+		is_at_war = no
+	}
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		is_available = yes
+		is_independent_ruler = yes
+	}
+	
+	effect = {
+		custom_tooltip = decision_harnen_submission.tt
+		every_ruler = {
+			limit = { # Only the Umbarean Lords of the Harnen should receive this event!
+				OR = {
+					AND = {
+						has_culture = culture:umbarean 
+						is_independent_ruler = yes
+						OR = {
+							has_primary_title = title:d_forethir 
+							has_primary_title = title:c_mirlond 
+							has_primary_title = title:c_harthalond 
+							has_primary_title = title:c_korb_ugarta 
+							has_primary_title = title:c_menost 
+							has_primary_title = title:d_ramlond 
+							has_primary_title = title:c_ramlond 
+							has_primary_title = title:c_kiba 
+							has_primary_title = title:c_celebiant 
+						}
+					}
+					AND = { # Aaaaand the Haruze Lord of Celebiant (if he still exists) because bordergore is a sin
+						has_culture = culture:haruze
+						is_independent_ruler = yes
+						OR = {
+							has_primary_title = title:c_celebiant
+						}
+					}
+				}
+			}
+			trigger_event = {
+				id = harad.0220
+				days = { 30 90 }
+			}
+		}
+		root = {
+			save_scope_as = haruzan_ruler
+		}
+		
+		add_to_global_variable_list = {
+			name = haruzan_expansion_routes
+			target = flag:harnen_submission_demanded
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+}
+
+decision_repulse_khand_lurmsakun = {
+	title = decision_repulse_khand_lurmsakun
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	
+	ai_goal = yes
+	selection_tooltip = decision_repulse_khand_lurmsakun_tooltip
+	desc = decision_repulse_khand_lurmsakun_desc
+	
+	confirm_text = decision_repulse_khand_lurmsakun_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		highest_held_title_tier >= tier_kingdom
+		OR = {
+			culture = { has_cultural_pillar = heritage_northern_apysaic }
+			culture = { has_cultural_pillar = heritage_middle_apysaic }
+			culture = { has_cultural_pillar = heritage_southern_apysaic }
+			culture = culture:bellanarud
+			culture = { any_parent_culture_or_above = { this = culture:bellanarud } }
+		}
+		OR = {
+			has_title = title:e_haradwaith
+			has_title = title:e_harad
+		}
+
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:repulse_khand_lurmsakun
+			}
+		}
+	}
+	is_valid = {
+		is_at_war = no
+		completely_controls = title:k_lurmsakun
+	}
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		is_available = yes
+		is_independent_ruler = yes
+	}
+	
+	effect = {
+		title:k_lurmsakun = {
+			set_de_jure_liege_title = root.primary_title
+		}
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:repulse_khand_lurmsakun
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+}
+
+decision_purchase_mumakil = {
+	sort_order = 25
+	title = decision_purchase_mumakil
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_05.dds"
+	}
+	
+	ai_goal = no
+	ai_check_interval = 120
+	selection_tooltip = decision_purchase_mumakil_tooltip
+	desc = decision_purchase_mumakil_desc
+	
+	confirm_text = decision_purchase_mumakil_confirm
+	
+	cooldown = { years = 10 }
+	
+	decision_group_type = realms_in_exile_minor
+	
+	is_shown = {
+		OR = {
+			is_landed = yes
+			is_landless_adventurer = yes
+		}
+		culture = { has_innovation = innovation_mumakil_domestication }
+		highest_held_title_tier > tier_barony # Only counts and above, but the high cost should mean functionally only dukes and up can hope to afford
+		NOT = { # If they have recently imported Mumakil, can't import more for a while
+			has_character_flag = recently_imported_mumakils
+		}
+	}
+	
+	is_valid = {
+		culture = { has_innovation = innovation_mumakil_domestication }
+		gold >= mumakil_purchase_cost
+	}
+	
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		#is_available = yes
+		is_imprisoned = no
+	}
+	
+	effect = {
+		custom_tooltip = summon_mumakil_trader_tt
+		custom_tooltip = summon_mumakil_trader_inflated_price_tt
+		custom_tooltip = summon_mumakil_trader_recruitment_info_tt
+		trigger_event = {
+			id = harad.0500
+			days = { 5 15 }
+		}
+	}
+	
+	ai_potential = {
+		short_term_gold > increased_mumakil_purchase_cost # Ai should only do it if they can afford the cost of buying Mumakil
+		war_chest_gold >= halved_ai_war_chest_gold_maximum
+		NOT = {
+			has_trait = reclusive
+		}
+	}
+	
+	ai_will_do = {
+		base = 35
+
+		#ai_value_modifier = {
+		#	ai_sociability = 1
+		#	ai_greed = -0.5
+		#}
+
+		modifier = {
+			add = 47.5 # Has Greed of 75, so this is only (-37.5 + 45 = +10)
+			has_trait = ambitious
+		}
+		
+		modifier = { # Too busy booming the economy
+			add = -50
+			OR = {
+				ai_has_economical_boom_personality = yes
+				has_character_flag = ai_boom
+			}
+		}
+		
+		modifier = { # Work first, play later
+			add = -35
+			exists = capital_county
+			capital_county.title_province = {
+				free_building_slots > 0
+			}
+		}
+	}
+}
+
+decision_jelut_empire = {
+	title = decision_jelut_empire
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	
+	ai_goal = yes
+	selection_tooltip = decision_jelut_empire_tooltip
+	desc = decision_jelut_empire_desc
+	
+	confirm_text = decision_jelut_empire_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		NOT = { exists = title:e_jelut.holder }
+		OR = {
+			culture = culture:jelut
+			culture = { any_parent_culture_or_above = { this = culture:jelut } }
+		}
+		culture = { has_cultural_parameter = heritage_group_apysaic }
+		OR = {
+			has_title = title:k_narak
+			has_title = title:d_kes_jelut
+			has_title = title:d_zar_uran
+			has_title = title:d_kes_aluk
+			has_title = title:d_kes_karrak
+			has_title = title:k_umbar
+			has_title = title:d_umbar
+			has_title = title:d_sakal_an_khar
+			has_title = title:k_haruzan
+			has_title = title:d_ramlond
+			has_title = title:k_koanoz
+			has_title = title:d_koanoz
+			has_title = title:d_jel_daniz
+			has_title = title:k_tedja
+			has_title = title:d_kref_urt
+		}
+
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_jelut_empire
+			}
+		}
+	}
+	is_valid = {
+		is_at_war = no
+		completely_controls_region = custom_jelut
+		has_title = title:k_narak
+		calc_true_if = {
+			amount = 2
+			has_title = title:k_umbar
+			has_title = title:k_tedja
+			has_title = title:k_koanoz
+			has_title = title:k_haruzan
+		}
+		culture:jelut = {
+			save_temporary_scope_as  = jelutculture
+		}
+		custom_tooltip = {
+			text = jelut_are_independent #There are independent jelut outside your realm
+			NOT = {
+				any_independent_ruler = {
+					NOT = { this = root }
+					#OR = {
+						culture = culture:jelut
+					#	culture = { any_parent_culture_or_above = { this = culture:jelut } }
+					#}
+					is_independent_ruler = yes
+					primary_title = {
+						is_mercenary_company = no
+						is_holy_order = no
+						is_head_of_faith = no
+					}
+				}
+			}
+		}
+		#any_independent_ruler = {
+		#	count = 0
+		#	custom_tooltip = {
+		#		text = jelut_are_independent #There are independent jelut outside your realm
+		#		NOT = { this = root }
+		#		#OR = {
+		#			culture = culture:jelut
+		#		#	culture = { any_parent_culture_or_above = { this = culture:jelut } }
+		#		#}
+		#		is_mercenary_company = no 
+		#	}
+		#}
+		
+		prestige_level >= 3
+		piety_level >= 3
+	}
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		is_available = yes
+		is_independent_ruler = yes
+	}
+	
+	effect = {
+		create_title_and_vassal_change = {
+			type = created
+			save_scope_as = change
+			add_claim_on_loss = yes
+		}
+		title:e_jelut = {
+			change_title_holder = {
+				holder = root
+				change = scope:change
+			}
+		}
+		resolve_title_and_vassal_change = scope:change
+		if = {
+			limit = {
+				NOT = { has_primary_title = title:e_jelut }
+			}
+			set_primary_title_to = title:e_jelut
+		}
+		
+		#Nickname stuff
+		random_list = {
+			100 = {
+				trigger = {
+					NOT = {  #There can only be one!
+						is_target_in_global_variable_list = {
+							name = past_jelut_nicknames
+							target = flag:flag_nick_the_hand_of_gurzil
+						}
+					}
+					always = no #juke note: by 7033 its already been used
+				}
+				give_nickname = nick_the_hand_of_gurzil
+				add_to_global_variable_list = {
+					name = past_jelut_nicknames
+					target = flag:flag_nick_the_hand_of_gurzil
+				}
+			}
+			100 = {
+				trigger = {
+					NOT = {  #There can only be one!
+						is_target_in_global_variable_list = {
+							name = past_jelut_nicknames
+							target = flag:flag_nick_the_jelut_unifier
+						}
+					}
+				}
+				give_nickname = nick_the_jelut_unifier
+				add_to_global_variable_list = {
+					name = past_jelut_nicknames
+					target = flag:flag_nick_the_jelut_unifier
+				}
+			}
+			100 = {
+				trigger = {
+					NOT = {  #There can only be one!
+						is_target_in_global_variable_list = {
+							name = past_jelut_nicknames
+							target = flag:flag_nick_the_great_guide
+						}
+					}
+				}
+				give_nickname = nick_the_great_guide
+				add_to_global_variable_list = {
+					name = past_jelut_nicknames
+					target = flag:flag_nick_the_great_guide
+				}
+			}
+			100 = {
+				trigger = {
+					NOT = {  #There can only be one!
+						is_target_in_global_variable_list = {
+							name = past_jelut_nicknames
+							target = flag:flag_nick_gurzils_arrow
+						}
+					}
+				}
+				give_nickname = nick_gurzils_arrow
+				add_to_global_variable_list = {
+					name = past_jelut_nicknames
+					target = flag:flag_nick_gurzils_arrow
+				}
+			}
+			100 = {
+				trigger = {
+					NOT = {  #There can only be one!
+						is_target_in_global_variable_list = {
+							name = past_jelut_nicknames
+							target = flag:flag_nick_the_suntouched
+						}
+					}
+				}
+				give_nickname = nick_the_suntouched
+				add_to_global_variable_list = {
+					name = past_jelut_nicknames
+					target = flag:flag_nick_the_suntouched
+				}
+			}
+		}
+		add_character_flag = { flag = had_nickname_event }
+		
+		# Char Modifier
+		add_character_modifier = { modifier = jelut_unifier_modifier }
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_jelut_empire
+		}
+	}
+	cost = {
+		gold = {
+			value = medium_gold_value
+		}
+		prestige = {
+			value = major_prestige_value
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+	ai_will_do = {
+		base = 100
+	}
+}
+
+decision_restore_ancient_lurmsakun = {
+	title = decision_restore_ancient_lurmsakun
+	desc = decision_restore_ancient_lurmsakun_desc
+	selection_tooltip = decision_restore_ancient_lurmsakun_tooltip
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	
+	decision_group_type = realms_in_exile_major
+	
+	ai_goal = yes
+	
+	confirm_text = decision_restore_ancient_lurmsakun_confirm
+	
+	is_shown = {
+		OR = {
+			culture = culture:lurmsakari
+			culture = { any_parent_culture_or_above = { this = culture:lurmsakari }}
+		}
+		culture = { has_cultural_parameter = heritage_group_apysaic }
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_restore_ancient_lurmsakun
+			}
+		}
+			
+	}
+	is_valid = {
+		has_primary_title = title:k_lurmsakun
+		completely_controls = title:k_lurmsakun
+		completely_controls = title:d_starlurtsa
+		completely_controls = title:d_itakh_khand
+		prestige_level >= 3
+		
+	}
+	
+	is_valid_showing_failures_only = {
+		is_at_war = no
+		is_adult = yes
+		is_available = yes
+		is_independent_ruler = yes
+	}
+	effect = {
+		title:d_starlurtsa = {
+			set_de_jure_liege_title = title:k_lurmsakun
+			}
+		title:d_itakh_khand = {
+			set_de_jure_liege_title = title:k_lurmsakun
+		}
+		title:k_lurmsakun = {
+			set_de_jure_liege_title = title:e_haradwaith
+		}
+		if = {
+			limit ={
+				NOR = {
+					has_realm_law = crown_authority_2
+					has_realm_law = crown_authority_3
+				}
+			}
+			add_realm_law_skip_effects = crown_authority_2
+		}
+		dynasty = {
+			add_dynasty_prestige = 500
+			add_dynasty_modifier = lurmsakun_dynasty_modifier
+		}
+		add_prestige = major_prestige_gain
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_restore_ancient_lurmsakun
+		}
+		
+	}
+	
+}
+
+decision_siaken_kingdom = {
+	title = decision_siaken_kingdom
+	desc = decision_siaken_kingdom_desc
+	selection_tooltip = decision_siaken_kingdom_tooltip
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	
+	decision_group_type = realms_in_exile_major
+	
+	ai_goal = yes
+	
+	confirm_text = decision_siaken_kingdom_confirm
+	
+	is_shown = {
+		is_landed = yes
+		NOT = { exists = title:k_siakan.holder }
+		OR = {
+			culture = culture:siaken
+			culture = { any_parent_culture_or_above = { this = culture:siaken }}
+		}
+		culture = { has_cultural_parameter = heritage_group_apysaic }
+		highest_held_title_tier < tier_kingdom
+	}
+	is_valid = {
+		highest_held_title_tier < tier_kingdom
+		realm_size < 10
+		has_primary_title = title:d_siakan
+		completely_controls = title:d_siakan
+		calc_true_if = {
+			amount >= 3
+			prestige_level >= 3
+			legitimacy_level >= 4
+			learning >= 20
+			has_trait = scholar
+			has_trait = august
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		is_at_war = no
+		is_adult = yes
+		is_available = yes
+		is_independent_ruler = yes
+	}
+
+	cost = {
+		gold = 200
+	}
+
+	widget = {
+		gui = "decision_view_widget_option_list_generic"
+		controller = decision_option_list_controller
+		decision_to_second_step_button = "decision_siaken_kingdom.second_step"
+
+		item = {	# Siakan
+			value = kingdom_name_siakan
+			current_description = decision_siaken_kingdom.tt.siakan
+			localization = decision_siaken_kingdom.tt.siakan
+			icon = "gfx/interface/icons/message_feed/vassal_contract.dds"
+		}
+
+		item = {	# Siakor
+			value = kingdom_name_siakor
+			current_description = decision_siaken_kingdom.tt.siakor
+			localization = decision_siaken_kingdom.tt.siakor
+			icon = "gfx/interface/icons/message_feed/vassal_contract.dds"
+		}
+
+		item = {	# Sirysis
+			value = kingdom_name_sirysis
+			current_description = decision_siaken_kingdom.tt.sirysis
+			localization = decision_siaken_kingdom.tt.sirysis
+			icon = "gfx/interface/icons/message_feed/vassal_contract.dds"
+		}
+
+		item = {	# Siakûn
+			value = kingdom_name_siakun
+			current_description = decision_siaken_kingdom.tt.siakun
+			localization = decision_siaken_kingdom.tt.siakun
+			icon = "gfx/interface/icons/message_feed/vassal_contract.dds"
+		}
+
+		item = {	# Sirazan
+			value = kingdom_name_sirazan
+			current_description = decision_siaken_kingdom.tt.sirazan
+			localization = decision_siaken_kingdom.tt.sirazan
+			icon = "gfx/interface/icons/message_feed/vassal_contract.dds"
+		}
+	}
+
+	effect = {
+		create_siaken_kingdom_effect = yes
+	}
+	
+}
+
+
+# Recruit Witch Decision - Unlocked by special LotR tenet
+recruit_witch_decision = {
+	sort_order = 5
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_recruitment.dds"
+	}
+	
+
+	ai_check_interval = 120
+
+	cooldown = { years = 5 }
+	
+	desc = recruit_witch_decision_desc
+
+	decision_group_type = realms_in_exile_minor
+	
+	is_shown = {
+		root.faith = {
+			has_doctrine_parameter = summon_witch_active
+		}
+	}
+
+	effect = {
+		custom_tooltip = recruit_witch_decision.tt
+		hidden_effect = {
+			create_character = {
+				employer = root
+				template = lotr_witch_template
+				faith = root.faith
+				culture = root.culture
+				gender_female_chance = {
+					if = {
+						limit = { root.faith = { has_doctrine = doctrine_clerical_gender_either } }
+						add = 50
+					}
+					else_if = {
+						limit = { root.faith = { has_doctrine = doctrine_clerical_gender_male_only } }
+						add = 0
+					}
+					else = {
+						add = 100
+					}
+				}
+				save_scope_as = new_witch
+			}
+			if = { # Error suppression
+				limit = {
+					exists = scope:new_witch
+				}
+				scope:new_witch = {
+					force_character_skill_recalculation = yes
+					add_character_flag = {
+						flag = blocked_from_leaving
+						years = 25
+					}
+				}
+				if = {
+					limit = {
+						scope:new_witch = {
+							NOT = {
+								is_courtier_of = root
+							}
+						}
+					}
+					add_courtier = scope:new_witch
+				}
+				send_interface_toast = {
+					title = witch_recruited.t
+					left_icon = scope:new_witch
+					custom_tooltip = witch_recruited.desc
+				}
+			}
+		}
+	}
+
+	cost = {
+		gold = {
+			value = minor_gold_value
+		}
+		prestige = {
+			value = medium_piety_value
+		}
+	}
+
+	ai_potential = {
+		faith = {
+			has_doctrine_parameter = summon_witch_active
+		}
+	}
+
+	ai_will_do = {
+		base = 100
+
+		modifier = {
+			factor = 0.6
+			any_courtier = {
+				has_trait = witch
+			}
+		}
+	}
+}
+
+###### Long Winter Decisions #####
+
+decision_harrying_of_the_coasts = {
+	title = decision_harrying_of_the_coasts
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_04.dds"
+	}
+	sort_order = 100
+		
+	ai_goal = yes
+	selection_tooltip = decision_harrying_of_the_coasts_tooltip
+	desc = decision_harrying_of_the_coasts_desc
+	
+	confirm_text = decision_harrying_of_the_coasts_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		# Fleets are readied
+		has_character_modifier = lotr_preparing_the_fleets_modifier
+
+		# Safety nets:
+		culture = { 
+			has_cultural_pillar = heritage_northern_apysaic
+		}
+		has_title = title:e_haradwaith
+		NOT = {
+			completely_controls = title:k_harondor
+		}
+		title:k_harondor = { # Gondor needs to control something in Harondor
+			any_de_jure_county_holder = {
+				top_liege = {
+					is_gondor = yes
+				}
+			}
+		}
+		NOT = {
+			is_target_in_global_variable_list = { # If this fails the first time, you aren't doing it again
+				name = unavailable_unique_decisions
+				target = flag:decision_harrying_of_the_coasts
+			}
+		}
+	}
+
+	is_valid = {
+		trigger_if = {
+			limit = {
+				is_ai = no
+			}
+			has_character_modifier = lotr_preparing_the_fleets_modifier
+			completely_controls = title:d_forethir
+			completely_controls = title:d_ramlond
+			completely_controls = title:d_umbar
+		}
+		trigger_else = {
+			always = yes
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		trigger_if = { 
+			limit = { 
+				OR = {
+					NOT = { has_character_flag = bypass_normal_requirements }
+					NOT = { has_character_flag = bypass_gondor_war_requirements }
+				}
+			}
+			is_at_war = no
+			is_imprisoned = no
+			is_adult = yes
+			is_available = yes
+		}
+		trigger_if = {
+			limit = { exists = title:c_minas_tirith.empire.holder }
+			NOT = { has_truce = title:c_minas_tirith.empire.holder }
+		}
+	}
+
+	cost = {
+		gold = {
+			if = {
+				limit = {
+					is_ai = no
+				}
+				value = 100
+			}
+		}
+		prestige = {
+			if = {
+				limit = {
+					is_ai = no
+				}
+				value = 250
+			}
+		}
+	}
+	
+	effect = {
+		custom_tooltip = decision_harrying_of_the_coasts_tt
+		# Handle Modifiers 
+		if = {
+			limit = { is_ai = yes }
+			add_character_modifier = {
+				modifier = lotr_fleets_long_prepared_harwan_ai_modifier
+				years = 10
+			}
+			if = {
+				limit = {
+					has_character_modifier = lotr_preparing_the_fleets_modifier
+				}
+				remove_character_modifier = lotr_preparing_the_fleets_modifier
+			}
+		}
+		else = {
+			add_character_modifier = {
+				modifier = lotr_fleets_long_prepared_harwan_modifier
+				years = 5
+			}
+			if = {
+				limit = {
+					has_character_modifier = lotr_preparing_the_fleets_modifier
+				}
+				remove_character_modifier = lotr_preparing_the_fleets_modifier
+			}
+		}
+
+		spawn_army = {
+			levies = 2000
+			men_at_arms = {
+				type = corsair_warriors
+				stacks = 2
+			}
+			men_at_arms = {
+				type = haradrim_raiders
+				stacks = 4
+			}
+			location = capital_province
+			inheritable = no
+			uses_supply = no
+			name = first_fleet		
+		}
+		# Add another army if Harendor doesn't exist
+		if = {
+			limit = {
+				NOT = {
+					exists = title:k_mirlond.holder
+				}
+			}
+			spawn_army = {
+				levies = 2000
+				men_at_arms = {
+					type = corsair_warriors
+					stacks = 2
+				}
+				men_at_arms = {
+					type = haradrim_raiders
+					stacks = 4
+				}
+				location = capital_province
+				inheritable = no
+				uses_supply = no
+				name = third_fleet		
+			}
+		}
+		# Add *Yet Another* Army if you've done those preparations
+		if = {
+			limit = {
+				has_character_flag = lotr_further_preparations
+			}
+			spawn_army = {
+				levies = 2000
+				men_at_arms = {
+					type = corsair_warriors
+					stacks = 2
+				}
+				men_at_arms = {
+					type = haradrim_raiders
+					stacks = 4
+				}
+				location = capital_province
+				inheritable = no
+				uses_supply = no
+				name = fourth_fleet		
+			}
+		}
+		trigger_event = {
+			id = harad.2000
+			days = 1
+		}
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_harrying_of_the_coasts
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 50
+		modifier = {
+			add = 50
+			current_year >= 6791
+		}
+		modifier = {
+			add = -50
+			current_year < 6791
+		}
+	}
+}
+
+decision_further_preparations = {
+	title = decision_further_preparations
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_near_harad_01.dds"
+	}
+	sort_order = 90
+		
+	ai_goal = yes
+	selection_tooltip = decision_further_preparations_tooltip
+	desc = decision_further_preparations_desc
+	
+	confirm_text = decision_further_preparations_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		# Fleets are readied
+		has_character_modifier = lotr_preparing_the_fleets_modifier
+
+		# Safety nets:
+		OR = {
+			has_title = title:k_umbar
+			has_title = title:e_haradwaith
+		}
+		NOT = {
+			completely_controls = title:k_harondor
+		}
+		title:k_harondor = { # Gondor needs to controll something in Harondor
+			any_de_jure_county_holder = {
+				top_liege = {
+					is_gondor = yes
+				}
+			}
+		}
+		NOR = {
+			AND = {
+				has_title = title:k_umbar
+				is_target_in_global_variable_list = { # Check if Umbar has done this
+					name = unavailable_unique_decisions
+					target = flag:decision_further_preparations_umbar
+				}
+			}
+			AND = {
+				has_title = title:e_haradwaith
+				is_target_in_global_variable_list = { # Check for Harwan or anyone else
+					name = unavailable_unique_decisions
+					target = flag:decision_further_preparations
+				}
+			}
+		}
+	}
+
+	is_valid = {
+		has_character_modifier = lotr_preparing_the_fleets_modifier
+		OR = {
+			completely_controls = title:d_forethir
+			completely_controls = title:d_ramlond
+			completely_controls = title:d_umbar
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_adult = yes
+		is_available = yes
+	}
+
+	cost = {
+		gold = 600
+		prestige = 100
+	}
+	
+	effect = {
+		custom_tooltip = decision_further_preparations_tt
+		add_character_flag = lotr_further_preparations
+		# Handle Modifiers 
+		add_character_modifier = {
+			modifier = lotr_extensive_preparations_modifier
+			years = 5
+		}
+		if = {
+			limit = {
+				has_title = title:k_umbar
+			}
+			add_to_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_further_preparations_umbar
+			}
+		}
+		else = {
+			add_to_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:decision_further_preparations
+			}
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 100
+	}
+}
+
+decision_consolidate_harondor = {
+	title = decision_consolidate_harondor
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_harad_07.dds"
+	}
+	sort_order = 100
+		
+	ai_goal = yes
+	selection_tooltip = decision_consolidate_harondor_tooltip
+	desc = decision_consolidate_harondor_desc
+	
+	confirm_text = decision_consolidate_harondor_confirm
+	
+	decision_group_type = realms_in_exile_major
+	
+	is_shown = {
+		# Fleets are readied
+		has_character_modifier = lotr_preparing_the_fleets_modifier
+
+		# Safety nets:
+		culture = { 
+			has_cultural_pillar = heritage_northern_apysaic
+		}
+		has_title = title:e_haradwaith
+		NOT = {
+			completely_controls = title:k_harondor
+		}
+		NOT = {
+			is_target_in_global_variable_list = { # If this fails the first time, you aren't doing it again
+				name = unavailable_unique_decisions
+				target = flag:decision_consolidate_harondor
+			}
+		}
+	}
+
+	is_valid = {
+		NOT = {
+			completely_controls = title:k_harondor
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		trigger_if = { 
+			limit = { NOT = { has_character_flag = bypass_normal_requirements } }
+			is_at_war = no
+			is_imprisoned = no
+			is_available = yes
+		}
+		is_independent_ruler = yes
+	}
+
+	cost = {
+		gold = 50
+		prestige = 200
+	}
+	
+	effect = {
+		custom_tooltip = decision_consolidate_harondor_tt
+
+		hidden_effect = {
+			add_piety = 2500 # To keep you from going into piety debt from all the wars
+		}
+		
+		# PDX doesn't have an every de jure duchy, so we'll do this by hand. Could do it with just a bunch of invasion wars, but then it removes that for later.
+		title:d_harfalas = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+		title:d_annun = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+		title:d_aegardh = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+		title:d_eredir = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+		title:d_carnentir = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+		title:d_laergaladrin = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+		title:d_forethir = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+		title:d_doriant = {
+			save_scope_as = current_duchy
+			every_de_jure_top_liege = {
+				limit = {
+					NOR = {
+						is_gondor = yes
+						this = root 
+						any_ally = {
+							this = root
+						}
+					}
+				}
+				if = {
+					limit = {
+						root.faith = {
+							is_hostile_enough_for_holy_war_trigger = { FAITH = prev.faith }
+						}
+					}
+					save_scope_as = harondor_heathen
+					root = {
+						start_war = {
+							casus_belli = religious_war
+							target = scope:harondor_heathen
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+				else = {
+					save_scope_as = harondor_target
+					root = {
+						start_war = {
+							casus_belli = duchy_conquest_cb
+							target = scope:harondor_target
+							target_title = scope:current_duchy
+		
+						}
+					}
+				}
+			}
+		}
+
+
+		
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:decision_consolidate_harondor
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 100
+	}
+}
